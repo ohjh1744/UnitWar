@@ -17,11 +17,22 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _movePoint;
 
+    [SerializeField]private GameObject _target;
+
+    private Vector2 _recentTargetPos;
+
     [SerializeField] private LineRenderer _lineRenderer;
 
     [SerializeField] private float _lineZPos;
 
     [SerializeField] private float _lineWidth;
+
+    [SerializeField] private float _findAttackPathTime;
+
+    private float time;
+
+    private bool _isAttack;
+
 
 
     private Vector2Int[] _endPosDir =
@@ -48,11 +59,19 @@ public class PlayerController : MonoBehaviour
         _lineRenderer.endColor = Color.green;
     }
 
-
     void Update()
     {
+        time += Time.deltaTime;
+
         SelectUnits();
         OrderUnits();
+
+        if(_isAttack == true && time > _findAttackPathTime)
+        {
+            time = 0f;
+            UpdateTargetPos();
+            OrderAttack();
+        }      
     }
 
     // Unit선택하기
@@ -60,6 +79,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            //선택 유닛 마우스 버튼누를 때 초기화.
             _units.Clear();
             _lineRenderer.positionCount = _linePosCount;
             _lineStartPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
@@ -85,8 +105,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            _movePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-            OrderMove();
+            CheckOrder();
         }
     }
 
@@ -127,9 +146,36 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void CheckOrder()
+    {
+        _movePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+
+        Collider2D target = Physics2D.OverlapCircle(_movePoint, 0.4f);
+        // 공격할 대상이 있따면
+        if (target != null)
+        {
+            _target = target.gameObject;
+            _isAttack = true;
+            UpdateTargetPos();
+        }
+        else
+        {
+            //공격할 대상이 없는 땅이라면 
+            _target = null;
+            _isAttack = false;
+            OrderMove();
+        }
+    }
+
+    private void UpdateTargetPos()
+    {
+        _recentTargetPos.x = _target.transform.position.x;
+        _recentTargetPos.y = _target.transform.position.y;
+    }
     //이동 명령.
     private void OrderMove()
     {
+        Debug.Log("Move!");
         if(_movePoint == Vector2.zero)
         {
             return;
@@ -137,7 +183,6 @@ public class PlayerController : MonoBehaviour
 
         int xPos = 0;
         int yPos = 0;
-
 
         int dirIndex = 0;
 
@@ -147,6 +192,8 @@ public class PlayerController : MonoBehaviour
 
             Vector2Int startPos = new Vector2Int((int)_units[i].transform.position.x, (int)_units[i].transform.position.y);
             Vector2Int endPos = new Vector2Int((int)_movePoint.x + xPos, (int)_movePoint.y + yPos);
+
+            Debug.Log(endPos);
 
             if(_aStar.DoAStar(startPos, endPos) == true)
             {
@@ -159,9 +206,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            xPos += _endPosDir[dirIndex].x;
-            yPos += _endPosDir[dirIndex].y;
-
+            // 단체로 unit이 이동 시 한곳에 모여지 않도록 구현.
             if(dirIndex == _endPosDir.Length - 1)
             {
                 dirIndex = 0;
@@ -171,9 +216,47 @@ public class PlayerController : MonoBehaviour
                 dirIndex++;
             }
 
+            xPos += _endPosDir[dirIndex].x;
+            yPos += _endPosDir[dirIndex].y;
+
+
         }
 
     }
+
+    //공격 명령
+    private void  OrderAttack()
+    {
+        Debug.Log("Attack!");
+        if (_movePoint == Vector2.zero)
+        {
+            return;
+        }
+
+        for (int i = 0; i < _units.Count; i++)
+        {
+            Unit unit = _units[i];
+
+            Vector2Int startPos = new Vector2Int((int)_units[i].transform.position.x, (int)_units[i].transform.position.y);
+            Vector2Int endPos = new Vector2Int((int)_target.transform.position.x, (int)_target.transform.position.y);
+
+            Debug.Log(endPos);
+
+            if (_aStar.DoAStar(startPos, endPos) == true)
+            {
+                unit.Path.Clear();
+
+                foreach (Vector2Int path in _aStar.Path)
+                {
+                    unit.PathIndex = 0;
+                    unit.Path.Add(path);
+                }
+            }
+
+        }
+    }
+
+
 
 
 }
