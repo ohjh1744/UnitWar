@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitProduct : MonoBehaviour
+public abstract class UnitProduct
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public abstract void Spawn(GameObject gameObject, Vector3 spanwPos);
+}
 
-    // Update is called once per frame
-    void Update()
+public class MeleeUnit : UnitProduct
+{
+    public override void Spawn(GameObject gameObject, Vector3 spawnPos)
     {
-        
+        GameObject.Instantiate(gameObject, spawnPos, Quaternion.identity);
     }
 }
