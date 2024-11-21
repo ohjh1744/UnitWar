@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class NickNamePanel : MonoBehaviour
+public class NickNamePanel : UIBInder
 {
     [SerializeField] TMP_InputField nickNameInputField;
 

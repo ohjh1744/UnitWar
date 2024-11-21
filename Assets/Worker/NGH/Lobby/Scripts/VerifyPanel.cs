@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class VerifyPanel : MonoBehaviour
 {
-    [SerializeField] GameObject nickNamePanel;
+    private GameObject _nickNamePanel;
+    public GameObject NickNamePanel { get; private set; }
 
     private void OnEnable()
     {
@@ -42,7 +43,6 @@ public class VerifyPanel : MonoBehaviour
 
                 Debug.Log("Email sent successfully.");
                 checkVerifyRoutine = StartCoroutine(CheckVerifyRoutine());
-                gameObject.SetActive(false);
             });
     }
 
@@ -70,7 +70,7 @@ public class VerifyPanel : MonoBehaviour
                     if(BackendManager.Auth.CurrentUser.IsEmailVerified == true)
                     {
                         Debug.Log("인증 확인");
-                        nickNamePanel.SetActive(true);
+                        NickNamePanel.SetActive(true);
                         gameObject.SetActive(false);
                     }
                 });

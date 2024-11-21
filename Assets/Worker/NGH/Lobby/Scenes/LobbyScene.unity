@@ -494,7 +494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687e4dd2ae4955f47a000e728c1c6429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nickNamePanel: {fileID: 18016931}
 --- !u!1 &90344980
 GameObject:
   m_ObjectHideFlags: 0
