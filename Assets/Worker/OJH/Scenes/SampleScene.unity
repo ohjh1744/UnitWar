@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 898407270}
   m_Layer: 3
   m_Name: Unit3
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 1020453000}
   m_Layer: 3
   m_Name: Unit1
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: []
   PathIndex: 0
-  _moveSpeed: 20
+  _moveSpeed: 2
 --- !u!1 &1324734646
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 1830301096}
   m_Layer: 3
   m_Name: Unit2
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
