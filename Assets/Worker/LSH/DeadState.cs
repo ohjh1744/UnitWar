@@ -2,17 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : MonoBehaviour
+public class DeadState : MonoBehaviour, IState
 {
-    // Start is called before the first frame update
-    void Start()
+    private UnitController _unitController;
+
+    public DeadState(UnitController controller)
     {
-        
+        //»ý¼ºÀÚ
+        _unitController = controller;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void OnEnter()
     {
-        
+
     }
+
+    public void OnUpdate()
+    {
+        Dead();
+    }
+
+    public void OnExit()
+    {
+
+    }
+
+
+    public void Dead()
+    {
+
+    }
+
+
 }
