@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 898407270}
   m_Layer: 3
   m_Name: Unit3
-  m_TagString: Unit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 1020453000}
   m_Layer: 3
   m_Name: Unit1
-  m_TagString: Unit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -682,9 +682,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aStar: {fileID: 1324734649}
+  _target: {fileID: 0}
   _lineRenderer: {fileID: 1324734647}
   _lineZPos: -1
   _lineWidth: 0.1
+  _findAttackPathTime: 2
 --- !u!114 &1324734649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -728,7 +730,7 @@ GameObject:
   - component: {fileID: 1830301096}
   m_Layer: 3
   m_Name: Unit2
-  m_TagString: Unit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
