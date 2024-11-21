@@ -6,6 +6,10 @@ public class AttackState : MonoBehaviour, IState
 {
     private UnitController _unitController;
 
+    private Collider2D _detectEnemy;    
+
+    
+
     public AttackState(UnitController controller)
     {
         //생성자
@@ -15,7 +19,7 @@ public class AttackState : MonoBehaviour, IState
 
     public void OnEnter()
     {
-
+        Debug.Log("Attack상태 진입");
     }
 
     public void OnUpdate()
@@ -25,12 +29,12 @@ public class AttackState : MonoBehaviour, IState
             _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
         }
 
-        if (true /*상대방이 외부 테두리를 벗어남*/ &&
+        if (_unitController.Detect == null &&
             _unitController.UnitData.Path.Count == _unitController.UnitData.PathIndex)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
         }
-        if (true/*상대방이 외부 테두리를 벗어남*/ &&
+        if (_unitController.Detect == null &&
             _unitController.UnitData.Path.Count > 0)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
@@ -42,15 +46,21 @@ public class AttackState : MonoBehaviour, IState
 
     public void OnExit()
     {
-
+        Debug.Log("Attack상태 탈출");
     }
 
     /// <summary>
     /// 항상, 유닛의 외부 테두리와 상대의 외부 테두리가 충돌하는지 검사합니다.
     /// </summary>
     public void OverlapCircle()
-    {
+    {        
+        _detectEnemy = Physics2D.OverlapCircle(this.transform.position, _unitController.InRadius);
 
+        if (_detectEnemy != null)
+        {
+            DoAttack();
+        }
+        
     }
 
     /// <summary>
@@ -58,7 +68,14 @@ public class AttackState : MonoBehaviour, IState
     /// </summary>
     public void DoAttack()
     {
+        float damageRate = 0;
+        damageRate += Time.deltaTime;
 
+        if (damageRate > _unitController.UnitData.DamageRate)
+        {
+            _unitController.GetDamage();
+            damageRate = 0f;
+        }
     }
 
 }

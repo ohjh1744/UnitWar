@@ -15,7 +15,7 @@ public class DeadState : MonoBehaviour, IState
 
     public void OnEnter()
     {
-
+        Debug.Log("Dead상태 진입");
     }
 
     public void OnUpdate()
@@ -25,13 +25,16 @@ public class DeadState : MonoBehaviour, IState
 
     public void OnExit()
     {
-
+        Debug.Log("Dead상태 탈출");
     }
 
 
     public void Dead()
     {
-
+        Debug.Log("Dead 상태 (죽음)");
+        //못움직이고
+        //애니메이션
+        //사라짐
     }
 
 

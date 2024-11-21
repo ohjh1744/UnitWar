@@ -6,11 +6,13 @@ using UnityEngine;
 public class WalkState : MonoBehaviour, IState
 {
     private UnitController _unitController;
+    private UnitData _data;
 
     public WalkState(UnitController controller)
     {
         //생성자
         _unitController = controller;
+        _data = _unitController.UnitData;
     }
 
 
@@ -20,7 +22,12 @@ public class WalkState : MonoBehaviour, IState
     }
 
     public void OnUpdate()
-    {       
+    {
+        if (_unitController.UnitData.Path.Count > 0 && _unitController.UnitData.PathIndex < _unitController.UnitData.Path.Count)
+        {
+            DoWalk(_unitController.UnitData.Path[_unitController.UnitData.PathIndex]);
+        }
+
         if (_unitController.UnitData.HP <= 0)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
@@ -30,12 +37,12 @@ public class WalkState : MonoBehaviour, IState
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
         }
-        if (false)
+        if (_unitController.Detect != null)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
         }
 
-        DoWalk();
+        
 
     }
 
@@ -45,9 +52,17 @@ public class WalkState : MonoBehaviour, IState
     }
 
 
-    public void DoWalk()
+    public void DoWalk(Vector2Int pathPoint)
     {
-        Debug.Log("Walk 상태 진행중 (뚜벅)");
+        // 현재 위치에서 목표 지점으로 이동
+        transform.position = Vector2.MoveTowards(transform.position, pathPoint, _unitController.UnitData.MoveSpeed * Time.deltaTime);
+
+        // 목표 지점에 도달했는지 확인
+        if ((Vector2)transform.position == pathPoint)
+        {
+            _unitController.UnitData.PathIndex++;  // 다음 지점으로 이동
+        }
     }
+
 
 }

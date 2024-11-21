@@ -29,7 +29,7 @@ public class IdleState : MonoBehaviour, IState
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
         }
-        if (false)
+        if (_unitController.Detect != null)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
         }

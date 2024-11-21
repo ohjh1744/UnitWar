@@ -4,19 +4,20 @@ using UnityEngine;
 using UnityEngine.XR;
 
 public enum EStates { Idle, Walk, Attack, Dead, Size}
-public class UnitController : MonoBehaviour
+public class UnitController : MonoBehaviour, IDamageable
 {
 
     [SerializeField] private UnitData _unitData;
-    public UnitData UnitData { get; set; } //天天天天天天天天天天天
+    public UnitData UnitData { get { return _unitData; } set { } }
 
-    private IState _currentState; //============================
+    private IState _currentState;
     private IState[] _states = new IState[(int)EStates.Size];    
-    public IState[] States { get; set; } //天天天天天天天天天天天天
+    public IState[] States { get { return _states; } set { } }
 
 
-    private Collider2D _hitEnemy;
-    public Collider2D HitEnemy { get { return _hitEnemy} set { } }
+
+    private Collider2D _detect;
+    public Collider2D Detect { get { return _detect; } set { } }
 
     [SerializeField] private float _outRadius;
     public float OutRadius { get { return _outRadius; } set { } }
@@ -43,9 +44,9 @@ public class UnitController : MonoBehaviour
 
     private void Update()
     {
-        _currentState.OnUpdate(); //---------------------------------------
+        _currentState?.OnUpdate();
 
-        HitEnemy = Physics2D.OverlapCircle(this.transform.position, _outRadius);
+        Detect = Physics2D.OverlapCircle(this.transform.position, _outRadius);
     }
 
     public void ChangeState(IState newState)
@@ -59,6 +60,12 @@ public class UnitController : MonoBehaviour
         _currentState.OnEnter();
 
 
+    }
+
+    
+    public void GetDamage()
+    {
+        _unitData.HP -= _unitData.Power;
     }
 
 
