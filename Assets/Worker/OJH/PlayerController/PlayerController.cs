@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+public enum EOrder {Move, Attack };
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private AStar _aStar;
@@ -64,13 +66,13 @@ public class PlayerController : MonoBehaviour
         time += Time.deltaTime;
 
         SelectUnits();
-        OrderUnits();
+        CheckCommand();
 
-        if(_isAttack == true && time > _findAttackPathTime)
+        if (_isAttack == true && time > _findAttackPathTime)
         {
             time = 0f;
             UpdateTargetPos();
-            OrderAttack();
+            CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
         }      
     }
 
@@ -101,13 +103,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OrderUnits()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            CheckOrder();
-        }
-    }
 
     // 사각형 라인 그리기
     private void DrawRectangle()
@@ -146,24 +141,28 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void CheckOrder()
+    // 공격인지 이동오더인지 체크.
+    private void CheckCommand()
     {
-        _movePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+        if (Input.GetMouseButtonDown(1))
+        {
+            _movePoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
 
-        Collider2D target = Physics2D.OverlapCircle(_movePoint, 0.4f);
-        // 공격할 대상이 있따면
-        if (target != null)
-        {
-            _target = target.gameObject;
-            _isAttack = true;
-            UpdateTargetPos();
-        }
-        else
-        {
-            //공격할 대상이 없는 땅이라면 
-            _target = null;
-            _isAttack = false;
-            OrderMove();
+            Collider2D target = Physics2D.OverlapCircle(_movePoint, 0.4f);
+            // 공격할 대상이 있따면
+            if (target != null)
+            {
+                _target = target.gameObject;
+                _isAttack = true;
+                UpdateTargetPos();
+            }
+            else
+            {
+                //공격할 대상이 없는 땅이라면 
+                _target = null;
+                _isAttack = false;
+                CommandUnits(_movePoint.x, _movePoint.y, (int)EOrder.Move);
+            }
         }
     }
 
@@ -172,8 +171,9 @@ public class PlayerController : MonoBehaviour
         _recentTargetPos.x = _target.transform.position.x;
         _recentTargetPos.y = _target.transform.position.y;
     }
-    //이동 명령.
-    private void OrderMove()
+    
+    // 오더에 따라서 유닛 작동.
+    private void CommandUnits(float movePosX, float movePosY, int orderNum)
     {
         Debug.Log("Move!");
         if(_movePoint == Vector2.zero)
@@ -191,9 +191,7 @@ public class PlayerController : MonoBehaviour
             Unit unit = _units[i];      
 
             Vector2Int startPos = new Vector2Int((int)_units[i].transform.position.x, (int)_units[i].transform.position.y);
-            Vector2Int endPos = new Vector2Int((int)_movePoint.x + xPos, (int)_movePoint.y + yPos);
-
-            Debug.Log(endPos);
+            Vector2Int endPos = new Vector2Int((int)movePosX + xPos, (int)movePosY + yPos);
 
             if(_aStar.DoAStar(startPos, endPos) == true)
             {
@@ -206,57 +204,23 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            // 단체로 unit이 이동 시 한곳에 모여지 않도록 구현.
-            if(dirIndex == _endPosDir.Length - 1)
+            // 단체로 이동 오더 시 한곳에 모여지 않도록 구현.
+            if (orderNum == (int)EOrder.Move)
             {
-                dirIndex = 0;
-            }
-            else
-            {
-                dirIndex++;
-            }
-
-            xPos += _endPosDir[dirIndex].x;
-            yPos += _endPosDir[dirIndex].y;
-
-
-        }
-
-    }
-
-    //공격 명령
-    private void  OrderAttack()
-    {
-        Debug.Log("Attack!");
-        if (_movePoint == Vector2.zero)
-        {
-            return;
-        }
-
-        for (int i = 0; i < _units.Count; i++)
-        {
-            Unit unit = _units[i];
-
-            Vector2Int startPos = new Vector2Int((int)_units[i].transform.position.x, (int)_units[i].transform.position.y);
-            Vector2Int endPos = new Vector2Int((int)_target.transform.position.x, (int)_target.transform.position.y);
-
-            Debug.Log(endPos);
-
-            if (_aStar.DoAStar(startPos, endPos) == true)
-            {
-                unit.Path.Clear();
-
-                foreach (Vector2Int path in _aStar.Path)
+                if (dirIndex == _endPosDir.Length - 1)
                 {
-                    unit.PathIndex = 0;
-                    unit.Path.Add(path);
+                    dirIndex = 0;
                 }
+                else
+                {
+                    dirIndex++;
+                }
+
+                xPos += _endPosDir[dirIndex].x;
+                yPos += _endPosDir[dirIndex].y;
             }
-
         }
+
     }
-
-
-
 
 }
