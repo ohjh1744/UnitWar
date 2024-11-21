@@ -4,13 +4,14 @@ using UnityEngine;
 
 public abstract class UnitProduct
 {
-    public abstract void Spawn(GameObject gameObject, Vector3 spanwPos);
+    public abstract void Spawn(Vector3 spanwPos);
 }
 
 public class MeleeUnit : UnitProduct
 {
-    public override void Spawn(GameObject gameObject, Vector3 spawnPos)
+    public override void Spawn(Vector3 spawnPos)
     {
-        GameObject.Instantiate(gameObject, spawnPos, Quaternion.identity);
+        GameObject meleeUnit = ObjectPool.Instance.GetObject(ObjectPool.E_UnitType.MELEE);
+        meleeUnit.transform.position = spawnPos;
     }
 }

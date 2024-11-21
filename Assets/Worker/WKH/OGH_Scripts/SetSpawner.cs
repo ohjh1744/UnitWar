@@ -5,8 +5,8 @@ using Photon.Pun;
 
 public class SetSpawner : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private Vector3[] _spawnerPos;
-    [SerializeField] private GameObject _spawnerPrefab;
+    [SerializeField] private Vector3[] _spawnerPos;                     // 스폰위치 (네트워크 도입시 유저마다 다르게 설정)
+    [SerializeField] private GameObject _spawnerPrefab;                 // 스포너 프리팹
 
     private void Start()
     {

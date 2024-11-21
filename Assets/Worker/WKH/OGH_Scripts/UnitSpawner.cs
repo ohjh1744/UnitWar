@@ -5,9 +5,9 @@ using Photon.Pun;
 
 public class UnitSpawner : MonoBehaviourPunCallbacks
 {
-    [SerializeField] GameObject meleePrefab;                // 근접유닛 프리팹
+    [SerializeField] GameObject _meleePrefab;                // 근접유닛 프리팹
 
-    [SerializeField] Vector3 spawnPos;                      // 생성 위치
+    [SerializeField] Vector3 _spawnPos;                      // 생성 위치
 
     [SerializeField] private float _unitDistance = 0.1f;    // 유닛간의 거리
 
@@ -39,10 +39,10 @@ public class UnitSpawner : MonoBehaviourPunCallbacks
         float colRatio = col * 0.3f;                        // 생성 열 간격 조절
         float rowRatio = row * 0.3f;                        // 생성 행 간격 조절
 
-        spawnPos = transform.position + new Vector3(1, 1, 0);
-        Vector3 newSpawnPos = spawnPos + new Vector3(rowRatio, -colRatio, 0);
+        _spawnPos = transform.position + new Vector3(1, 0.7f, 0);
+        Vector3 newSpawnPos = _spawnPos + new Vector3(rowRatio, -colRatio, 0);
         UnitFactory meleeFact = new MeleeUnitFactory();
-        meleeFact.Spawn(meleePrefab, newSpawnPos);
-        _unitCount++;
+        meleeFact.Spawn(newSpawnPos);
+        _unitCount++;   
     }
 }
