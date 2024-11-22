@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerPos:
-  - {x: -7, y: 0, z: 0}
-  - {x: 7, y: 0, z: 0}
-  - {x: 0, y: 4, z: 0}
-  - {x: 0, y: -4, z: 0}
+  - {x: -4.4, y: 2.62, z: 0}
+  - {x: 4.85, y: 2.64, z: 0}
+  - {x: -4.4, y: -2.74, z: 0}
+  - {x: 4.42, y: -2.64, z: 0}
   _spawnerPrefab: {fileID: 7077033313851828464, guid: 41f4bc36890799841be1eddda57a94f7, type: 3}
