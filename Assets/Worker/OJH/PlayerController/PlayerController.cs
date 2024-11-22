@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private AStar _aStar;
 
-    private List<Unit> _units;
+    private List<UnitData> _units;
 
     private const int _linePosCount = 5;
 
@@ -31,14 +31,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _findAttackPathTime;
 
-    private float time;
+    private float _time;
 
     private bool _isAttack;
 
 
 
     private Vector2Int[] _endPosDir =
-{
+    {
         new Vector2Int( 0, +2), // 상
         new Vector2Int( 0, -2), // 하
         new Vector2Int(-2,  0), // 좌
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        _units = new List<Unit>();
+        _units = new List<UnitData>();
         _lineRenderer = GetComponent<LineRenderer>();
 
         _lineRenderer.startWidth = _lineWidth;
@@ -63,17 +63,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        time += Time.deltaTime;
-
+        _time += Time.deltaTime;
         SelectUnits();
         CheckCommand();
 
-        if (_isAttack == true && time > _findAttackPathTime)
-        {
-            time = 0f;
-            UpdateTargetPos();
-            CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
-        }      
+        //if (_isAttack == true && _time > _findAttackPathTime)
+        //{
+        //    _time = 0f;
+        //    UpdateTargetPos();
+        //    CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
+        //}      
     }
 
     // Unit선택하기
@@ -132,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
         foreach(Collider2D hitCollider in coliders)
         {
-            Unit unit = hitCollider.GetComponent<Unit>();
+            UnitData unit = hitCollider.GetComponent<UnitData>();
             if(unit != null)
             {
                 _units.Add(unit);
@@ -152,10 +151,13 @@ public class PlayerController : MonoBehaviour
             // 공격할 대상이 있따면
             if (target != null)
             {
-                // 후에 uNitmodel의 target에서 전달해주기.
-                _target = target.gameObject;
-                _isAttack = true;
-                UpdateTargetPos();
+                // 장애물은 공격 대상으로 취급 x.
+                if (target.tag != "Obstacle")
+                {
+                    _target = target.gameObject;
+                    _isAttack = true;
+                    UpdateTargetPos();
+                }
             }
             else
             {
@@ -189,7 +191,16 @@ public class PlayerController : MonoBehaviour
 
         for(int i = 0; i < _units.Count; i++)
         {
-            Unit unit = _units[i];      
+            UnitData unit = _units[i];
+            // 공격order인 경우 타겟 지정
+            if(orderNum == (int)EOrder.Attack)
+            {
+                unit.AttackTarget = _target;
+            }
+            else if(orderNum == (int)EOrder.Move)
+            {
+                unit.AttackTarget = null;
+            }
 
             Vector2Int startPos = new Vector2Int((int)_units[i].transform.position.x, (int)_units[i].transform.position.y);
             Vector2Int endPos = new Vector2Int((int)movePosX + xPos, (int)movePosY + yPos);
