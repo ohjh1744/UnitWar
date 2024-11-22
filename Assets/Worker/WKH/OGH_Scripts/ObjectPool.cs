@@ -10,11 +10,14 @@ public class ObjectPool : MonoBehaviour
         MELEE = 1
     }
 
-    public static ObjectPool Instance;
+    public static ObjectPool Instance { get; set; }
 
-    [SerializeField] private GameObject[] _poolingObj;                          // 풀링할 오브젝트
+    [SerializeField] private GameObject[] _poolingObj;                  // 풀링할 오브젝트
 
-    private Dictionary<E_UnitType, List<GameObject>> _poolDict;      // 오브젝트 딕셔너리
+    private Dictionary<E_UnitType, List<GameObject>> _poolDict;         // 오브젝트 딕셔너리
+
+    [SerializeField] GameObject[] _minimapRender;                         // 미니맵에 표시될 도형
+
 
     private void Awake()
     {
@@ -34,6 +37,9 @@ public class ObjectPool : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 GameObject poolObj = Instantiate(_poolingObj[j]);
+                GameObject minimapRender = Instantiate(_minimapRender[j]);
+                minimapRender.transform.parent = poolObj.transform;
+                minimapRender.transform.position = poolObj.transform.position;
                 poolObj.SetActive(false);
                 _poolDict[type].Add(poolObj);
             }

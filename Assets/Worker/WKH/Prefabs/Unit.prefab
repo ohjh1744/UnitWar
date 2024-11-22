@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 9136928532113555164}
   - component: {fileID: 9136928532113555165}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9136928532113555167
 Transform:
   m_ObjectHideFlags: 0
