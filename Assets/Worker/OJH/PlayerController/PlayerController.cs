@@ -233,8 +233,8 @@ public class PlayerController : MonoBehaviour
                     dirIndex++;
                 }
 
-                xPos += _endPosDir[dirIndex].x;
-                yPos += _endPosDir[dirIndex].y;
+                xPos = _endPosDir[dirIndex].x;
+                yPos = _endPosDir[dirIndex].y;
             }
         }
 

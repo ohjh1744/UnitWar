@@ -78,7 +78,7 @@ public class UnitController : MonoBehaviour, IDamageable
             for (int i = 0; i < _unitData.HitColider.Length; i++)
             {
                 // 자기 자신이나 장애물은 Hit대상으로 x.
-                if (_unitData.DetectColider[i].gameObject != gameObject && _unitData.DetectColider[i].tag != "Obstacle")
+                if (_unitData.HitColider[i].gameObject != gameObject && _unitData.HitColider[i].tag != "Obstacle")
                 {
                     _unitData.HitObject = _unitData.HitColider[i];
                     // 만약 공격대상이 지정된 경우, 공격대상을 HitObject로 변경.
