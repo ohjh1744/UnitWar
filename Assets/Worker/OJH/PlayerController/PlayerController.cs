@@ -152,6 +152,7 @@ public class PlayerController : MonoBehaviour
             // 공격할 대상이 있따면
             if (target != null)
             {
+                // 후에 uNitmodel의 target에서 전달해주기.
                 _target = target.gameObject;
                 _isAttack = true;
                 UpdateTargetPos();
