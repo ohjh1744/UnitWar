@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public enum E_UnitType 
+    public enum EUnitType 
     {
         NONE = 0,
         MELEE = 1
@@ -14,7 +14,7 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField] private GameObject[] _poolingObj;                  // 풀링할 오브젝트
 
-    private Dictionary<E_UnitType, List<GameObject>> _poolDict;         // 오브젝트 딕셔너리
+    private Dictionary<EUnitType, List<GameObject>> _poolDict;         // 오브젝트 딕셔너리
 
     [SerializeField] GameObject[] _minimapRender;                         // 미니맵에 표시될 도형
 
@@ -28,10 +28,10 @@ public class ObjectPool : MonoBehaviour
 
     private void Init(int count)
     {
-        _poolDict = new Dictionary<E_UnitType, List<GameObject>>();
+        _poolDict = new Dictionary<EUnitType, List<GameObject>>();
         for (int j = 0; j < _poolingObj.Length; j++)
         {
-            E_UnitType type = (E_UnitType)(j + 1);
+            EUnitType type = (EUnitType)(j + 1);
             _poolDict[type] = new List<GameObject>();
 
             for (int i = 0; i < count; i++)
@@ -46,7 +46,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public GameObject GetObject(E_UnitType type)
+    public GameObject GetObject(EUnitType type)
     {
         if (!_poolDict.ContainsKey(type))
         {
