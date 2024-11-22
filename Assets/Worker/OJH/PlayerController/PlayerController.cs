@@ -67,12 +67,12 @@ public class PlayerController : MonoBehaviour
         SelectUnits();
         CheckCommand();
 
-        if (_isAttack == true && _time > _findAttackPathTime)
-        {
-            _time = 0f;
-            UpdateTargetPos();
-            CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
-        }      
+        //if (_isAttack == true && _time > _findAttackPathTime)
+        //{
+        //    _time = 0f;
+        //    UpdateTargetPos();
+        //    CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
+        //}      
     }
 
     // Unit선택하기

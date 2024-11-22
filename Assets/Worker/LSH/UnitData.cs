@@ -48,7 +48,8 @@ public class UnitData : MonoBehaviour
     [SerializeField] private GameObject _attackTarget;
     public GameObject AttackTarget { get { return _attackTarget; }  set { _attackTarget = value; } }
 
-    [SerializeField] private bool _isMoveOrderReceived;
+    [SerializeField] private float _findLoadTime;
+    public float FindLoadTime { get { return _findLoadTime; } private set { } }
 
 
 }
