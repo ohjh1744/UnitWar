@@ -4,37 +4,52 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class MainPanel : MonoBehaviour
+public class MainPanel : UIBInder
 {
-    [SerializeField] GameObject menuPanel;
-    [SerializeField] GameObject createRoomPanel;
-    [SerializeField] TMP_InputField roomNameInputField;
-    [SerializeField] TMP_InputField maxPlayerInputField;
+    //[SerializeField] GameObject menuPanel;
+    //[SerializeField] GameObject createRoomPanel;
+    //[SerializeField] TMP_InputField roomNameInputField;
+    //[SerializeField] TMP_InputField maxPlayerInputField;
+
+    private void Awake()
+    {
+        BindAll();
+
+        AddEvent("CreateRoomButton", EventType.Click, CreateRoomMenu);
+        AddEvent("RandomMatchingButton", EventType.Click, RandomMatching);
+        AddEvent("CreateRoomConfirmButton", EventType.Click, CreateRoomConfirm);
+        AddEvent("CreateRoomCancelButton", EventType.Click, CreateRoomCancel);
+        AddEvent("LobbyButton", EventType.Click, JoinLobby);
+        AddEvent("LogoutButton", EventType.Click, Logout);
+        AddEvent("DeleteUserButton", EventType.Click, DeleteUser);
+        AddEvent("DeleteUserButton", EventType.Click, DeleteUser);
+    }
 
     private void OnEnable()
     {
-        createRoomPanel.SetActive(false);
+        GetUI("CreateRoomPanel").SetActive(false); //createRoomPanel.SetActive(false);
     }
 
-    public void CreateRoomMenu()
+    private void CreateRoomMenu(PointerEventData eventData)
     {
-        createRoomPanel.SetActive(true);
+        GetUI("CreateRoomPanel").SetActive(true);
 
-        roomNameInputField.text = $"Room {Random.Range(1000, 10000)}";
-        maxPlayerInputField.text = "8";
+        GetUI<TMP_InputField>("RoomNameInputField").text = $"Room {Random.Range(1000, 10000)}"; //roomNameInputField.text = $"Room {Random.Range(1000, 10000)}";
+        GetUI<TMP_InputField>("MaxPlayerInputField").text = "8"; //maxPlayerInputField.text = "8";
     }
 
-    public void CreateRoomConfirm()
+    private void CreateRoomConfirm(PointerEventData eventData)
     {
-        string roomName = roomNameInputField.text;
+        string roomName = GetUI<TMP_InputField>("RoomNameInputField").text;
         if (roomName == "")
         {
             Debug.LogWarning("방 이름을 지정해야 방을 생성할 수 있습니다.");
             return;
         }
 
-        int maxPlayer = int.Parse(maxPlayerInputField.text);
+        int maxPlayer = int.Parse(GetUI<TMP_InputField>("MaxPlayerInputField").text);
         maxPlayer = Mathf.Clamp(maxPlayer, 1, 8);
 
         RoomOptions options = new RoomOptions();
@@ -43,12 +58,12 @@ public class MainPanel : MonoBehaviour
         PhotonNetwork.CreateRoom(roomName, options);
     }
 
-    public void CreateRoomCancel()
+    private void CreateRoomCancel(PointerEventData eventData)
     {
-        createRoomPanel.SetActive(false);
+        GetUI("CreateRoomPanel").SetActive(false);
     }
 
-    public void RandomMatching()
+    private void RandomMatching(PointerEventData eventData)
     {
         Debug.Log("랜덤 매칭 요청");
 
@@ -61,21 +76,38 @@ public class MainPanel : MonoBehaviour
         PhotonNetwork.JoinRandomOrCreateRoom(roomName : name, roomOptions : options);
     }
 
-    public void JoinLobby()
+    private void JoinLobby(PointerEventData eventData)
     {
         Debug.Log("로비 입장 요청");
         PhotonNetwork.JoinLobby();
     }
 
-    public void Logout()
+    private void Logout(PointerEventData eventData)
     {
         Debug.Log("로그아웃 요청");
         PhotonNetwork.Disconnect();
     }
 
-    public void DeleteUser()
+    private void DeleteUser(PointerEventData eventData)
+    {
+        GetUI("UserDeletePanel").SetActive(true);
+    }
+
+    private void DeleteUserCancel(PointerEventData eventData)
+    {
+        GetUI("UserDeletePanel").SetActive(false);
+    }
+
+    private void DeleteUserConfirm(PointerEventData eventData, string email, string password)
     {
         FirebaseUser user = BackendManager.Auth.CurrentUser;
+
+        if (user == null)
+        {
+            Debug.LogError("No user is currently logged in.");
+            return;
+        }
+
         user.DeleteAsync()
             .ContinueWithOnMainThread(task =>
             {

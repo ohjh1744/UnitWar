@@ -22,6 +22,7 @@ public class VerifyPanel : MonoBehaviour
         }
     }
 
+    // 메일 인증 진행
     private void SendVerifyMail()
     {
         FirebaseUser user = BackendManager.Auth.CurrentUser;
@@ -46,7 +47,9 @@ public class VerifyPanel : MonoBehaviour
             });
     }
 
+    // 코루틴 생성
     Coroutine checkVerifyRoutine;
+    // 인증이 완료되었는지 주기적으로 확인하는 코루틴
     IEnumerator CheckVerifyRoutine()
     {
         WaitForSeconds delay = new WaitForSeconds(3f);

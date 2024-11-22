@@ -5,14 +5,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class NickNamePanel : UIBInder
 {
-    [SerializeField] TMP_InputField nickNameInputField;
+    //[SerializeField] TMP_InputField nickNameInputField;
 
-    public void Confirm()
+    private void Awake()
     {
-        string nickName = nickNameInputField.text;
+        BindAll();
+
+        AddEvent("NickNameConfirmButton", EventType.Click, Confirm); 
+    }
+
+    // 닉네임 설정
+    private void Confirm(PointerEventData eventData)
+    {
+        string nickName = GetUI<TMP_InputField>("NickNameInputField").text; //nickNameInputField.text;
         if(nickName == "")
         {
             Debug.LogWarning("닉네임을 설정해주세요.");
@@ -21,7 +30,7 @@ public class NickNamePanel : UIBInder
 
         FirebaseUser user = BackendManager.Auth.CurrentUser;
         UserProfile profile = new UserProfile();
-        profile.DisplayName = nickNameInputField.text;
+        profile.DisplayName = GetUI<TMP_InputField>("NickNameInputField").text;
 
         user.UpdateUserProfileAsync(profile)
             .ContinueWithOnMainThread(task =>

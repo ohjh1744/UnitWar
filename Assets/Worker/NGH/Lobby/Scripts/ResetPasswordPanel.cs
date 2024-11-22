@@ -3,14 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ResetPasswordPanel : MonoBehaviour
+public class ResetPasswordPanel : UIBInder
 {
-    [SerializeField] TMP_InputField emailInputFiedl;
+    //[SerializeField] TMP_InputField emailInputFiedl;
 
-    public void SendResetEmail()
+    private void Awake()
     {
-        string email = emailInputFiedl.text;
+        BindAll();
+
+        AddEvent("SendResetEmailButton", EventType.Click, SendResetEmail);
+    }
+
+    // 입력한 메일 주소로 비밀번호 재설정 메일 송신
+    public void SendResetEmail(PointerEventData eventData)
+    {
+        string email = GetUI<TMP_InputField>("ResetPasswordEmailInputField").text; //emailInputFiedl.text;
         BackendManager.Auth.SendPasswordResetEmailAsync(email)
             .ContinueWithOnMainThread(task =>
             {

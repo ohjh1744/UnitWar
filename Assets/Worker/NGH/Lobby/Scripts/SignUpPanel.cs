@@ -4,22 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using WebSocketSharp;
 
-public class SignUpPanel : MonoBehaviour
+public class SignUpPanel : UIBInder
 {
-    [SerializeField] TMP_InputField emailInputField;
-    [SerializeField] TMP_InputField passwordInputField;
-    [SerializeField] TMP_InputField passwordConfirmInputField;
-    private bool existsEmail = false;
+    //[SerializeField] TMP_InputField emailInputField;
+    //[SerializeField] TMP_InputField passwordInputField;
+    //[SerializeField] TMP_InputField passwordConfirmInputField;
+    //private bool existsEmail = false;
 
-    public void SignUp()
+    private void Awake()
     {
-        string email = emailInputField.text;
-        string password = passwordInputField.text;
-        string confirm = passwordConfirmInputField.text;
+        BindAll();
 
-        if(email.IsNullOrEmpty())
+        AddEvent("SignUpConfirmButton", EventType.Click, SignUp);
+        AddEvent("SignUpCancelButton", EventType.Click, Cancel);
+    }
+
+    // 계정을 생성
+    private void SignUp(PointerEventData eventData)
+    {
+        string email = GetUI<TMP_InputField>("SignUPEmailInputField").text; //emailInputField.text;
+        string password = GetUI<TMP_InputField>("SignUPPasswordInputField").text; //passwordInputField.text;
+        string confirm = GetUI<TMP_InputField>("SignUPPasswordConfirmInputField").text; //passwordConfirmInputField.text;
+
+        if (email.IsNullOrEmpty())
         {
             Debug.LogWarning("이메일을 입력해주세요.");
             return;
@@ -47,7 +57,14 @@ public class SignUpPanel : MonoBehaviour
 
         CreateUser(email, password);
     }
+
+    // 해당 창을 닫음
+    private void Cancel(PointerEventData eventData)
+    {
+        gameObject.SetActive(false);
+    }
     
+    // 데이터 베이스에 유저 정보를 등록
     private void CreateUser(string email, string password)
     {
         BackendManager.Auth.CreateUserWithEmailAndPasswordAsync(email, password)
@@ -72,25 +89,25 @@ public class SignUpPanel : MonoBehaviour
             });
     }
 
-    public void CheckEmailExists(string email, System.Action<bool> callback)
-    {
-        Firebase.Auth.FirebaseAuth.DefaultInstance.FetchProvidersForEmailAsync(email)
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCanceled)
-                {
-                    Debug.LogError("FetchProvidersForEmailAsync was canceled.");
-                    return false;
-                }
-                if (task.IsFaulted)
-                {
-                    Debug.LogError("FetchProvidersForEmailAsync encountered an error: " + task.Exception);
-                    return false;
-                }
+    //private void CheckEmailExists(string email, System.Action<bool> callback)
+    //{
+    //    Firebase.Auth.FirebaseAuth.DefaultInstance.FetchProvidersForEmailAsync(email)
+    //        .ContinueWithOnMainThread(task =>
+    //        {
+    //            if (task.IsCanceled)
+    //            {
+    //                Debug.LogError("FetchProvidersForEmailAsync was canceled.");
+    //                return false;
+    //            }
+    //            if (task.IsFaulted)
+    //            {
+    //                Debug.LogError("FetchProvidersForEmailAsync encountered an error: " + task.Exception);
+    //                return false;
+    //            }
 
-                // 이메일 제공자가 있다면 이미 등록된 이메일
-                var providers = task.Result;
-                return true;
-            });
-    }
+    //            // 이메일 제공자가 있다면 이미 등록된 이메일
+    //            var providers = task.Result;
+    //            return true;
+    //        });
+    //}
 }
