@@ -38,6 +38,11 @@ public class UnitController : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        if (_unitData.AttackTarget != null && _unitData.AttackTarget.activeSelf == false)
+        {
+            _unitData.AttackTarget = null;
+        }
+
         // 감지 대상 체크
         _unitData.DetectColider = Physics2D.OverlapCircleAll(this.transform.position, _unitData.DetectRadius);
 
@@ -51,7 +56,7 @@ public class UnitController : MonoBehaviour, IDamageable
             for (int i = 0; i < _unitData.DetectColider.Length; i++)
             {
                 // 자기 자신이나 장애물은 감지대상으로 x.
-                if (_unitData.DetectColider[i].gameObject != gameObject || _unitData.DetectColider[i].tag == "Obstacle")
+                if (_unitData.DetectColider[i].gameObject != gameObject || _unitData.DetectColider[i].tag != "Obstacle")
                 {
                     _unitData.DetectObject = _unitData.DetectColider[i];
                     break;
@@ -63,18 +68,24 @@ public class UnitController : MonoBehaviour, IDamageable
         _unitData.HitColider = Physics2D.OverlapCircleAll(this.transform.position, _unitData.HitRadius);
 
         // Length == 1 즉, 본인은 대상으로 x. Player가 직접적으로 공격대상을 지정해준 경우. 랜덤공격대상은 null 로
-        if (_unitData.HitColider.Length == 1 || _unitData.AttackTarget != null)
+        if (_unitData.HitColider.Length == 1)
         {
             _unitData.HitObject = null;
-        }
-        else
+        } 
+        else //  Hit할수 있는 대상들이 많은 경우
         {
+            // 상대Unit이 먼저 때린 경우로, 이런 경우 랜덤으로 대상 정해서 공격하기
             for (int i = 0; i < _unitData.HitColider.Length; i++)
             {
                 // 자기 자신이나 장애물은 Hit대상으로 x.
-                if (_unitData.DetectColider[i].gameObject != gameObject || _unitData.DetectColider[i].tag == "Obstacle")
+                if (_unitData.DetectColider[i].gameObject != gameObject && _unitData.DetectColider[i].tag != "Obstacle")
                 {
                     _unitData.HitObject = _unitData.HitColider[i];
+                    // 만약 공격대상이 지정된 경우, 공격대상을 HitObject로 변경.
+                    if (_unitData.AttackTarget != null)
+                    {
+                        _unitData.HitObject = _unitData.AttackTarget.GetComponent<Collider2D>();
+                    }
                     break;
                 }
             }

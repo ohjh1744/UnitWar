@@ -1,6 +1,7 @@
 using ExitGames.Client.Photon.StructWrapping;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -32,16 +33,17 @@ public class AttackState : MonoBehaviour, IState
 
     public void OnUpdate()
     {
+        Debug.Log("°ø°ÝÁß!");
         if (_data.HP <= 0)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
         }
 
-        if ((_data.HitObject == null || _data.AttackTarget == null) && _data.Path.Count == _data.PathIndex)
+        if (_data.HitObject == null && _data.Path.Count == _data.PathIndex)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
         }
-        if ((_data.HitObject == null || _data.AttackTarget == null) && _data.Path.Count > 0 && _data.PathIndex != _data.Path.Count)
+        if ((_data.HasReceivedMove == true || _data.HitObject == null) && _data.Path.Count > 0 && _data.PathIndex != _data.Path.Count)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
         }

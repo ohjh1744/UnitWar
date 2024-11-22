@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _time += Time.deltaTime;
+        //_time += Time.deltaTime;
         SelectUnits();
         CheckCommand();
 
@@ -156,7 +156,8 @@ public class PlayerController : MonoBehaviour
                 {
                     _target = target.gameObject;
                     _isAttack = true;
-                    UpdateTargetPos();
+                    //UpdateTargetPos();
+                    CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
                 }
             }
             else
@@ -196,10 +197,14 @@ public class PlayerController : MonoBehaviour
             if(orderNum == (int)EOrder.Attack)
             {
                 unit.AttackTarget = _target;
+                unit.HasReceivedAttack = true;
+                unit.HasReceivedMove = false;
             }
             else if(orderNum == (int)EOrder.Move)
             {
                 unit.AttackTarget = null;
+                unit.HasReceivedMove = true;
+                unit.HasReceivedAttack = false;
             }
 
             Vector2Int startPos = new Vector2Int((int)_units[i].transform.position.x, (int)_units[i].transform.position.y);

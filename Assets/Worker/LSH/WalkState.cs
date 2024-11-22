@@ -11,7 +11,7 @@ public class WalkState : MonoBehaviour, IState
 
     private AStar _aStar;
 
-    private Transform _currentAttackTarget;
+    private Vector3 _currentAttackTarget;
 
     private float _checkAttackTargetTime;
 
@@ -27,9 +27,10 @@ public class WalkState : MonoBehaviour, IState
     public void OnEnter()
     {
         Debug.Log("Walk상태 진입");
-        if(_data.AttackTarget != null)
+
+        if (_data.AttackTarget != null)
         {
-            _currentAttackTarget = _data.AttackTarget.transform;
+            _currentAttackTarget = _data.AttackTarget.transform.position;
         }
         _checkAttackTargetTime = 0;
     }
@@ -37,30 +38,41 @@ public class WalkState : MonoBehaviour, IState
     public void OnUpdate()
     {
         _checkAttackTargetTime += Time.deltaTime;
+        Debug.Log("Walk중!");
 
         if (_data.HP <= 0)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
         }
 
-        if (_data.Path.Count == _data.PathIndex)
+        if (_data.PathIndex == _data.Path.Count)
         {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
-        }
-        if (_data.DetectObject != null && _data.HitObject != null)
-        {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
+            _data.HasReceivedMove = false;
         }
 
-        if (_data.AttackTarget.transform.position != _currentAttackTarget.position && _checkAttackTargetTime > _data.FindLoadTime)
+        if (_data.HasReceivedMove == false)
         {
-            _currentAttackTarget.position = _data.AttackTarget.transform.position;
+            if (_data.Path.Count == _data.PathIndex && _data.AttackTarget == null)
+            {
+                _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
+            }
+            if (_data.DetectObject != null && _data.HitObject != null)
+            {
+                _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
+            }
+        }
+
+        if (_data.AttackTarget != null && (_data.AttackTarget.transform.position != _currentAttackTarget && _checkAttackTargetTime > _data.FindLoadTime))
+        {
+            Debug.Log("경로 변환!!!");
+            _currentAttackTarget = _data.AttackTarget.transform.position;
             Vector2Int startPos = new Vector2Int((int)_unitController.transform.position.x, (int)_unitController.transform.position.y);
             Vector2Int endPos = new Vector2Int((int)_data.AttackTarget.transform.position.x, (int)_data.AttackTarget.transform.position.y);
             _aStar.DoAStar(startPos, endPos);
             _data.Path.Clear();
             _data.PathIndex = 0;
             _data.Path = _aStar.Path;
+            _checkAttackTargetTime = 0;
         }
 
         if(_data.PathIndex < _data.Path.Count)

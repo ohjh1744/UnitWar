@@ -51,5 +51,12 @@ public class UnitData : MonoBehaviour
     [SerializeField] private float _findLoadTime;
     public float FindLoadTime { get { return _findLoadTime; } private set { } }
 
+    [SerializeField] private bool _hasReceivedMove;
+    public bool HasReceivedMove { get { return _hasReceivedMove; } set { _hasReceivedMove = value; } }
+
+    [SerializeField] private bool _hasReceivedAttack;
+    public bool HasReceivedAttack { get { return _hasReceivedAttack; } set { _hasReceivedAttack = value; } }
+
+
 
 }
