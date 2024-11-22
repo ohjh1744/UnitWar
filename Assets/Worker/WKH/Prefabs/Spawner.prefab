@@ -97,6 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a95a8f009ad6f438789ed562348429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleePrefab: {fileID: 1108404361347395617, guid: 4c842aa4a0df7ce43bf27dc9e2d60c1c, type: 3}
+  _meleePrefab: {fileID: 0}
+  _spawnPos: {x: 0, y: 0, z: 0}
+  _unitDistance: 0.1
+  _unitCount: 0
+  _unitsInLine: 5
   _time: 0
   _spawnTime: 3

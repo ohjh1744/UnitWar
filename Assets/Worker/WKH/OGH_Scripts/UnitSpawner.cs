@@ -5,8 +5,6 @@ using Photon.Pun;
 
 public class UnitSpawner : MonoBehaviourPunCallbacks
 {
-    [SerializeField] GameObject _meleePrefab;                // 근접유닛 프리팹
-
     [SerializeField] Vector3 _spawnPos;                      // 생성 위치
 
     [SerializeField] private float _unitDistance = 0.1f;    // 유닛간의 거리
