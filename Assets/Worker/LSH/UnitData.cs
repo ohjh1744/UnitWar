@@ -21,13 +21,26 @@ public class UnitData : MonoBehaviour
 
     public List<Vector2Int> Path = new List<Vector2Int>();
 
-    public int PathIndex = 0;
+    private int _pathIndex = 0;
+    public int PathIndex { get { return _pathIndex; } set { } }
 
     [SerializeField] private float _moveSpeed;
     public float MoveSpeed { get{ return _moveSpeed; } private set { } }
 
 
+    private Collider2D _detectColider;
+    public Collider2D DetectColider { get { return _detectColider; } set { } }
 
+    private Collider2D _hitColider;
+    public Collider2D HitColider { get { return _hitColider; } set { } }
     
+
+    [SerializeField] private float _outRadius;
+    public float OutRadius { get { return _outRadius; } set { } }
+
+    [SerializeField] private float _inRadius;
+    public float InRadius { get { return _inRadius; } set { } }
+
+
 
 }

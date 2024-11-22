@@ -14,16 +14,11 @@ public class UnitController : MonoBehaviour, IDamageable
     private IState[] _states = new IState[(int)EStates.Size];    
     public IState[] States { get { return _states; } set { } }
 
+    private GameObject _attackTarget;
+    public GameObject AttackTarget { get { return _attackTarget; } set { } }
 
 
-    private Collider2D _detect;
-    public Collider2D Detect { get { return _detect; } set { } }
 
-    [SerializeField] private float _outRadius;
-    public float OutRadius { get { return _outRadius; } set { } }
-
-    [SerializeField] private float _inRadius;
-    public float InRadius { get { return _inRadius; } set { } }
 
 
 
@@ -39,6 +34,9 @@ public class UnitController : MonoBehaviour, IDamageable
     private void Start()
     {
         ChangeState(_states[(int)EStates.Idle]);
+        //DetectColider = _unitData.DetectColider;
+        //HitColider = _unitData.HitColider;
+
     }
 
 
@@ -46,7 +44,9 @@ public class UnitController : MonoBehaviour, IDamageable
     {
         _currentState?.OnUpdate();
 
-        Detect = Physics2D.OverlapCircle(this.transform.position, _outRadius);
+        _unitData.DetectColider = Physics2D.OverlapCircle(this.transform.position, _unitData.OutRadius);
+        _unitData.HitColider = Physics2D.OverlapCircle(this.transform.position, _unitData.InRadius);
+
     }
 
     public void ChangeState(IState newState)
@@ -68,5 +68,11 @@ public class UnitController : MonoBehaviour, IDamageable
         _unitData.HP -= _unitData.Power;
     }
 
+
+    //TO DO: PlayerController쪽에서 attackTarget을 지정해줌. 
+    public void GetTarget()
+    {
+        //AttackTarget
+    }
 
 }

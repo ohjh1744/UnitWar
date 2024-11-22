@@ -23,21 +23,21 @@ public class WalkState : MonoBehaviour, IState
 
     public void OnUpdate()
     {
-        if (_unitController.UnitData.Path.Count > 0 && _unitController.UnitData.PathIndex < _unitController.UnitData.Path.Count)
+        if (_data.Path.Count > 0 && _data.PathIndex < _data.Path.Count)
         {
-            DoWalk(_unitController.UnitData.Path[_unitController.UnitData.PathIndex]);
+            DoWalk(_data.Path[_data.PathIndex]);
         }
 
-        if (_unitController.UnitData.HP <= 0)
+        if (_data.HP <= 0)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
         }
 
-        if (_unitController.UnitData.Path.Count == _unitController.UnitData.PathIndex)
+        if (_data.Path.Count == _data.PathIndex)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
         }
-        if (_unitController.Detect != null)
+        if (_data.DetectColider != null && _data.HitColider != null)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
         }
@@ -52,16 +52,20 @@ public class WalkState : MonoBehaviour, IState
     }
 
 
+    //TO DO: 애니메이션 추가
     public void DoWalk(Vector2Int pathPoint)
     {
+
         // 현재 위치에서 목표 지점으로 이동
-        transform.position = Vector2.MoveTowards(transform.position, pathPoint, _unitController.UnitData.MoveSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, pathPoint, _data.MoveSpeed * Time.deltaTime);
 
         // 목표 지점에 도달했는지 확인
         if ((Vector2)transform.position == pathPoint)
         {
-            _unitController.UnitData.PathIndex++;  // 다음 지점으로 이동
+            _data.PathIndex++;  // 다음 지점으로 이동
         }
+
+
     }
 
 

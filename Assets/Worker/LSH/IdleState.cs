@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class IdleState : MonoBehaviour, IState
 {
     private UnitController _unitController;
+    private UnitData _data;
 
     public IdleState(UnitController controller)
     {
         //생성자
         _unitController = controller;
+        _data = _unitController.UnitData;
     }
 
 
@@ -20,16 +23,16 @@ public class IdleState : MonoBehaviour, IState
 
     public void OnUpdate()
     {
-        if (_unitController.UnitData.HP <= 0)
+        if (_data.HP <= 0)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
         }
 
-        if (_unitController.UnitData.Path.Count > 0)
+        if (_data.Path.Count > 0 && _data.PathIndex != _data.Path.Count)        
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
         }
-        if (_unitController.Detect != null)
+        if (_data.DetectColider != null && _data.HitColider != null)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
         }
@@ -44,9 +47,11 @@ public class IdleState : MonoBehaviour, IState
     }
 
 
+    //TO DO: 애니메이션 추가
     public void DoIdle()
     {
-        Debug.Log("Idle 상태 진행중 (멀뚱)");
+        Debug.Log("Idle 상태 진행중");
+        //Idle 애니메이션 추가
     }
 
 }
