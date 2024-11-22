@@ -6,15 +6,21 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LoginPanel : UIBInder
 {
     private void Awake()
     {
         BindAll();
+
+        AddEvent("LoginButton", EventType.Click, Login);
+        AddEvent("SignUpButton", EventType.Click, ShowSignUpPanel);
+        AddEvent("ResetPasswordButton", EventType.Click, ShowResetPasswordPanel);
     }
 
-    public void Login()
+    // 로그인을 진행
+    private void Login(PointerEventData eventData)
     {
         string email = GetUI<TMP_InputField>("EmailInputField").text; //emailInputField.text;
         string password = GetUI<TMP_InputField>("PasswordInputField").text;
@@ -42,6 +48,20 @@ public class LoginPanel : UIBInder
             });
     }
 
+    // 회원가입 창 활성화
+    private void ShowSignUpPanel(PointerEventData eventData)
+    {
+        GetUI("SignUpPanel").SetActive(true);
+    }
+
+    // 비밀번호 재설정 창 활성화
+    private void ShowResetPasswordPanel(PointerEventData eventData)
+    {
+        GetUI("ResetPasswordPanel").SetActive(true);
+    }
+
+    // 유저의 정보를 확인하고, 필요 설정이 있다면 진행.
+    // 다른 설정이 필요없다면 네트워크와 연결.
     private void CheckUserInfo()
     {
         FirebaseUser user = BackendManager.Auth.CurrentUser;
@@ -68,6 +88,7 @@ public class LoginPanel : UIBInder
         }
     }
 
+    // 오류가 있다면 팝업창에 메시지를 띄움
     private void ShowErrorPopup(string message)
     {
         GetUI<TMP_Text>("ErrorPopupText").text = message; //errorPopupText.text = message;
@@ -75,13 +96,15 @@ public class LoginPanel : UIBInder
         StartCoroutine(CloseErrorPopupCoroutine());
     }
 
+    // 팝업창을 자동으로 닫는 코루틴
     private IEnumerator CloseErrorPopupCoroutine()
     {
         yield return new WaitForSeconds(1f);
         CloseErrorPopup();
     }
 
-    public void CloseErrorPopup()
+    // 팝업창을 자동으로 닫는 함수
+    private void CloseErrorPopup()
     {
         GetUI("ErrorPopup").SetActive(false);
     }
