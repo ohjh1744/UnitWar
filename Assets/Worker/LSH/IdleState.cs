@@ -32,7 +32,7 @@ public class IdleState : MonoBehaviour, IState
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
         }
-        if (_data.DetectObject != null && _data.HitObject != null)
+        if (_data.HitObject != null)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
         }
