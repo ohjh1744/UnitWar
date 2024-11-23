@@ -23,23 +23,14 @@ public class UnitData : MonoBehaviour
     [SerializeField] private float _moveSpeed; // 이동 속도
     public float MoveSpeed { get{ return _moveSpeed; } private set { } }
 
-    [SerializeField] private Collider2D[] _detectColider; // 감지된 대상들 
-    public Collider2D[] DetectColider { get { return _detectColider; }  set { _detectColider = value; } }
-
-    [SerializeField] private Collider2D _detectObject; // 감지 특정 대상 
-    public Collider2D DetectObject { get { return _detectObject; } set { _detectObject = value; } }
-
-    [SerializeField] private Collider2D[] _hitColider; // 공격가능한 대상들 
-    public Collider2D[] HitColider { get { return _hitColider; }  set { _hitColider = value; } }
+    [SerializeField] private Collider2D[] _hitColiders; // 공격가능한 대상들 
+    public Collider2D[] HitColiders { get { return _hitColiders; }  set { _hitColiders = value; } }
 
     [SerializeField] private Collider2D _hitObject; // 랜덤 공격 대상 
     public Collider2D HitObject {  get { return _hitObject; } set { _hitObject = value; } }
 
     [SerializeField] private GameObject _attackTarget; // Player에 의해 지정된 공격 대상 
     public GameObject AttackTarget { get { return _attackTarget; } set { _attackTarget = value; } }
-
-    [SerializeField] private float _detectRadius; // 감지 가능한 범위
-    public float DetectRadius { get { return _detectRadius; } private set { } }
 
     [SerializeField] private float _hitRadius; // 공격 가능한 범위
     public float HitRadius { get { return _hitRadius; } private set { } }
@@ -49,10 +40,5 @@ public class UnitData : MonoBehaviour
 
     [SerializeField] private bool _hasReceivedMove; // 이동명령을 받았는지 여부 
     public bool HasReceivedMove { get { return _hasReceivedMove; } set { _hasReceivedMove = value; } }
-
-    [SerializeField] private bool _hasReceivedAttack; //공격명령을 받았는지 여부 
-    public bool HasReceivedAttack { get { return _hasReceivedAttack; } set { _hasReceivedAttack = value; } }
-
-
 
 }
