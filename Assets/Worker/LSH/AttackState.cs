@@ -34,12 +34,12 @@ public class AttackState : MonoBehaviour, IState
     public void OnUpdate()
     {
         Debug.Log("°ø°ÝÁß!");
+
         if (_data.HP <= 0)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
         }
-
-        if (_data.HitObject == null && _data.Path.Count == _data.PathIndex)
+        if (_data.Path.Count == _data.PathIndex && _data.HitObject == null)
         {
             _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
         }
@@ -68,16 +68,8 @@ public class AttackState : MonoBehaviour, IState
 
         if(_curDamageRate > _data.DamageRate)
         {
-            if (_data.AttackTarget != null)
-            {
-                IDamageable damageable = _data.AttackTarget.GetComponent<IDamageable>();
-                damageable.GetDamage(_data.Power);
-            }
-            else
-            {
-                IDamageable damageable = _data.HitObject.GetComponent<IDamageable>();
-                damageable.GetDamage(_data.Power);
-            }
+            IDamageable damageable = _data.HitObject.GetComponent<IDamageable>();
+            damageable.GetDamage(_data.Power);
             _curDamageRate = 0;
         }
     }
