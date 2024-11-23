@@ -38,16 +38,17 @@ public class WalkState : MonoBehaviour, IState
     public void OnUpdate()
     {
         _checkAttackTargetTime += Time.deltaTime;
-        Debug.Log("Walk중!");
 
-        if (_data.HP <= 0)
-        {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
-        }
-
+        // 이동 마지막 경로까지 이동을 끝냈다면, HasReceivedMove false.
         if (_data.PathIndex == _data.Path.Count)
         {
             _data.HasReceivedMove = false;
+        }
+
+        //상태전환 
+        if (_data.HP <= 0)
+        {
+            _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
         }
 
         if (_data.HasReceivedMove == false)
@@ -56,25 +57,19 @@ public class WalkState : MonoBehaviour, IState
             {
                 _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
             }
-            if (_data.DetectObject != null && _data.HitObject != null)
+            if (_data.HitObject != null)
             {
                 _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
             }
         }
 
+        // 재탐색
         if (_data.AttackTarget != null && (_data.AttackTarget.transform.position != _currentAttackTarget && _checkAttackTargetTime > _data.FindLoadTime))
         {
-            Debug.Log("경로 변환!!!");
-            _currentAttackTarget = _data.AttackTarget.transform.position;
-            Vector2Int startPos = new Vector2Int((int)_unitController.transform.position.x, (int)_unitController.transform.position.y);
-            Vector2Int endPos = new Vector2Int((int)_data.AttackTarget.transform.position.x, (int)_data.AttackTarget.transform.position.y);
-            _aStar.DoAStar(startPos, endPos);
-            _data.Path.Clear();
-            _data.PathIndex = 0;
-            _data.Path = _aStar.Path;
-            _checkAttackTargetTime = 0;
+            ReSearchPath();
         }
 
+        // 이동
         if(_data.PathIndex < _data.Path.Count)
         {
             DoWalk(_data.Path[_data.PathIndex]);
@@ -87,10 +82,25 @@ public class WalkState : MonoBehaviour, IState
         Debug.Log("Walk상태 탈출");
     }
 
+    // 경로 재탐색
+    public void ReSearchPath()
+    {
+        Debug.Log("경로 변환!!!");
+        _currentAttackTarget = _data.AttackTarget.transform.position;
+        Vector2Int startPos = new Vector2Int((int)_unitController.transform.position.x, (int)_unitController.transform.position.y);
+        Vector2Int endPos = new Vector2Int((int)_data.AttackTarget.transform.position.x, (int)_data.AttackTarget.transform.position.y);
+        _aStar.DoAStar(startPos, endPos);
+        _data.Path.Clear();
+        _data.PathIndex = 0;
+        _data.Path = _aStar.Path;
+        _checkAttackTargetTime = 0;
+    }
+
 
     //TO DO: 애니메이션 추가
     public void DoWalk(Vector2Int pathPoint)
     {
+        Debug.Log("Walk중!");
         // 현재 위치에서 목표 지점으로 이동
         _unitController.transform.position = Vector2.MoveTowards(_unitController.transform.position, pathPoint, _data.MoveSpeed * Time.deltaTime);
 
