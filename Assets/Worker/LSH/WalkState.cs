@@ -28,6 +28,7 @@ public class WalkState : MonoBehaviour, IState
     {
         Debug.Log("Walk상태 진입");
 
+        // 경로 재탐색을 위한 초기화.
         if (_data.AttackTarget != null)
         {
             _currentAttackTarget = _data.AttackTarget.transform.position;
@@ -35,6 +36,7 @@ public class WalkState : MonoBehaviour, IState
         _checkAttackTargetTime = 0;
     }
 
+    //순서 바꾸지 말기!
     public void OnUpdate()
     {
         _checkAttackTargetTime += Time.deltaTime;
@@ -96,8 +98,6 @@ public class WalkState : MonoBehaviour, IState
         _checkAttackTargetTime = 0;
     }
 
-
-    //TO DO: 애니메이션 추가
     public void DoWalk(Vector2Int pathPoint)
     {
         Debug.Log("Walk중!");
