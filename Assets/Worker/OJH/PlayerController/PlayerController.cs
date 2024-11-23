@@ -31,11 +31,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _findAttackPathTime;
 
-    private float _time;
-
-    private bool _isAttack;
-
-
 
     private Vector2Int[] _endPosDir =
     {
@@ -63,16 +58,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //_time += Time.deltaTime;
         SelectUnits();
-        CheckCommand();
-
-        //if (_isAttack == true && _time > _findAttackPathTime)
-        //{
-        //    _time = 0f;
-        //    UpdateTargetPos();
-        //    CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
-        //}      
+        CheckCommand();     
     }
 
     // Unit선택하기
@@ -155,8 +142,6 @@ public class PlayerController : MonoBehaviour
                 if (target.tag != "Obstacle")
                 {
                     _target = target.gameObject;
-                    _isAttack = true;
-                    //UpdateTargetPos();
                     CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
                 }
             }
@@ -164,18 +149,11 @@ public class PlayerController : MonoBehaviour
             {
                 //공격할 대상이 없는 땅이라면 
                 _target = null;
-                _isAttack = false;
                 CommandUnits(_movePoint.x, _movePoint.y, (int)EOrder.Move);
             }
         }
     }
-
-    private void UpdateTargetPos()
-    {
-        _recentTargetPos.x = _target.transform.position.x;
-        _recentTargetPos.y = _target.transform.position.y;
-    }
-    
+ 
     // 오더에 따라서 유닛 작동.
     private void CommandUnits(float movePosX, float movePosY, int orderNum)
     {
