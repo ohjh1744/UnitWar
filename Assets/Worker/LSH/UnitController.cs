@@ -42,6 +42,7 @@ public class UnitController : MonoBehaviour, IDamageable
 
     private void Update()
     {
+        // AttackTarget이 정해져 있는 상태에서 그 Attack Target이 죽었다면 AttackTarget 초기화.
         if (_unitData.AttackTarget != null && _unitData.AttackTarget.activeSelf == false)
         {
             _unitData.AttackTarget = null;
