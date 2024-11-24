@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum EUnit {Zealot, DarkTemplar, Juggling, Ultralisk}
 public class UnitData : MonoBehaviour
 {
+    [SerializeField] private EUnit _unitType;
+    public EUnit UnitType { get { return _unitType;} private set { } }
+
     [SerializeField] private int _hp;  // Ã¼·Â
     public int HP { get { return _hp; }  set { _hp = value; } }
 

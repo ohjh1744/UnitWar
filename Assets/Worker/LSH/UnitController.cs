@@ -61,8 +61,9 @@ public class UnitController : MonoBehaviour, IDamageable
             // 상대Unit이 먼저 때린 경우로, 이런 경우 랜덤으로 대상 정해서 공격하기
             for (int i = 0; i < _unitData.HitColiders.Length; i++)
             {
-                // 자기 자신이나 장애물은 Hit대상으로 x.
-                if (_unitData.HitColiders[i].gameObject != gameObject && _unitData.HitColiders[i].tag != "Obstacle")
+                UnitData otherUnit = _unitData.HitColiders[i].GetComponent<UnitData>();
+                // 자기 자신이나 장애물, 아군 종족은  Hit대상으로 x,
+                if (_unitData.HitColiders[i].gameObject != gameObject && _unitData.HitColiders[i].tag != "Obstacle" && otherUnit.UnitType != _unitData.UnitType)
                 {
                     _unitData.HitObject = _unitData.HitColiders[i];
                     // 만약 공격대상이 지정된 경우, 공격대상을 HitObject로 변경.
