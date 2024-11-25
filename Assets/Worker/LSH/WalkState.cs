@@ -15,12 +15,24 @@ public class WalkState : MonoBehaviour, IState
 
     private float _checkAttackTargetTime;
 
+    private Animator _animator;
+    private int _hashWalkFront;
+    private int _hashWalkBack;
+    private int _hashWalkRight;
+
     public WalkState(UnitController controller)
     {
         //생성자
         _unitController = controller;
         _data = _unitController.UnitData;
         _aStar = _unitController.AStar;
+    }
+
+    private void Awake()
+    {
+        _hashWalkFront = Animator.StringToHash("Walk_Front");
+        _hashWalkBack = Animator.StringToHash("Walk_Back");
+        _hashWalkRight = Animator.StringToHash("Walk_Right");
     }
 
 
@@ -110,7 +122,14 @@ public class WalkState : MonoBehaviour, IState
             _data.PathIndex++;  // 다음 지점으로 이동
         }
 
+        PlayWalkAnimation();
+
     }
 
+    //FIX ME: 방향에 따라 상하좌우 애니메이션 재생 필요
+    public void PlayWalkAnimation()
+    {
+        _animator.Play(_hashWalkFront);
+    }
 
 }
