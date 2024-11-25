@@ -47,11 +47,11 @@ public class IdleState : MonoBehaviour, IState
     }
 
 
-    //TO DO: 애니메이션 추가
     public void DoIdle()
     {
         Debug.Log("Idle 상태 진행중");
-        //Idle 애니메이션 추가
     }
+
+    
 
 }

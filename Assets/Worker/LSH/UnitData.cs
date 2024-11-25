@@ -46,4 +46,7 @@ public class UnitData : MonoBehaviour
     [SerializeField] private bool _hasReceivedMove; // 이동명령을 받았는지 여부 
     public bool HasReceivedMove { get { return _hasReceivedMove; } set { _hasReceivedMove = value; } }
 
+    [SerializeField] private Animator _animator; // 애니메이터
+    public Animator Animator { get { return _animator; } set { } }
+
 }

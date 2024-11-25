@@ -17,6 +17,10 @@ public class AttackState : MonoBehaviour, IState
 
     private float _curDamageRate;
 
+    private int _hashAttackFront;
+    private int _hashAttackBack;
+    private int _hashAttackRight;
+
     public AttackState(UnitController controller)
     {
         //생성자
@@ -24,11 +28,18 @@ public class AttackState : MonoBehaviour, IState
         _data = _unitController.UnitData;
     }
 
+    private void Awake()
+    {
+        _hashAttackFront = Animator.StringToHash("Attack_Front");
+        _hashAttackBack = Animator.StringToHash("Attack_Back");
+        _hashAttackRight = Animator.StringToHash("Attack_Right");
+    }
+
 
     public void OnEnter()
     {
         Debug.Log("Attack상태 진입");
-        _curDamageRate = 0;
+        _curDamageRate = 0;        
     }
 
     public void OnUpdate()
@@ -55,6 +66,7 @@ public class AttackState : MonoBehaviour, IState
     public void OnExit()
     {
         Debug.Log("Attack상태 탈출");
+        StopAni();
     }
 
     
@@ -72,8 +84,18 @@ public class AttackState : MonoBehaviour, IState
             damageable.GetDamage(_data.Power);
             _curDamageRate = 0;
         }
+
+        PlayAttackAnimation();
     }
 
-
+    //FIX ME: 방향에 따라 상하좌우 애니메이션 재생 필요
+    public void PlayAttackAnimation()
+    {
+        _data.Animator.Play(_hashAttackFront);
+    }
+    public void StopAni()
+    {
+        _data.Animator.StopPlayback();
+    }
 
 }

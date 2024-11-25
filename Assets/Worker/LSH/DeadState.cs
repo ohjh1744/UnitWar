@@ -6,10 +6,19 @@ public class DeadState : MonoBehaviour, IState
 {
     private UnitController _unitController;
 
+    private UnitData _data;
+
+    private int _hashDead;
     public DeadState(UnitController controller)
     {
         //생성자
         _unitController = controller;
+        _data = _unitController.UnitData;
+    }
+
+    private void Awake()
+    {
+        _hashDead = Animator.StringToHash("Death");
     }
 
 
@@ -26,6 +35,7 @@ public class DeadState : MonoBehaviour, IState
     public void OnExit()
     {
         Debug.Log("Dead상태 탈출");
+        StopAni();
     }
 
 
@@ -34,6 +44,17 @@ public class DeadState : MonoBehaviour, IState
     {
         Debug.Log("Dead 상태 (죽음)");
         _unitController.gameObject.SetActive(false);
+        PlayDeadAnimation();
+    }
+
+    public void PlayDeadAnimation()
+    {
+        _data.Animator.Play(_hashDead);
+    }
+
+    public void StopAni()
+    {
+        _data.Animator.StopPlayback();
     }
 
 

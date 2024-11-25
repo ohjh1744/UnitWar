@@ -6,7 +6,7 @@ using UnityEngine.XR;
 public enum EStates { Idle, Walk, Attack, Dead, Size}
 public class UnitController : MonoBehaviour, IDamageable
 {
- 
+
     [SerializeField] private AStar _aStar;
     public AStar AStar { get { return _aStar; } set { _aStar = value; } }
 
@@ -15,9 +15,10 @@ public class UnitController : MonoBehaviour, IDamageable
 
     private IState _currentState;
 
-    private IState[] _states = new IState[(int)EStates.Size];    
+    private IState[] _states = new IState[(int)EStates.Size];
     public IState[] States { get { return _states; } set { } }
 
+    
 
 
     private void Awake()
@@ -26,6 +27,7 @@ public class UnitController : MonoBehaviour, IDamageable
         _states[(int)EStates.Walk] = new WalkState(this);
         _states[(int)EStates.Attack] = new AttackState(this);
         _states[(int)EStates.Dead] = new DeadState(this);
+        //_unitData.Animator = GetComponent<Animator>();
 
     }
     private void OnEnable()
