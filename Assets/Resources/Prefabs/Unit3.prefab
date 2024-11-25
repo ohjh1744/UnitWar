@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9136928532113555167}
   - component: {fileID: 9136928532113555164}
   - component: {fileID: 9136928532113555165}
-  - component: {fileID: 8062228936726234353}
+  - component: {fileID: 5841127647314260493}
   m_Layer: 0
   m_Name: Unit3
   m_TagString: Untagged
@@ -75,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1941210689, guid: d418905caa3089c4ca9999bee77bc500, type: 3}
+  m_Sprite: {fileID: -1735700355, guid: c44230e6698d0b04eb9706deb826b5b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.296875, y: 0.25}
+  m_Size: {x: 0.6328125, y: 0.6328125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -102,7 +102,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.23828125}
   serializedVersion: 2
   m_Radius: 0.13
---- !u!114 &8062228936726234353
+--- !u!114 &5841127647314260493
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -4,14 +4,45 @@ using UnityEngine;
 
 public abstract class UnitFactory
 {
-    public abstract void Spawn(Vector3 spawnPos);
+    public abstract void Create(Vector3 spawnPos);
 }
 
-public class MeleeUnitFactory : UnitFactory
+public class ZealotFactory : UnitFactory
 {
-    public override void Spawn(Vector3 spawnPos)
+    public override void Create(Vector3 spawnPos)
     {
-        UnitProduct meleeUnit = new MeleeUnit();
-        meleeUnit.Spawn(spawnPos);
+        Unit unit = new Zealot();
+        unit.Spawn(spawnPos);
+    
+    }
+}
+
+public class UltraFactory : UnitFactory
+{
+    public override void Create(Vector3 spawnPos)
+    {
+        Unit unit = new Ultra();
+        unit.Spawn(spawnPos);
+
+    }
+}
+
+public class JugglingFactory : UnitFactory
+{
+    public override void Create(Vector3 spawnPos)
+    {
+        Unit unit = new Juggling();
+        unit.Spawn(spawnPos);
+
+    }
+}
+
+public class DarkTemplerFactory : UnitFactory
+{
+    public override void Create(Vector3 spawnPos)
+    {
+        Unit unit = new DarkTempler();
+        unit.Spawn(spawnPos);
+
     }
 }

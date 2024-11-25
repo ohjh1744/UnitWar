@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Unit : MonoBehaviour
+public class imTest : MonoBehaviour
 {
 
     public List<Vector2Int> Path = new List<Vector2Int>();
