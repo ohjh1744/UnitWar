@@ -8,10 +8,10 @@ public class LobbyScene : MonoBehaviourPunCallbacks
 {
     public enum Panel { Login, Menu, Lobby, Room }
 
-    [SerializeField] LoginPanel loginPanel;
-    [SerializeField] MainPanel menuPanel;
-    [SerializeField] RoomPanel roomPanel;
-    [SerializeField] LobbyPanel lobbyPanel;
+    [SerializeField] LoginPanel _loginPanel;
+    [SerializeField] MainPanel _menuPanel;
+    [SerializeField] RoomPanel _roomPanel;
+    [SerializeField] LobbyPanel _lobbyPanel;
 
     private void Start()
     {
@@ -65,17 +65,17 @@ public class LobbyScene : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        roomPanel.EnterPlayer(newPlayer);
+        _roomPanel.EnterPlayer(newPlayer);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        roomPanel.ExitPlayer(otherPlayer);
+        _roomPanel.ExitPlayer(otherPlayer);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        roomPanel.UpdatePlayerProperty(targetPlayer, changedProps);
+        _roomPanel.UpdatePlayerProperty(targetPlayer, changedProps);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -103,7 +103,7 @@ public class LobbyScene : MonoBehaviourPunCallbacks
     public override void OnLeftLobby()
     {
         Debug.Log("로비 퇴장 성공");
-        lobbyPanel.ClearRoomEntries();
+        _lobbyPanel.ClearRoomEntries();
         SetActivePanel(Panel.Menu);
     }
 
@@ -113,7 +113,7 @@ public class LobbyScene : MonoBehaviourPunCallbacks
         // 주의사항
         // 1. 처음 로비 입장 시 : 모든 방 목록을 전달
         // 2. 입장 중 방 목록이 변경되는 경우 : 변경된 방 목록만 전달
-        lobbyPanel.UpdateRoomList(roomList);
+        _lobbyPanel.UpdateRoomList(roomList);
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -123,9 +123,9 @@ public class LobbyScene : MonoBehaviourPunCallbacks
 
     private void SetActivePanel(Panel panel)
     {
-        loginPanel.gameObject.SetActive(panel == Panel.Login);
-        menuPanel.gameObject.SetActive(panel == Panel.Menu);
-        roomPanel.gameObject.SetActive(panel == Panel.Room);
-        lobbyPanel.gameObject.SetActive(panel == Panel.Lobby);
+        _loginPanel.gameObject.SetActive(panel == Panel.Login);
+        _menuPanel.gameObject.SetActive(panel == Panel.Menu);
+        _roomPanel.gameObject.SetActive(panel == Panel.Room);
+        _lobbyPanel.gameObject.SetActive(panel == Panel.Lobby);
     }
 }

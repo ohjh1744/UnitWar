@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class LobbyPanel : MonoBehaviour
 {
-    [SerializeField] RectTransform roomContent;
-    [SerializeField] RoomEntry roomEntryPrefab;
+    [SerializeField] RectTransform _roomContent;
+    [SerializeField] RoomEntry _roomEntryPrefab;
 
     private Dictionary<string, RoomEntry> roomDictionary = new Dictionary<string, RoomEntry>();
 
@@ -34,7 +34,7 @@ public class LobbyPanel : MonoBehaviour
             // 货肺款 规捞 积己等 版快
             else if (roomDictionary.ContainsKey(info.Name) == false)
             {
-                RoomEntry roomEntry = Instantiate(roomEntryPrefab, roomContent);
+                RoomEntry roomEntry = Instantiate(_roomEntryPrefab, _roomContent);
                 roomDictionary.Add(info.Name, roomEntry);
                 roomEntry.SetRoomInfo(info);
             }

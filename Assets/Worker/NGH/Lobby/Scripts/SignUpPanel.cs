@@ -19,7 +19,7 @@ public class SignUpPanel : UIBInder
         BindAll();
 
         AddEvent("SignUpConfirmButton", EventType.Click, SignUp);
-        AddEvent("SignUpCancelButton", EventType.Click, Cancel);
+        AddEvent("SignUPCancelButton", EventType.Click, Cancel);
     }
 
     // 계정을 생성
