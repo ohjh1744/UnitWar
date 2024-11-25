@@ -7,10 +7,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
-public class RoomPanel : MonoBehaviour
+public class RoomPanel : UIBInder
 {
-    [SerializeField] PlayerEntry[] playerEntries;
-    [SerializeField] Button startButton;
+    [SerializeField] PlayerEntry[] _playerEntries;
+    [SerializeField] Button _startButton;
+
+    private void Awake()
+    {
+        
+    }
 
     private void OnEnable()
     {
@@ -29,7 +34,7 @@ public class RoomPanel : MonoBehaviour
 
     public void UpdatePlayers()
     {
-        foreach (PlayerEntry entry in playerEntries)
+        foreach (PlayerEntry entry in _playerEntries)
         {
             entry.SetEmpty();
         }
@@ -40,16 +45,16 @@ public class RoomPanel : MonoBehaviour
                 continue;
 
             int number = player.GetPlayerNumber();
-            playerEntries[number].SetPlayer(player);
+            _playerEntries[number].SetPlayer(player);
         }
 
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            startButton.interactable = CheckAllReady();
+            _startButton.interactable = CheckAllReady();
         }
         else
         {
-            startButton.interactable = false;
+            _startButton.interactable = false;
         }
     }
 
@@ -76,6 +81,9 @@ public class RoomPanel : MonoBehaviour
 
     private bool CheckAllReady()
     {
+        if (PhotonNetwork.PlayerList.Length < 4)
+            return false;
+
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             if (player.GetReady() == false)

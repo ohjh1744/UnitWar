@@ -2,6 +2,7 @@ using Firebase.Auth;
 using Firebase.Extensions;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,12 +25,20 @@ public class MainPanel : UIBInder
         AddEvent("LobbyButton", EventType.Click, JoinLobby);
         AddEvent("LogoutButton", EventType.Click, Logout);
         AddEvent("DeleteUserButton", EventType.Click, DeleteUser);
-        AddEvent("DeleteUserButton", EventType.Click, DeleteUser);
+        AddEvent("DeleteUserCancelButton", EventType.Click, DeleteUserCancel);
+        AddEvent("DeleteUserConfirmButton", EventType.Click, (eventData) =>
+        {
+            string email = GetUI<TMP_InputField>("DeleteUserEmailInputField").text;
+            string password = GetUI<TMP_InputField>("DeleteUserPasswordInputField").text;
+
+            DeleteUserConfirm(eventData, email, password);
+        });
     }
 
     private void OnEnable()
     {
         GetUI("CreateRoomPanel").SetActive(false); //createRoomPanel.SetActive(false);
+        GetUI("DeleteUserPanel").SetActive(false);
     }
 
     private void CreateRoomMenu(PointerEventData eventData)
@@ -37,7 +46,7 @@ public class MainPanel : UIBInder
         GetUI("CreateRoomPanel").SetActive(true);
 
         GetUI<TMP_InputField>("RoomNameInputField").text = $"Room {Random.Range(1000, 10000)}"; //roomNameInputField.text = $"Room {Random.Range(1000, 10000)}";
-        GetUI<TMP_InputField>("MaxPlayerInputField").text = "8"; //maxPlayerInputField.text = "8";
+        GetUI<TMP_InputField>("MaxPlayerInputField").text = "4"; //maxPlayerInputField.text = "8";
     }
 
     private void CreateRoomConfirm(PointerEventData eventData)
@@ -50,7 +59,7 @@ public class MainPanel : UIBInder
         }
 
         int maxPlayer = int.Parse(GetUI<TMP_InputField>("MaxPlayerInputField").text);
-        maxPlayer = Mathf.Clamp(maxPlayer, 1, 8);
+        maxPlayer = Mathf.Clamp(maxPlayer, 4, 4);
 
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = maxPlayer;
@@ -72,7 +81,7 @@ public class MainPanel : UIBInder
 
         // 비어 있는 방이 없으면 새로 방을 만들어서 들어가는 방식
         string name = $"Room {Random.Range(1000, 10000)}";
-        RoomOptions options = new RoomOptions() { MaxPlayers = 8 };
+        RoomOptions options = new RoomOptions() { MaxPlayers = 4 };
         PhotonNetwork.JoinRandomOrCreateRoom(roomName : name, roomOptions : options);
     }
 
@@ -90,12 +99,12 @@ public class MainPanel : UIBInder
 
     private void DeleteUser(PointerEventData eventData)
     {
-        GetUI("UserDeletePanel").SetActive(true);
+        GetUI("DeleteUserPanel").SetActive(true);
     }
 
     private void DeleteUserCancel(PointerEventData eventData)
     {
-        GetUI("UserDeletePanel").SetActive(false);
+        GetUI("DeleteUserPanel").SetActive(false);
     }
 
     private void DeleteUserConfirm(PointerEventData eventData, string email, string password)
@@ -108,22 +117,44 @@ public class MainPanel : UIBInder
             return;
         }
 
-        user.DeleteAsync()
+        // 사용자 인증 정보 생성
+        Credential credential = Firebase.Auth.EmailAuthProvider.GetCredential(email, password);
+
+        // 재인증 수행
+        user.ReauthenticateAsync(credential)
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCanceled)
                 {
-                    Debug.LogError("DeleteAsync was canceled.");
+                    Debug.LogError("Reauthentication was canceled.");
                     return;
                 }
                 if (task.IsFaulted)
                 {
-                    Debug.LogError("DeleteAsync encountered an error: " + task.Exception);
+                    Debug.LogError("Reauthentication encountered an error: " + task.Exception);
                     return;
                 }
 
-                Debug.Log("User deleted successfully.");
-                PhotonNetwork.Disconnect();
+                Debug.Log("Reauthentication successful. Proceeding with account deletion.");
+
+                // 계정 삭제
+                user.DeleteAsync()
+                    .ContinueWithOnMainThread(deleteTask =>
+                    {
+                        if (deleteTask.IsCanceled)
+                        {
+                            Debug.LogError("DeleteAsync was canceled.");
+                            return;
+                        }
+                        if (deleteTask.IsFaulted)
+                        {
+                            Debug.LogError("DeleteAsync encountered an error: " + deleteTask.Exception);
+                            return;
+                        }
+
+                        Debug.Log("User deleted successfully.");
+                        PhotonNetwork.Disconnect();
+                    });
             });
     }
 }

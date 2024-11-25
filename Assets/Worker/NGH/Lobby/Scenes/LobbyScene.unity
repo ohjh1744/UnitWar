@@ -3355,7 +3355,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sign Up
+  m_text: Confirm
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11708,10 +11708,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81db5c0d8c2ee0540a7af697bf3f9012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loginPanel: {fileID: 2359447018297488303}
-  menuPanel: {fileID: 8371969074817434935}
-  roomPanel: {fileID: 5619281812584765103}
-  lobbyPanel: {fileID: 7784678395671557667}
+  _loginPanel: {fileID: 2359447018297488303}
+  _menuPanel: {fileID: 8371969074817434935}
+  _roomPanel: {fileID: 5619281812584765103}
+  _lobbyPanel: {fileID: 7784678395671557667}
 --- !u!1 &1622179230
 GameObject:
   m_ObjectHideFlags: 0
@@ -19362,7 +19362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2f9f832addd6647a205bd5f0e24f77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEntries:
+  _playerEntries:
   - {fileID: 816918881}
   - {fileID: 1534605430}
   - {fileID: 2076897311}
@@ -19371,7 +19371,7 @@ MonoBehaviour:
   - {fileID: 2014801059}
   - {fileID: 857307032}
   - {fileID: 1247780458}
-  startButton: {fileID: 278793593139913218}
+  _startButton: {fileID: 278793593139913218}
 --- !u!114 &5724274695454171274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20813,8 +20813,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719fdbb9faf043640bd997ba2800e02b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomContent: {fileID: 8309145696329165074}
-  roomEntryPrefab: {fileID: 1939838966151909072, guid: f5482b89311599546b280066e9e5304e, type: 3}
+  _roomContent: {fileID: 8309145696329165074}
+  _roomEntryPrefab: {fileID: 1939838966151909072, guid: f5482b89311599546b280066e9e5304e, type: 3}
 --- !u!224 &7785316149302073812
 RectTransform:
   m_ObjectHideFlags: 0
