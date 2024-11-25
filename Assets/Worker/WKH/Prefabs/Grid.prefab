@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7353474791928471952}
   - component: {fileID: 744958497742689527}
   - component: {fileID: 433172715306312251}
-  - component: {fileID: 2355143861878584595}
+  - component: {fileID: 5696002461160063006}
   m_Layer: 0
   m_Name: ColliderTilemap
   m_TagString: Obstacle
@@ -5085,7 +5085,7 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &2355143861878584595
+--- !u!19719996 &5696002461160063006
 TilemapCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5143,7 +5143,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6160507838123741553}
   m_Enabled: 1
-  m_CellSize: {x: 0.25, y: 0.25, z: 0}
+  m_CellSize: {x: 1, y: 1, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
