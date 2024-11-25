@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class UnitSpawner : MonoBehaviourPunCallbacks
+public class UnitSpawner : MonoBehaviour
 {
 
     [SerializeField] private int _unitsInLine;          // 한 라인당 유닛 생성 수

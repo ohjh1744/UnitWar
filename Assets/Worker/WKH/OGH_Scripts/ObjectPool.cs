@@ -9,7 +9,7 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField] private GameObject[] _units;
 
-    private List<GameObject>[] _poolDict;      // 오브젝트 딕셔너리
+    private List<GameObject>[] _poolDict;                   // 오브젝트 리스트
 
     private void Awake()
     {

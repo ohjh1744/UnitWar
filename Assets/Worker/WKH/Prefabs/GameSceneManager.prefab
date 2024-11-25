@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &106700195247053869
+--- !u!1 &3600219163963117342
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,45 +8,58 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 106700195247053871}
-  - component: {fileID: 106700195247053870}
+  - component: {fileID: 3600219163963117340}
+  - component: {fileID: 3600219163963117343}
   m_Layer: 0
-  m_Name: SetSpawner
+  m_Name: GameSceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &106700195247053871
+--- !u!4 &3600219163963117340
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106700195247053869}
+  m_GameObject: {fileID: 3600219163963117342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.204089, y: 1.3057199, z: -0.43614572}
+  m_LocalPosition: {x: -6.0818305, y: -1.3473287, z: -0.1402857}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &106700195247053870
+--- !u!114 &3600219163963117343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106700195247053869}
+  m_GameObject: {fileID: 3600219163963117342}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa1667205dfcf241ad54a3895c5b15e, type: 3}
+  m_Script: {fileID: 11500000, guid: aa0b7ee6963368e4c84de2fd5c1efc9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnerPos:
-  - {x: -4.4, y: 2.62, z: 0}
-  - {x: 4.85, y: 2.64, z: 0}
-  - {x: -4.4, y: -2.74, z: 0}
-  - {x: 4.42, y: -2.64, z: 0}
-  _spawnerPrefab: {fileID: 7077033313851828464, guid: 41f4bc36890799841be1eddda57a94f7, type: 3}
+  _gameState: 0
+  _playerCount: 1
+  _time:
+  - 0
+  - 0
+  - 0
+  - 0
+  _spawnTime:
+  - 1
+  - 2
+  - 3
+  - 4
+  _unitCounts: 00000000000000000000000000000000
+  _spawnPos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _spawner: {fileID: 5156298953742319392, guid: ce59034deefa38843bd733230681bfd1, type: 3}
