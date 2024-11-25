@@ -7,7 +7,6 @@ public class IdleState : MonoBehaviour, IState
 {
     private UnitController _unitController;
     private UnitData _data;
-    private int _hashIdle;
 
     public IdleState(UnitController controller)
     {
@@ -51,13 +50,8 @@ public class IdleState : MonoBehaviour, IState
     public void DoIdle()
     {
         Debug.Log("Idle 상태 진행중");
-        PlayIdleAnimation();
     }
 
-    //FIX ME: Idle 애니메이션에 관한 회의 필요
-    public void PlayIdleAnimation()
-    {
-
-    }
+    
 
 }

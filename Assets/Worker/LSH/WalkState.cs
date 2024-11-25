@@ -15,7 +15,6 @@ public class WalkState : MonoBehaviour, IState
 
     private float _checkAttackTargetTime;
 
-    private Animator _animator;
     private int _hashWalkFront;
     private int _hashWalkBack;
     private int _hashWalkRight;
@@ -94,6 +93,7 @@ public class WalkState : MonoBehaviour, IState
     public void OnExit()
     {
         Debug.Log("Walk상태 탈출");
+        StopAni();
     }
 
     // 경로 재탐색
@@ -129,7 +129,12 @@ public class WalkState : MonoBehaviour, IState
     //FIX ME: 방향에 따라 상하좌우 애니메이션 재생 필요
     public void PlayWalkAnimation()
     {
-        _animator.Play(_hashWalkFront);
+        _data.Animator.Play(_hashWalkFront);
+    }
+
+    public void StopAni()
+    {
+        _data.Animator.StopPlayback();
     }
 
 }

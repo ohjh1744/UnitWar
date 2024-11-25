@@ -17,7 +17,6 @@ public class AttackState : MonoBehaviour, IState
 
     private float _curDamageRate;
 
-    private Animator _animator;
     private int _hashAttackFront;
     private int _hashAttackBack;
     private int _hashAttackRight;
@@ -40,7 +39,7 @@ public class AttackState : MonoBehaviour, IState
     public void OnEnter()
     {
         Debug.Log("Attack상태 진입");
-        _curDamageRate = 0;
+        _curDamageRate = 0;        
     }
 
     public void OnUpdate()
@@ -67,6 +66,7 @@ public class AttackState : MonoBehaviour, IState
     public void OnExit()
     {
         Debug.Log("Attack상태 탈출");
+        StopAni();
     }
 
     
@@ -90,8 +90,12 @@ public class AttackState : MonoBehaviour, IState
 
     //FIX ME: 방향에 따라 상하좌우 애니메이션 재생 필요
     public void PlayAttackAnimation()
-    {        
-        _animator.Play(_hashAttackFront);
+    {
+        _data.Animator.Play(_hashAttackFront);
+    }
+    public void StopAni()
+    {
+        _data.Animator.StopPlayback();
     }
 
 }
