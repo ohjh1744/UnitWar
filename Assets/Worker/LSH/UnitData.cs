@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 
 public enum EUnit {Zealot, DarkTemplar, Juggling, Ultralisk}
+
 public class UnitData : MonoBehaviour
 {
     [SerializeField] private EUnit _unitType;

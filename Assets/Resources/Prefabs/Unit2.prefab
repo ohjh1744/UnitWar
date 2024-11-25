@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 9136928532113555167}
   - component: {fileID: 9136928532113555164}
   - component: {fileID: 9136928532113555165}
-  - component: {fileID: 6698613734621262010}
+  - component: {fileID: 8062228936726234353}
   m_Layer: 0
-  m_Name: Unit1
+  m_Name: Unit2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -101165104, guid: 7214b2ed330f5a442920a4b3e93b91d5, type: 3}
+  m_Sprite: {fileID: -1941210689, guid: d418905caa3089c4ca9999bee77bc500, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.234375, y: 0.28125}
+  m_Size: {x: 0.296875, y: 0.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -102,7 +102,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.23828125}
   serializedVersion: 2
   m_Radius: 0.13
---- !u!114 &6698613734621262010
+--- !u!114 &8062228936726234353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
