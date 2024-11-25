@@ -27,7 +27,7 @@ public class UnitController : MonoBehaviour, IDamageable
         _states[(int)EStates.Walk] = new WalkState(this);
         _states[(int)EStates.Attack] = new AttackState(this);
         _states[(int)EStates.Dead] = new DeadState(this);
-        //_unitData.Animator = GetComponent<Animator>();
+        
 
     }
     private void OnEnable()
@@ -39,6 +39,7 @@ public class UnitController : MonoBehaviour, IDamageable
     private void Start()
     {
         ChangeState(_states[(int)EStates.Idle]);
+        
 
     }
 
@@ -90,6 +91,7 @@ public class UnitController : MonoBehaviour, IDamageable
         _unitData.AttackTarget = null;
         _unitData.HasReceivedMove = false;
         //_unitData.HasReceivedAttack = false;
+        
     }
 
     public void ChangeState(IState newState)
@@ -101,6 +103,7 @@ public class UnitController : MonoBehaviour, IDamageable
 
         _currentState = newState;
         _currentState.OnEnter();
+
     }
 
     public void GetDamage(int damage)

@@ -17,19 +17,27 @@ public class AttackState : MonoBehaviour, IState
 
     private float _curDamageRate;
 
+    private Animator _animator;
+
     private int _hashAttackFront;
+
     private int _hashAttackBack;
+
     private int _hashAttackRight;
+
+    private Vector2Int _attackDir; //공격방향
+
+    private SpriteRenderer _render;
 
     public AttackState(UnitController controller)
     {
         //생성자
         _unitController = controller;
         _data = _unitController.UnitData;
-    }
 
-    private void Awake()
-    {
+        _animator = _unitController.GetComponent<Animator>();
+        _render = _unitController.GetComponent<SpriteRenderer>();
+
         _hashAttackFront = Animator.StringToHash("Attack_Front");
         _hashAttackBack = Animator.StringToHash("Attack_Back");
         _hashAttackRight = Animator.StringToHash("Attack_Right");
@@ -38,7 +46,8 @@ public class AttackState : MonoBehaviour, IState
 
     public void OnEnter()
     {
-        Debug.Log("Attack상태 진입");
+        Debug.Log("Attack상태 진입");        
+
         _curDamageRate = 0;        
     }
 
@@ -78,7 +87,13 @@ public class AttackState : MonoBehaviour, IState
     {
         _curDamageRate += Time.deltaTime;
 
-        if(_curDamageRate > _data.DamageRate)
+        // 상대 unit과의 바라보는 방향 계산.
+        Vector3 attackDir = _data.HitObject.transform.position - _unitController.transform.position;
+
+        // Vector2Int로 변환.
+        _attackDir = new Vector2Int((int)attackDir.x, (int)attackDir.y);
+
+        if (_curDamageRate > _data.DamageRate)
         {
             IDamageable damageable = _data.HitObject.GetComponent<IDamageable>();
             damageable.GetDamage(_data.Power);
@@ -88,14 +103,27 @@ public class AttackState : MonoBehaviour, IState
         PlayAttackAnimation();
     }
 
-    //FIX ME: 방향에 따라 상하좌우 애니메이션 재생 필요
+    //FIX ME: Walk 애니메이션은 방향에 따라 좌,우만 재생 (24.11/15 16:30)
     public void PlayAttackAnimation()
     {
-        _data.Animator.Play(_hashAttackFront);
+        Vector2 newAttackDir = _attackDir;
+
+        if (newAttackDir.normalized.x > 0)
+        {
+            //오른쪽 공격 애니메이션 작동
+            _render.flipX = false;
+            _animator.Play(_hashAttackRight);
+        }
+        else
+        {
+            //왼쪽 공격 애니메이션 작동
+            _render.flipX = true;
+            _animator.Play(_hashAttackRight);
+        }
     }
     public void StopAni()
     {
-        _data.Animator.StopPlayback();
+        _animator.StopPlayback();
     }
 
 }
