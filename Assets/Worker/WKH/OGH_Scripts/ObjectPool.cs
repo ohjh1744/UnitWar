@@ -7,14 +7,12 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance { get; set; }
 
-    [SerializeField] private GameObject[] _units;
-
     private List<GameObject>[] _poolDict;                   // 오브젝트 리스트
 
     private void Awake()
     {
         Instance = this;
-        _poolDict = new List<GameObject>[_units.Length];
+        _poolDict = new List<GameObject>[4];
         for(int i = 0; i < _poolDict.Length; i++)
         {
             _poolDict[i] = new List<GameObject>();
@@ -24,7 +22,6 @@ public class ObjectPool : MonoBehaviour
     public GameObject GetObject(int unitNum, Vector3 spawnPos)
     {
         GameObject select = null;
-
 
         foreach (GameObject poolObj in _poolDict[unitNum])
         {
@@ -38,7 +35,7 @@ public class ObjectPool : MonoBehaviour
 
         if(select == null)
         {
-            select = PhotonNetwork.InstantiateRoomObject($"Prefabs/Unit{unitNum}", spawnPos, Quaternion.identity);
+            select = PhotonNetwork.Instantiate($"Prefabs/Unit{unitNum}", spawnPos, Quaternion.identity);
             _poolDict[unitNum].Add(select);
         }
 

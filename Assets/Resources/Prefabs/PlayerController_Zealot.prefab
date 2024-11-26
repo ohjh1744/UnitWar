@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2826380249176100950}
   - component: {fileID: 568248144385763714}
   - component: {fileID: 6609429528955278050}
+  - component: {fileID: -4228841096328933595}
+  - component: {fileID: 3904405151717146977}
   m_Layer: 0
   m_Name: PlayerController_Zealot
   m_TagString: Untagged
@@ -67,6 +69,10 @@ MonoBehaviour:
   _lineZPos: -1
   _lineWidth: 0.1
   _findAttackPathTime: 0.5
+  _unitSpawner: {fileID: 3904405151717146977}
+  _spawnTime: 1
+  _unitCounts: 0
+  _spawnPos: {x: -17, y: 11.6, z: 0}
 --- !u!120 &6609429528955278050
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -166,3 +172,39 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &-4228841096328933595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268075692923869460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3904405151717146977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268075692923869460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a95a8f009ad6f438789ed562348429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitsInLine: 5
+  _interval: 0.7
