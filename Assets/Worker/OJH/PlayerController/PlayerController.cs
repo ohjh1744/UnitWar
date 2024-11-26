@@ -1,12 +1,10 @@
-using System.Collections;
+using Photon.Pun;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 
-public enum EOrder {Move, Attack };
-public class PlayerController : MonoBehaviour
+public enum EOrder { Move, Attack };
+public class PlayerController : MonoBehaviourPun
 {
     [SerializeField] private EUnit _unitType;
 
@@ -22,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _movePoint;
 
-    [SerializeField]private GameObject _target;
+    [SerializeField] private GameObject _target;
 
     private Vector2 _recentTargetPos;
 
@@ -34,6 +32,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _findAttackPathTime;
 
+    [SerializeField] private UnitSpawner _unitSpawner;
+
+    private float _time;                                              // Unit별 생성 주기 체크.
+
+    [SerializeField] private float _spawnTime;                        // Unit별 Spawn Time 설정.
+
+    [SerializeField] private int _unitCounts;                         // Unit별 현재 개수.
+
+    [SerializeField] private Vector3 _spawnPos;                     // 종족별 기본 Spawn 위치
 
     private Vector2Int[] _endPosDir =
     {
@@ -62,8 +69,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        SelectUnits();
-        CheckCommand();     
+        if (photonView.IsMine)
+        {
+            Debug.Log($"{PhotonNetwork.LocalPlayer.IsLocal},{gameObject.name}");
+            SelectUnits();
+            CheckCommand();
+            CreateUnit();
+        }
     }
 
     // Unit선택하기
@@ -120,11 +132,11 @@ public class PlayerController : MonoBehaviour
 
         Collider2D[] coliders = Physics2D.OverlapBoxAll(centerPos, size, 0);
 
-        foreach(Collider2D hitCollider in coliders)
+        foreach (Collider2D hitCollider in coliders)
         {
             UnitData unit = hitCollider.GetComponent<UnitData>();
             // 내 종족 Unit만 건들 수 있도록 함.
-            if(unit != null && unit.UnitType == _unitType)
+            if (unit != null && unit.UnitType == _unitType)
             {
                 _units.Add(unit);
             }
@@ -160,12 +172,12 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
- 
+
     // 오더에 따라서 유닛 작동.
     private void CommandUnits(float movePosX, float movePosY, int orderNum)
     {
         Debug.Log("Move!");
-        if(_movePoint == Vector2.zero)
+        if (_movePoint == Vector2.zero)
         {
             return;
         }
@@ -175,16 +187,16 @@ public class PlayerController : MonoBehaviour
 
         int dirIndex = 0;
 
-        for(int i = 0; i < _units.Count; i++)
+        for (int i = 0; i < _units.Count; i++)
         {
             UnitData unit = _units[i];
             // 공격order인 경우 타겟 지정
-            if(orderNum == (int)EOrder.Attack)
+            if (orderNum == (int)EOrder.Attack)
             {
                 unit.AttackTarget = _target;
                 unit.HasReceivedMove = false;
             }
-            else if(orderNum == (int)EOrder.Move)
+            else if (orderNum == (int)EOrder.Move)
             {
                 unit.AttackTarget = null;
                 unit.HasReceivedMove = true;
@@ -193,7 +205,7 @@ public class PlayerController : MonoBehaviour
             Vector2Int startPos = new Vector2Int((int)_units[i].transform.position.x, (int)_units[i].transform.position.y);
             Vector2Int endPos = new Vector2Int((int)movePosX + xPos, (int)movePosY + yPos);
 
-            if(_aStar.DoAStar(startPos, endPos) == true)
+            if (_aStar.DoAStar(startPos, endPos) == true)
             {
                 unit.Path.Clear();
 
@@ -223,4 +235,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void CreateUnit()
+    {
+        if(ObjectPool.Instance != null)
+        {
+            _time += Time.deltaTime;
+
+            if (_time >= _spawnTime)
+            {
+                _unitSpawner.Spawn((int)_unitType, _unitCounts, _spawnPos);
+                _unitCounts++;
+                _time = 0;
+            }
+        }
+    }
 }
