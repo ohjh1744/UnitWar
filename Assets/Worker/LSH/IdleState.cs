@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using Photon.Pun;
 
-public class IdleState : MonoBehaviourPun, IState
+public class IdleState : IState
 {
     private UnitController _unitController;
 
@@ -41,16 +41,19 @@ public class IdleState : MonoBehaviourPun, IState
     {
         if (_data.HP <= 0)
         {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
+            //_unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
+            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
         }
 
         if (_data.Path.Count > 0 && _data.PathIndex != _data.Path.Count)        
         {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
+            // _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
+            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Walk);
         }
         if (_data.HitObject != null)
         {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
+            // _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
+            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Attack);
         }
 
         DoIdle();
