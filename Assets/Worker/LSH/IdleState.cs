@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Photon.Pun;
 
-public class IdleState : MonoBehaviour, IState
+public class IdleState : MonoBehaviourPun, IState
 {
     private UnitController _unitController;
+
     private UnitData _data;
 
     private Animator _animator;
@@ -20,13 +22,12 @@ public class IdleState : MonoBehaviour, IState
     {
         //생성자
         _unitController = controller;
+
         _data = _unitController.UnitData;
 
         _animator = _unitController.GetComponent<Animator>();
 
         _hashIdleFront = Animator.StringToHash("Idle_Front");
-        _hashIdleBack = Animator.StringToHash("Idle_Back");
-        _hashIdleRight = Animator.StringToHash("Idle_Right");
     }
 
 
@@ -62,7 +63,7 @@ public class IdleState : MonoBehaviour, IState
     }
 
 
-    public void DoIdle()
+    private void DoIdle()
     {
         Debug.Log("Idle 상태 진행중");
         PlayIdleAnimation();
@@ -70,14 +71,12 @@ public class IdleState : MonoBehaviour, IState
     }
 
     //FIX ME: Idle 애니메이션은 아래 내려보는 방향만 재생 (24.11/15 16:30)
-    public void PlayIdleAnimation()
+    private void PlayIdleAnimation()
     {
         _animator.Play(_hashIdleFront);             
-        //_data.Animator.Play(_hashIdleBack);
-        //_data.Animator.Play(_hashIdleRight);
     }
 
-    public void StopAni()
+    private void StopAni()
     {
         _animator.StopPlayback();
     }
