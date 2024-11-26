@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
-using static Photon.Pun.UtilityScripts.PlayerNumbering;
+using Photon.Realtime;
+using System.Collections;
+using UnityEngine;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
@@ -14,17 +12,20 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private EGameState _gameState;
 
-    [SerializeField] private int _playerCount;                // 시작하기 위한 참여 플레이어 수
+    [SerializeField] private int _playerCount;                          // 시작하기 위한 참여 플레이어 수
 
-    [SerializeField] private float[] _time;                   // Unit별 생성 주기 체크.
+    [SerializeField] private float[] _time;                             // Unit별 생성 주기 체크.
 
-    [SerializeField] private float[] _spawnTime;              // Unit별 Spawn Time 설정.
+    [SerializeField] private float[] _spawnTime;                        // Unit별 Spawn Time 설정.
 
-    [SerializeField] private int[] _unitCounts;               // Unit별 현재 개수.
+    [SerializeField] private int[] _unitCounts;                         // Unit별 현재 개수.
 
-    [SerializeField] Transform[] _spawnPos;                   // 종족별 기본 Spawn 위치
+    [SerializeField] private Transform[] _spawnPos;                     // 종족별 기본 Spawn 위치
 
-    [SerializeField] UnitSpawner _spawner;
+    [SerializeField] private UnitSpawner _spawner;                      // 스포너(커맨드센터)
+
+    [SerializeField] GameObject[] _playerControllers;                   // PlayerController 프리팹
+
     void Start()
     {
         PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(1000, 10000)}";
@@ -69,8 +70,9 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         Debug.Log("게임 시작");
 
         //테스트용 게임 시작 부분
-        Debug.Log($"플레이어 넘버 : {PhotonNetwork.LocalPlayer.GetPlayerNumber()}");
 
+        // TODO : playercontroller 클라이언트마다 배치 다르게 설정하는 부분
+        SetPlayerController();
         if (PhotonNetwork.IsMasterClient == false)
         {
             return;
@@ -117,6 +119,29 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
                 _time[(int)EUnit.Ultralisk] = 0;
             }
             yield return new WaitForSeconds(1f);
+        }
+    }
+    /// <summary>
+    /// PlayerController를 클라이언트마다 다르게 생성하는 메서드
+    /// </summary>
+    private void SetPlayerController()
+    {
+        switch (PhotonNetwork.LocalPlayer.GetPlayerNumber())
+        {
+            case 0:
+                GameObject playerController_zealot = Instantiate(_playerControllers[(int)EUnit.Zealot], Vector3.zero, Quaternion.identity);
+                break;
+            case 1:
+                GameObject playerController_DarkTempler = Instantiate(_playerControllers[(int)EUnit.DarkTemplar], Vector3.zero, Quaternion.identity);
+                break;
+            case 2:
+                GameObject playerController_Zergling = Instantiate(_playerControllers[(int)EUnit.Juggling], Vector3.zero, Quaternion.identity);
+                break;
+            case 3:
+                GameObject playerController_Ultrarisk = Instantiate(_playerControllers[(int)EUnit.Ultralisk], Vector3.zero, Quaternion.identity);
+                break;
+            default:
+                break;
         }
     }
 
