@@ -72,7 +72,7 @@ public class IdleState : MonoBehaviour, IState
     //FIX ME: Idle 애니메이션은 아래 내려보는 방향만 재생 (24.11/15 16:30)
     public void PlayIdleAnimation()
     {
-        _animator.Play(_hashIdleFront);
+        _animator.Play(_hashIdleFront);             
         //_data.Animator.Play(_hashIdleBack);
         //_data.Animator.Play(_hashIdleRight);
     }

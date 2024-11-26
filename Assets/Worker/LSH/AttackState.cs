@@ -114,7 +114,7 @@ public class AttackState : MonoBehaviour, IState
             _render.flipX = false;
             _animator.Play(_hashAttackRight);
         }
-        else
+        else if (newAttackDir.normalized.x < 0)
         {
             //왼쪽 공격 애니메이션 작동
             _render.flipX = true;

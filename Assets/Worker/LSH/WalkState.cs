@@ -148,28 +148,30 @@ public class WalkState : MonoBehaviour, IState
         Vector2 newDir = _currentDir;
         Vector2 direction = newDir.normalized;
 
-        if (direction == Vector2.up)
-        {
-            // 위 이동 애니메이션 Play
-            _animator.Play(_hashWalkFront);
-        }
-        else if (direction == Vector2.down)
-        {
-            // 아래 이동 애니메이션 Play
-            _animator.Play(_hashWalkBack);
-        }
-        else if(direction.x > 0)
+        if (direction.x > 0)
         {
             // 오른쪽 이동 애니메이션 Play
             _render.flipX = false;
             _animator.Play(_hashWalkRight);
         }
-        else
+        else if (direction.x < 0)
         {
             // 왼쪽 이동 애니메이션 Play
             _render.flipX = true;
             _animator.Play(_hashWalkRight);
         }
+        else if (direction == Vector2.up)
+        {
+            // 위 이동 애니메이션 Play
+            _animator.Play(_hashWalkBack);
+        }
+        else if (direction == Vector2.down)
+        {
+            // 아래 이동 애니메이션 Play
+            _animator.Play(_hashWalkFront);
+        }
+        
+        
     }
 
     public void StopAni()
