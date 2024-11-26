@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon;
 using Photon.Pun;
 
-public abstract class Unit : MonoBehaviourPun
+public abstract class Unit
 {
     public abstract void Spawn(Vector3 spanwPos);
 }
