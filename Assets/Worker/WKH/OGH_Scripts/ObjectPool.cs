@@ -21,7 +21,7 @@ public class ObjectPool : MonoBehaviour
         }     
     }
 
-    public GameObject GetObject(int unitNum)
+    public GameObject GetObject(int unitNum, Vector3 spawnPos)
     {
         GameObject select = null;
 
@@ -38,7 +38,7 @@ public class ObjectPool : MonoBehaviour
 
         if(select == null)
         {
-            select = PhotonNetwork.InstantiateRoomObject($"Prefabs/Unit{unitNum}", Vector3.zero, Quaternion.identity);
+            select = PhotonNetwork.InstantiateRoomObject($"Prefabs/Unit{unitNum}", spawnPos, Quaternion.identity);
             _poolDict[unitNum].Add(select);
         }
 
