@@ -14,7 +14,7 @@ public class RoomPanel : UIBInder
 
     private void Awake()
     {
-        
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     private void OnEnable()
@@ -97,6 +97,7 @@ public class RoomPanel : UIBInder
     {
         PhotonNetwork.LoadLevel("GameScene");
         PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 
     public void LeaveRoom()
