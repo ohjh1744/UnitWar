@@ -22,6 +22,7 @@ public class LoginPanel : UIBInder
     // 로그인을 진행
     private void Login(PointerEventData eventData)
     {
+        SoundManager.Instance.PlayUI("mousedown2");
         string email = GetUI<TMP_InputField>("EmailInputField").text; //emailInputField.text;
         string password = GetUI<TMP_InputField>("PasswordInputField").text;
 
