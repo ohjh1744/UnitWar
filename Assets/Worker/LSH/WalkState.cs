@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Analytics;
+using Photon.Pun;
 
-public class WalkState : MonoBehaviour, IState
+public class WalkState : MonoBehaviourPun, IState
 {
     private UnitController _unitController;
 
@@ -106,7 +107,7 @@ public class WalkState : MonoBehaviour, IState
     }
 
     // 경로 재탐색
-    public void ReSearchPath()
+    private void ReSearchPath()
     {
         Debug.Log("경로 변환!!!");
         _currentAttackTarget = _data.AttackTarget.transform.position;
@@ -119,7 +120,7 @@ public class WalkState : MonoBehaviour, IState
         _checkAttackTargetTime = 0;
     }
 
-    public void DoWalk(Vector2Int pathPoint)
+    private void DoWalk(Vector2Int pathPoint)
     {
         Debug.Log("Walk중!");
         // Unit 위치 vector2int로 변환
@@ -142,7 +143,7 @@ public class WalkState : MonoBehaviour, IState
     }
 
     //FIX ME: Walk 애니메이션은 방향에 따라 상하좌우 재생 (24.11/15 16:30)
-    public void PlayWalkAnimation()
+    private void PlayWalkAnimation()
     {
         //방향벡터를 얻기 위한 Vector2 변환
         Vector2 newDir = _currentDir;
@@ -174,7 +175,7 @@ public class WalkState : MonoBehaviour, IState
         
     }
 
-    public void StopAni()
+    private void StopAni()
     {
         _animator.StopPlayback();
     }

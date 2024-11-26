@@ -18,8 +18,6 @@ public class UnitController : MonoBehaviour, IDamageable
     private IState[] _states = new IState[(int)EStates.Size];
     public IState[] States { get { return _states; } set { } }
 
-    
-
 
     private void Awake()
     {
@@ -27,20 +25,13 @@ public class UnitController : MonoBehaviour, IDamageable
         _states[(int)EStates.Walk] = new WalkState(this);
         _states[(int)EStates.Attack] = new AttackState(this);
         _states[(int)EStates.Dead] = new DeadState(this);
-        
-
+       
     }
     private void OnEnable()
     {
         //죽고 Pull에서 다시 생성될때, Data Reset해주기
         ResetData();
-    }
-
-    private void Start()
-    {
         ChangeState(_states[(int)EStates.Idle]);
-        
-
     }
 
     private void Update()
@@ -82,7 +73,7 @@ public class UnitController : MonoBehaviour, IDamageable
         _currentState?.OnUpdate();
     }
 
-    public void ResetData()
+    private void ResetData()
     {
         _unitData.HP = 100;
         _unitData.Path.Clear();

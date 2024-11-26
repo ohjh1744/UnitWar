@@ -46,5 +46,6 @@ public class UnitData : MonoBehaviour
     [SerializeField] private bool _hasReceivedMove; // 이동명령을 받았는지 여부 
     public bool HasReceivedMove { get { return _hasReceivedMove; } set { _hasReceivedMove = value; } }
 
-
+    [SerializeField] private float _setFalseTime; // 죽는 애니메이션 이후  setfalse되는 시간.
+    public float SetFalseTime { get { return _setFalseTime; } set { _setFalseTime = value; } }
 }

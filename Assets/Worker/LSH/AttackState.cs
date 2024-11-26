@@ -1,11 +1,12 @@
 using ExitGames.Client.Photon.StructWrapping;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AttackState : MonoBehaviour, IState
+public class AttackState : MonoBehaviourPun, IState
 {
     private UnitController _unitController;
 
@@ -25,7 +26,7 @@ public class AttackState : MonoBehaviour, IState
 
     private int _hashAttackRight;
 
-    private Vector2Int _attackDir; //공격방향
+    private Vector3 _attackDir; //공격방향
 
     private SpriteRenderer _render;
 
@@ -87,12 +88,6 @@ public class AttackState : MonoBehaviour, IState
     {
         _curDamageRate += Time.deltaTime;
 
-        // 상대 unit과의 바라보는 방향 계산.
-        Vector3 attackDir = _data.HitObject.transform.position - _unitController.transform.position;
-
-        // Vector2Int로 변환.
-        _attackDir = new Vector2Int((int)attackDir.x, (int)attackDir.y);
-
         if (_curDamageRate > _data.DamageRate)
         {
             IDamageable damageable = _data.HitObject.GetComponent<IDamageable>();
@@ -100,28 +95,32 @@ public class AttackState : MonoBehaviour, IState
             _curDamageRate = 0;
         }
 
-        PlayAttackAnimation();
+        // 상대 unit과의 바라보는 방향 계산.
+        if (_data.HitObject != null)
+        {
+            _attackDir = _data.HitObject.transform.position - _unitController.transform.position;
+            PlayAttackAnimation();
+        }
     }
 
     //FIX ME: Walk 애니메이션은 방향에 따라 좌,우만 재생 (24.11/15 16:30)
-    public void PlayAttackAnimation()
+    private void PlayAttackAnimation()
     {
-        Vector2 newAttackDir = _attackDir;
 
-        if (newAttackDir.normalized.x > 0)
+        if (_attackDir.normalized.x > 0)
         {
             //오른쪽 공격 애니메이션 작동
             _render.flipX = false;
             _animator.Play(_hashAttackRight);
         }
-        else if (newAttackDir.normalized.x < 0)
+        else if (_attackDir.normalized.x < 0)
         {
             //왼쪽 공격 애니메이션 작동
             _render.flipX = true;
             _animator.Play(_hashAttackRight);
         }
     }
-    public void StopAni()
+    private void StopAni()
     {
         _animator.StopPlayback();
     }

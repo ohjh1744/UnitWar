@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : MonoBehaviour, IState
+public class DeadState : MonoBehaviourPun, IState
 {
     private UnitController _unitController;
 
@@ -11,27 +12,43 @@ public class DeadState : MonoBehaviour, IState
     private Animator _animator;
 
     private int _hashDead;
+
+    private float _setFalsTime;
+
+    private float _curTime;
+
+
     public DeadState(UnitController controller)
     {
         //생성자
         _unitController = controller;
+
         _data = _unitController.UnitData;
 
         _animator = _unitController.GetComponent<Animator>();
 
         _hashDead = Animator.StringToHash("Death");
+
+        _setFalsTime = _data.SetFalseTime;
+
     }
 
 
     public void OnEnter()
     {
+        _curTime = 0;
         Debug.Log("Dead상태 진입");
-        
+        PlayDeadAnimation();
     }
 
     public void OnUpdate()
     {
-        Dead();
+        _curTime += Time.deltaTime;
+        // 애니메이션 동작 후 setfalse
+        if(_curTime > _setFalsTime)
+        {
+            _unitController.gameObject.SetActive(false);
+        }
     }
 
     public void OnExit()
@@ -40,21 +57,14 @@ public class DeadState : MonoBehaviour, IState
         StopAni();
     }
 
-
-    //TO DO: 죽음 상태 완성하기
-    public void Dead()
-    {
-        Debug.Log("Dead 상태 (죽음)");
-        _unitController.gameObject.SetActive(false);
-        PlayDeadAnimation();
-    }
-
-    public void PlayDeadAnimation()
+    // 죽는 애니메이션 실행 후 false 해주기
+    // 죽는 애니메이션은 반복이 필요없으므로 roof false 해주기.
+    private void  PlayDeadAnimation()
     {
         _animator.Play(_hashDead);
     }
 
-    public void StopAni()
+    private void StopAni()
     {
         _animator.StopPlayback();
     }
