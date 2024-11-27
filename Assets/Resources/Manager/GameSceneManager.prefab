@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameState: 0
-  _playerCount: 1
+  _playerCount: 2
   _spawnerPos:
   - {x: -19.4, y: 11.61, z: 0}
   - {x: 22.32, y: 11.3, z: 0}
   - {x: 21.67, y: -10.1, z: 0}
   - {x: -19.64, y: -10.34, z: 0}
+  _unitCounts: 0a0000000a0000000000000000000000
+  _curUnitCounts: 00000000000000000000000000000000
 --- !u!114 &133082116
 MonoBehaviour:
   m_ObjectHideFlags: 0

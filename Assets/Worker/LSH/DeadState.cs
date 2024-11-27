@@ -47,9 +47,8 @@ public class DeadState : MonoBehaviourPun, IState
         // 애니메이션 동작 후 setfalse
         if(_curTime > _setFalsTime)
         {
+            PlayerController.CurUnitCounts[(int)_data.UnitType]--;
             _unitController.gameObject.SetActive(false);
-            //TO DO: 머지 후 위쪽 코드를 밑 코드로 변경
-            //ObjectPool.Instance.ReturnObject(_unitController.gameObject);
         }
     }
 
