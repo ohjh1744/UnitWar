@@ -45,11 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f0aeee10dcbe94698e35174518299a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData:
-  - {fileID: -2991268026201275749, guid: 0ef73ae14bf4bce44b2ee17497b62b90, type: 3}
-  - {fileID: 4748798084699974354, guid: cdfc4995d78b4204da9b945ee646a9a6, type: 3}
-  - {fileID: -5134994007710992050, guid: 5fbd59e98f7ec4b46a402d65d0ae5e9c, type: 3}
-  - {fileID: -264760545192145678, guid: 08907f2a837ecf34f93d411dd1430191, type: 3}
 --- !u!114 &485143326
 MonoBehaviour:
   m_ObjectHideFlags: 0

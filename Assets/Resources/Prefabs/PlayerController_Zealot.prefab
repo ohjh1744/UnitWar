@@ -742,7 +742,6 @@ MonoBehaviour:
   _unitSpawner: {fileID: 8459673582637169600}
   _target: {fileID: 0}
   _spawnTime: 1
-  _unitCounts: 20
   _spawnPos: {x: -17, y: 12, z: 0}
   _hp: 100
   _maxHp: 100

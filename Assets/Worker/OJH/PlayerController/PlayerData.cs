@@ -32,11 +32,6 @@ public class PlayerData : MonoBehaviourPun , IPunObservable
 
     public float SpawnTime { get { return _spawnTime; } set { _spawnTime = value; } }
 
-
-    [SerializeField] private int _unitCounts;   // Unit별 현재 개수.
-
-    public int UnitCounts { get { return _unitCounts; } set { _unitCounts = value; } }
-
     [SerializeField] private Vector3 _spawnPos; // Unit Spawn지점.
 
     public Vector3 SpawnPos { get { return _spawnPos; } set { _spawnPos = value; } }
