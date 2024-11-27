@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 852726264959176890}
   - component: {fileID: 6152028668516863039}
   - component: {fileID: -264760545192145678}
+  - component: {fileID: -5480153290760983768}
   m_Layer: 0
   m_Name: PlayerController_Ultrarisk
   m_TagString: Untagged
@@ -669,6 +670,22 @@ MonoBehaviour:
   _spawnPos: {x: -18, y: -10, z: 0}
   _hp: 100
   _maxHp: 100
+--- !u!58 &-5480153290760983768
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4377770538093150213}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.578125
 --- !u!1 &4389592463547098712
 GameObject:
   m_ObjectHideFlags: 0
