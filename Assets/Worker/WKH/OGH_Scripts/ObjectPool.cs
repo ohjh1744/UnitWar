@@ -29,6 +29,7 @@ public class ObjectPool : MonoBehaviour
             {
                 select = poolObj;
                 select.SetActive(true);
+                select.transform.position = spawnPos;
                 break;
             }
         }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4087443948332882786}
   - component: {fileID: 852726264959176890}
   - component: {fileID: 6152028668516863039}
+  - component: {fileID: -264760545192145678}
   m_Layer: 0
   m_Name: PlayerController_Ultrarisk
   m_TagString: Untagged
@@ -115,17 +116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07e7f71f10f0de498318f6fcdb50cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitType: 3
-  _aStar: {fileID: 5031224841007026481}
-  _target: {fileID: 0}
+  _playerData: {fileID: -264760545192145678}
   _lineRenderer: {fileID: 6152028668516863039}
   _lineZPos: -1
   _lineWidth: 0.1
-  _findAttackPathTime: 0.5
   _unitSpawner: {fileID: 852726264959176890}
-  _spawnTime: 4
-  _unitCounts: 0
-  _spawnPos: {x: -18.02993, y: -10.220728, z: 0}
 --- !u!114 &4087443948332882786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,3 +256,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &-264760545192145678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4377770538093150213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e666dce63ea23459c2e43c93be41d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitType: 3
+  _aStar: {fileID: 5031224841007026481}
+  _unitSpawner: {fileID: 852726264959176890}
+  _target: {fileID: 0}
+  _spawnTime: 4
+  _unitCounts: 20
+  _spawnPos: {x: -18, y: -10, z: 0}
