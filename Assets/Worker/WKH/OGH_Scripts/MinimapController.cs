@@ -13,7 +13,7 @@ public class MinimapController : MonoBehaviour
 
     private Vector3 _leftBottom;                    // 카메라 뷰포트 좌하단
 
-    [SerializeField] private GameObject _test;
+    [SerializeField] private GameObject _test;      // 테스트용 오브젝트
 
 
     private void Start()
@@ -26,7 +26,12 @@ public class MinimapController : MonoBehaviour
     }
     private void Update()
     {
-        _rightTop = Camera.main.ViewportToWorldPoint(new Vector3(1, 1,0));
+        ChaseMainCam();
+    }
+
+    private void ChaseMainCam()
+    {
+        _rightTop = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0));
         _leftTop = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         _rightBottom = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
         _leftBottom = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
@@ -34,11 +39,7 @@ public class MinimapController : MonoBehaviour
         //Debug.DrawLine(_leftTop, _leftBottom, Color.red);
         //Debug.DrawLine(_leftBottom, _rightBottom, Color.red);
         //Debug.DrawLine(_rightBottom, _rightTop, Color.red);
-        
-        _test.transform.position = Camera.main.transform.position + new Vector3(0,0,10);
-        
-        
-        //_angle.rectTransform.position = Camera.main.WorldToViewportPoint();
-        //_angle.rectTransform.localScale = new Vector3(0.1f,0.1f,0);
+
+        _test.transform.position = Camera.main.transform.position + new Vector3(0, 0, 10);
     }
 }
