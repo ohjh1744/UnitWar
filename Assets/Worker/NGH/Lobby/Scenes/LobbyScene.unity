@@ -11931,7 +11931,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8371969074817434936}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DatabaseTester, Assembly-CSharp
         m_MethodName: SearchPlayer
         m_Mode: 1
@@ -12065,7 +12065,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8371969074817434936}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DatabaseTester, Assembly-CSharp
         m_MethodName: LevelUp
         m_Mode: 1
@@ -14223,7 +14223,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8371969074817434936}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DatabaseTester, Assembly-CSharp
         m_MethodName: LevelDown
         m_Mode: 1
@@ -15280,9 +15280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21efcabaaf76558499b1c862df13b04e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmSource: {fileID: 1954553391}
-  sfxSource: {fileID: 1954553390}
-  uiSource: {fileID: 1954553389}
+  _bgmSource: {fileID: 1954553391}
+  _sfxSource: {fileID: 1954553390}
+  _uiSource: {fileID: 1954553389}
 --- !u!4 &1954553393
 Transform:
   m_ObjectHideFlags: 0
@@ -21967,7 +21967,6 @@ GameObject:
   - component: {fileID: 7006166692240393518}
   - component: {fileID: 4652680895492712086}
   - component: {fileID: 8371969074817434935}
-  - component: {fileID: 8371969074817434936}
   m_Layer: 5
   m_Name: MainPanel
   m_TagString: Untagged
@@ -21987,22 +21986,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e179feebe911d344ca38e8bceb74e96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8371969074817434936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8371969074817434934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180c2b3b0d6f42c43a54768c6e3e5284, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  searchInputField: {fileID: 350277987}
-  resultText: {fileID: 1418561259}
-  playerLevelText: {fileID: 1335007737}
-  statIncreasePerLevel: 5
 --- !u!222 &8378545919510358170
 CanvasRenderer:
   m_ObjectHideFlags: 0
