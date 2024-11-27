@@ -50,6 +50,7 @@ public class UnitData : MonoBehaviourPun, IPunObservable
     [SerializeField] private float _setFalseTime; // 죽는 애니메이션 이후  setfalse되는 시간.
     public float SetFalseTime { get { return _setFalseTime; } set { _setFalseTime = value; } }
 
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)

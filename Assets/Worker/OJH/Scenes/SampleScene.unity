@@ -442,7 +442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3600219163963117343, guid: eb34abee99a85664dbdad47f2d5beee8, type: 3}
       propertyPath: _playerCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3600219163963117343, guid: eb34abee99a85664dbdad47f2d5beee8, type: 3}
       propertyPath: _playerController
