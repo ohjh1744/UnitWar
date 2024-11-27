@@ -65,7 +65,7 @@ public class UnitData : MonoBehaviourPun, IPunObservable
                 stream.SendNext(Point.y);
             }
 
-            stream.SendNext(_attackTarget.GetComponent<PhotonView>().ViewID); //ID보내기
+            //stream.SendNext(_attackTarget.GetComponent<PhotonView>().ViewID); //ID보내기
 
         }
         else if (stream.IsReading)
@@ -85,17 +85,17 @@ public class UnitData : MonoBehaviourPun, IPunObservable
             }
 
             
-            int otherID = (int)stream.ReceiveNext();// ID 받기
+            //int otherID = (int)stream.ReceiveNext();// ID 받기
 
-            PhotonView other = PhotonView.Find(otherID); 
+            //PhotonView other = PhotonView.Find(otherID); 
 
-            // 동기화가 되지않는 문제 발생.
-            if(other != null)
-            {
-                _attackTarget = other.GetComponent<UnitData>()._attackTarget;
-                _hitColiders =  other.GetComponent<UnitData>()._hitColiders;
-                _hitObject = other.GetComponent<UnitData>()._hitObject;
-            }
+            //// 동기화가 되지않는 문제 발생.
+            //if(other != null)
+            //{
+            //    _attackTarget = other.GetComponent<UnitData>()._attackTarget;
+            //    _hitColiders =  other.GetComponent<UnitData>()._hitColiders;
+            //    _hitObject = other.GetComponent<UnitData>()._hitObject;
+            //}
 
 
         }
