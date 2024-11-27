@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4141165349859886122}
   - component: {fileID: 4072863404592691286}
-  - component: {fileID: 1634759484149007541}
-  - component: {fileID: 4695506908588579476}
   - component: {fileID: 2792197948110052339}
+  - component: {fileID: 1634759484149007541}
   - component: {fileID: 8673681453622573814}
+  - component: {fileID: 4695506908588579476}
+  - component: {fileID: 4748798084699974354}
   - component: {fileID: 7781819388279062031}
   m_Layer: 0
   m_Name: PlayerController_DarkTempler
@@ -89,43 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1634759484149007541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8434497075927221880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb6f2a2eec2c3a47b9007d3f1eea9a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _start: {fileID: 0}
-  _end: {fileID: 0}
---- !u!114 &4695506908588579476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8434497075927221880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a07e7f71f10f0de498318f6fcdb50cc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitType: 1
-  _aStar: {fileID: 1634759484149007541}
-  _target: {fileID: 0}
-  _lineRenderer: {fileID: 7781819388279062031}
-  _lineZPos: -1
-  _lineWidth: 0.1
-  _findAttackPathTime: 0.5
-  _unitSpawner: {fileID: 8673681453622573814}
-  _spawnTime: 2
-  _unitCounts: 0
-  _spawnPos: {x: 17, y: 11, z: 0}
 --- !u!114 &2792197948110052339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +112,20 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1634759484149007541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434497075927221880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb6f2a2eec2c3a47b9007d3f1eea9a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _start: {fileID: 0}
+  _end: {fileID: 0}
 --- !u!114 &8673681453622573814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +140,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitsInLine: 5
   _interval: 0.7
+--- !u!114 &4695506908588579476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434497075927221880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07e7f71f10f0de498318f6fcdb50cc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerData: {fileID: 4748798084699974354}
+  _lineRenderer: {fileID: 7781819388279062031}
+  _lineZPos: -1
+  _lineWidth: 0.1
+  _unitSpawner: {fileID: 8673681453622573814}
+--- !u!114 &4748798084699974354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434497075927221880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e666dce63ea23459c2e43c93be41d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitType: 1
+  _aStar: {fileID: 1634759484149007541}
+  _unitSpawner: {fileID: 8673681453622573814}
+  _target: {fileID: 0}
+  _spawnTime: 2
+  _unitCounts: 20
+  _spawnPos: {x: 17, y: 12, z: 0}
 --- !u!120 &7781819388279062031
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -182,7 +196,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

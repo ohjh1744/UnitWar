@@ -6,11 +6,7 @@ using UnityEngine;
 public enum EOrder { Move, Attack };
 public class PlayerController : MonoBehaviourPun
 {
-    [SerializeField] private EUnit _unitType;
-
-    [SerializeField] private AStar _aStar;
-
-    private List<UnitData> _units;
+    [SerializeField] private PlayerData _playerData;
 
     private const int _linePosCount = 5;
 
@@ -20,27 +16,15 @@ public class PlayerController : MonoBehaviourPun
 
     private Vector2 _movePoint;
 
-    [SerializeField] private GameObject _target;
-
-    private Vector2 _recentTargetPos;
-
     [SerializeField] private LineRenderer _lineRenderer;
 
     [SerializeField] private float _lineZPos;
 
     [SerializeField] private float _lineWidth;
 
-    [SerializeField] private float _findAttackPathTime;
-
     [SerializeField] private UnitSpawner _unitSpawner;
 
     private float _time;                                              // Unit별 생성 주기 체크.
-
-    [SerializeField] private float _spawnTime;                        // Unit별 Spawn Time 설정.
-
-    [SerializeField] private int _unitCounts;                         // Unit별 현재 개수.
-
-    [SerializeField] private Vector3 _spawnPos;                     // 종족별 기본 Spawn 위치
 
     private Vector2Int[] _endPosDir =
     {
@@ -57,7 +41,7 @@ public class PlayerController : MonoBehaviourPun
 
     void Start()
     {
-        _units = new List<UnitData>();
+        _playerData.Units = new List<UnitData>();
         _lineRenderer = GetComponent<LineRenderer>();
 
         _lineRenderer.startWidth = _lineWidth;
@@ -84,7 +68,7 @@ public class PlayerController : MonoBehaviourPun
         if (Input.GetMouseButtonDown(0))
         {
             //선택 유닛 마우스 버튼누를 때 초기화.
-            _units.Clear();
+            _playerData.Units.Clear();
             _lineRenderer.positionCount = _linePosCount;
             _lineStartPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
         }
@@ -136,9 +120,9 @@ public class PlayerController : MonoBehaviourPun
         {
             UnitData unit = hitCollider.GetComponent<UnitData>();
             // 내 종족 Unit만 건들 수 있도록 함.
-            if (unit != null && unit.UnitType == _unitType)
+            if (unit != null && unit.UnitType == _playerData.UnitType)
             {
-                _units.Add(unit);
+                _playerData.Units.Add(unit);
             }
         }
 
@@ -158,16 +142,16 @@ public class PlayerController : MonoBehaviourPun
             {
                 UnitData _unit = target.GetComponent<UnitData>();
                 // 장애물은 공격 대상으로 취급 안하고 Unit이어야 하며, 그 Unit은 아군종족이 아닌 다른 종족이어야함.
-                if (target.tag != "Obstacle" && _unit != null && _unit.UnitType != _unitType)
+                if (target.tag != "Obstacle" && _unit != null && _unit.UnitType != _playerData.UnitType)
                 {
-                    _target = target.gameObject;
-                    CommandUnits(_target.transform.position.x, _target.transform.position.y, (int)EOrder.Attack);
+                    _playerData.Target = target.gameObject;
+                    CommandUnits(_playerData.Target.transform.position.x, _playerData.Target.transform.position.y, (int)EOrder.Attack);
                 }
             }
             else
             {
                 //공격할 대상이 없는 땅이라면 
-                _target = null;
+                _playerData.Target = null;
                 CommandUnits(_movePoint.x, _movePoint.y, (int)EOrder.Move);
             }
         }
@@ -187,13 +171,13 @@ public class PlayerController : MonoBehaviourPun
 
         int dirIndex = 0;
 
-        for (int i = 0; i < _units.Count; i++)
+        for (int i = 0; i < _playerData.Units.Count; i++)
         {
-            UnitData unit = _units[i];
+            UnitData unit = _playerData.Units[i];
             // 공격order인 경우 타겟 지정
             if (orderNum == (int)EOrder.Attack)
             {
-                unit.AttackTarget = _target;
+                unit.AttackTarget = _playerData.Target;
                 unit.HasReceivedMove = false;
             }
             else if (orderNum == (int)EOrder.Move)
@@ -202,14 +186,14 @@ public class PlayerController : MonoBehaviourPun
                 unit.HasReceivedMove = true;
             }
 
-            Vector2Int startPos = new Vector2Int((int)_units[i].transform.position.x, (int)_units[i].transform.position.y);
+            Vector2Int startPos = new Vector2Int((int)_playerData.Units[i].transform.position.x, (int)_playerData.Units[i].transform.position.y);
             Vector2Int endPos = new Vector2Int((int)movePosX + xPos, (int)movePosY + yPos);
 
-            if (_aStar.DoAStar(startPos, endPos) == true)
+            if (_playerData.Astar.DoAStar(startPos, endPos) == true)
             {
                 unit.Path.Clear();
 
-                foreach (Vector2Int path in _aStar.Path)
+                foreach (Vector2Int path in _playerData.Astar.Path)
                 {
                     unit.PathIndex = 0;
                     unit.Path.Add(path);
@@ -241,10 +225,10 @@ public class PlayerController : MonoBehaviourPun
         {
             _time += Time.deltaTime;
 
-            if (_time >= _spawnTime)
+            if (_time >= _playerData.SpawnTime)
             {
-                _unitSpawner.Spawn((int)_unitType, _unitCounts, _spawnPos);
-                _unitCounts++;
+                _unitSpawner.Spawn((int)_playerData.UnitType, _playerData.UnitCounts, _playerData.SpawnPos);
+                _playerData.UnitCounts++;
                 _time = 0;
             }
         }
