@@ -147,7 +147,7 @@ MonoBehaviour:
   _unitType: 2
   _hp: 100
   _power: 5
-  _damageRate: 1
+  _damageRate: 0.6
   _path: []
   _pathIndex: 0
   _moveSpeed: 2
@@ -157,7 +157,7 @@ MonoBehaviour:
   _hitRadius: 0.8
   _findLoadTime: 1
   _hasReceivedMove: 0
-  _setFalseTime: 0
+  _setFalseTime: 0.8
 --- !u!114 &2405318870054285858
 MonoBehaviour:
   m_ObjectHideFlags: 0
