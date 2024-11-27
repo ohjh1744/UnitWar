@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
+    public static GameSceneManager Instance;
+
     public const string RoomName = "TestRoom";
 
     private Coroutine _spawnUnitroutine;
@@ -18,8 +20,19 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
         PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(1000, 10000)}";
         PhotonNetwork.ConnectUsingSettings();
+
     }
 
     public override void OnConnectedToMaster()
@@ -66,6 +79,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             return;
         }
         //방장만 진행할 수 있는 코드
+        PhotonNetwork.Instantiate("Manager/ObjectPool", Vector3.zero, Quaternion.identity);
     }
     /// <summary>
     /// PlayerController를 클라이언트마다 다르게 생성하는 메서드
@@ -78,15 +92,19 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             {
                 case 0:
                     GameObject playerController_zealot = PhotonNetwork.Instantiate("Prefabs/PlayerController_Zealot", _spawnerPos[0], Quaternion.identity);
+                    Camera.main.transform.position = _spawnerPos[0];
                     break;
                 case 1:
                     GameObject playerController_DarkTempler = PhotonNetwork.Instantiate("Prefabs/PlayerController_DarkTempler", _spawnerPos[1], Quaternion.identity);
+                    Camera.main.transform.position = _spawnerPos[1];
                     break;
                 case 2:
                     GameObject playerController_Zergling = PhotonNetwork.Instantiate("Prefabs/PlayerController_Zergling", _spawnerPos[2], Quaternion.identity);
+                    Camera.main.transform.position = _spawnerPos[2];
                     break;
                 case 3:
                     GameObject playerController_Ultrarisk = PhotonNetwork.Instantiate("Prefabs/PlayerController_Ultrarisk", _spawnerPos[3], Quaternion.identity);
+                    Camera.main.transform.position = _spawnerPos[3];
                     break;
                 default:
                     break;
