@@ -1,10 +1,11 @@
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public enum EOrder { Move, Attack };
-public class PlayerController : MonoBehaviourPun
+public class PlayerController : MonoBehaviourPun, IDamageable
 {
     [SerializeField] private PlayerData _playerData;
 
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviourPun
 
     private float _time;                                              // Unit별 생성 주기 체크.
 
+    [SerializeField] private Slider _hpSlider;
+
     private Vector2Int[] _endPosDir =
     {
         new Vector2Int( 0, +2), // 상
@@ -38,6 +41,17 @@ public class PlayerController : MonoBehaviourPun
         new Vector2Int(-2, -2), // 좌하
     };
 
+
+    private void OnEnable()
+    {
+        _playerData.OnHpChanged += UpdateHp;
+        Debug.Log($"1: {_playerData.OnHpChanged}");
+    }
+
+    private void OnDisable()
+    {
+        _playerData.OnHpChanged -= UpdateHp;
+    }
 
     void Start()
     {
@@ -61,6 +75,8 @@ public class PlayerController : MonoBehaviourPun
             CreateUnit();
         }
     }
+
+    
 
     // Unit선택하기
     private void SelectUnits()
@@ -232,5 +248,16 @@ public class PlayerController : MonoBehaviourPun
                 _time = 0;
             }
         }
+    }
+
+    public void GetDamage(int damage)
+    {
+        _playerData.HP -= damage;
+    }
+
+    public void UpdateHp()
+    {
+        _hpSlider.value = _playerData.HP / _playerData.MaxHp;
+        Debug.Log($"2: {_playerData.HP}");
     }
 }

@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerData : MonoBehaviourPun
 {
@@ -40,5 +41,12 @@ public class PlayerData : MonoBehaviourPun
 
     public Vector3 SpawnPos { get { return _spawnPos; } set { _spawnPos = value; } }
 
+    [SerializeField] private int _hp; // 커맨드센터 현재 체력
+    public int HP { get { return _hp; } set { _hp = value; OnHpChanged?.Invoke(); } }
+
+    [SerializeField] private int _maxHp; // 커맨드센터 Max체력
+    public int MaxHp { get { return _maxHp; } private set { } }
+
+    public UnityAction OnHpChanged;
 
 }
