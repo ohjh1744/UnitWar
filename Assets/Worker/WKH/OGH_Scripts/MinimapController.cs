@@ -5,23 +5,25 @@ using UnityEngine.UI;
 
 public class MinimapController : MonoBehaviour
 {
-    private Vector2 _rightTop;                      // 카메라 뷰포트 우상단
+    private Vector3 _rightTop;                      // 카메라 뷰포트 우상단
 
-    private Vector2 _leftTop;                       // 카메라 뷰포트 좌상단
+    private Vector3 _leftTop;                       // 카메라 뷰포트 좌상단
 
-    private Vector2 _rightBottom;                   // 카메라 뷰포트 우하단
+    private Vector3 _rightBottom;                   // 카메라 뷰포트 우하단
 
-    private Vector2 _leftBottom;                    // 카메라 뷰포트 좌하단
-
-    [SerializeField] private Image _angle;          // 미니맵에 표시될 카메라 앵글
+    private Vector3 _leftBottom;                    // 카메라 뷰포트 좌하단
 
     [SerializeField] private GameObject _test;
 
+
     private void Start()
     {
-        //_angle.transform.localScale = Camera.main.scaledPixelHeight;
+        _rightTop = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0));
+        _leftTop = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
+        _rightBottom = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
+        _leftBottom = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
+        _test.transform.localScale = new Vector3(Vector3.Distance(_rightTop, _leftTop), Vector3.Distance(_rightTop, _rightBottom), 0);
     }
-
     private void Update()
     {
         _rightTop = Camera.main.ViewportToWorldPoint(new Vector3(1, 1,0));
