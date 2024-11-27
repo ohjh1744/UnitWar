@@ -157,8 +157,9 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             if (target != null)
             {
                 UnitData _unit = target.GetComponent<UnitData>();
-                // 장애물은 공격 대상으로 취급 안하고 Unit이어야 하며, 그 Unit은 아군종족이 아닌 다른 종족이어야함.
-                if (target.tag != "Obstacle" && _unit != null && _unit.UnitType != _playerData.UnitType)
+                PlayerData _player = target.GetComponent<PlayerData>();
+                // 장애물은 공격 대상으로 취급 안하고 Unit이어야 하며, 그 Unit은 아군종족이 아닌 다른 종족이어야함, Player 또한 본인은 공격대상으로 x.
+                if (target.tag != "Obstacle" && ((_unit != null && _unit.UnitType != _playerData.UnitType) || (_player != null && _player.UnitType != _playerData.UnitType)))
                 {
                     _playerData.Target = target.gameObject;
                     CommandUnits(_playerData.Target.transform.position.x, _playerData.Target.transform.position.y, (int)EOrder.Attack);
@@ -257,7 +258,6 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     public void UpdateHp()
     {
-        _hpSlider.value = _playerData.HP / _playerData.MaxHp;
-        Debug.Log($"2: {_playerData.HP}");
+        _hpSlider.value = (float)_playerData.HP / (float)_playerData.MaxHp;
     }
 }
