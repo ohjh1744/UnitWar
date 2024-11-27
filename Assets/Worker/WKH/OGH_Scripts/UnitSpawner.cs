@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class UnitSpawner : MonoBehaviour
+public class UnitSpawner : MonoBehaviourPun
 {
 
     [SerializeField] private int _unitsInLine;          // 한 라인당 유닛 생성 수
@@ -38,7 +36,6 @@ public class UnitSpawner : MonoBehaviour
                 meleeFact.Create(newSpawnPos);
                 break;
         }
-
-        unitCount++;   
     }
+
 }

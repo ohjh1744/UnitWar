@@ -1,9 +1,8 @@
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+public class ObjectPool : MonoBehaviourPun
 {
     public static ObjectPool Instance { get; set; }
 
@@ -11,13 +10,23 @@ public class ObjectPool : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         _poolDict = new List<GameObject>[4];
-        for(int i = 0; i < _poolDict.Length; i++)
+        for (int i = 0; i < _poolDict.Length; i++)
         {
             _poolDict[i] = new List<GameObject>();
-        }     
+        }
     }
+
 
     public GameObject GetObject(int unitNum, Vector3 spawnPos)
     {
@@ -25,7 +34,7 @@ public class ObjectPool : MonoBehaviour
 
         foreach (GameObject poolObj in _poolDict[unitNum])
         {
-            if(!poolObj.activeSelf)
+            if (!poolObj.activeSelf)
             {
                 select = poolObj;
                 select.SetActive(true);
@@ -34,7 +43,7 @@ public class ObjectPool : MonoBehaviour
             }
         }
 
-        if(select == null)
+        if (select == null)
         {
             select = PhotonNetwork.Instantiate($"Prefabs/Unit{unitNum}", spawnPos, Quaternion.identity);
             _poolDict[unitNum].Add(select);
@@ -42,5 +51,4 @@ public class ObjectPool : MonoBehaviour
 
         return select;
     }
-
 }
