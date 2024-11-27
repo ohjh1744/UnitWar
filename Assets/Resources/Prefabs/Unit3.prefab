@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 6185648359582366872}
   - component: {fileID: 6751665879744885589}
   - component: {fileID: 6540079346438420228}
+  - component: {fileID: 1384213370010327466}
   m_Layer: 0
   m_Name: Unit3
   m_TagString: Untagged
@@ -209,7 +210,9 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 7059484078022742706}
+  - {fileID: 1384213370010327466}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -235,7 +238,7 @@ MonoBehaviour:
   _hitColiders: []
   _hitObject: {fileID: 0}
   _attackTarget: {fileID: 0}
-  _hitRadius: 0.6
+  _hitRadius: 0.8
   _findLoadTime: 1
   _hasReceivedMove: 0
   _setFalseTime: 0
@@ -288,3 +291,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1384213370010327466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4279203266931291058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

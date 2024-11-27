@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using Photon.Pun;
 
-public class WalkState : MonoBehaviourPun, IState
+public class WalkState : IState
 {
     private UnitController _unitController;
 
@@ -54,7 +54,7 @@ public class WalkState : MonoBehaviourPun, IState
         {
             _currentAttackTarget = _data.AttackTarget.transform.position;
         }
-        _checkAttackTargetTime = 0;
+        _checkAttackTargetTime = _data.FindLoadTime;
     }
 
     //순서 바꾸지 말기!
@@ -62,33 +62,31 @@ public class WalkState : MonoBehaviourPun, IState
     {
         _checkAttackTargetTime += Time.deltaTime;
 
-        // 이동 마지막 경로까지 이동을 끝냈다면, HasReceivedMove false.
-        if (_data.PathIndex == _data.Path.Count)
-        {
-            _data.HasReceivedMove = false;
-        }
-
         //상태전환 
         if (_data.HP <= 0)
         {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
+            //_unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
+            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
         }
 
         if (_data.HasReceivedMove == false)
         {
             if (_data.Path.Count == _data.PathIndex && _data.AttackTarget == null)
             {
-                _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
+                //_unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
+                _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
             }
             if (_data.HitObject != null)
             {
-                _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
+                //_unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
+                _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Attack);
             }
         }
 
         // 재탐색
         if (_data.AttackTarget != null && (_data.AttackTarget.transform.position != _currentAttackTarget && _checkAttackTargetTime > _data.FindLoadTime))
         {
+            Debug.Log("aaaaaaaaaah");
             ReSearchPath();
         }
 
@@ -97,6 +95,13 @@ public class WalkState : MonoBehaviourPun, IState
         {
             DoWalk(_data.Path[_data.PathIndex]);
         }
+
+        // 이동 마지막 경로까지 이동을 끝냈다면, HasReceivedMove false.
+        if (_data.PathIndex == _data.Path.Count)
+        {
+            _data.HasReceivedMove = false;
+        }
+
 
     }
 

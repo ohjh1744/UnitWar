@@ -6,7 +6,7 @@ using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AttackState : MonoBehaviourPun, IState
+public class AttackState : IState
 {
     private UnitController _unitController;
 
@@ -58,15 +58,18 @@ public class AttackState : MonoBehaviourPun, IState
 
         if (_data.HP <= 0)
         {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
+            //_unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
+            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
         }
         if (_data.Path.Count == _data.PathIndex && _data.HitObject == null)
         {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
+            //_unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
+            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
         }
         if ((_data.HasReceivedMove == true || _data.HitObject == null) && _data.Path.Count > 0 && _data.PathIndex != _data.Path.Count)
         {
-            _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
+            //_unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
+            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Walk);
         }
 
         DoAttack();

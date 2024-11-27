@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
 public enum EStates { Idle, Walk, Attack, Dead, Size}
-public class UnitController : MonoBehaviour, IDamageable
+public class UnitController : MonoBehaviourPun, IDamageable
 {
 
     [SerializeField] private AStar _aStar;
@@ -31,7 +32,8 @@ public class UnitController : MonoBehaviour, IDamageable
     {
         //죽고 Pull에서 다시 생성될때, Data Reset해주기
         ResetData();
-        ChangeState(_states[(int)EStates.Idle]);
+        photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
+        //ChangeState(_states[(int)EStates.Idle]);
     }
 
     private void Update()
@@ -81,18 +83,18 @@ public class UnitController : MonoBehaviour, IDamageable
         _unitData.HitObject = null;
         _unitData.AttackTarget = null;
         _unitData.HasReceivedMove = false;
-        //_unitData.HasReceivedAttack = false;
         
     }
 
-    public void ChangeState(IState newState)
+    [PunRPC]
+    public void ChangeState(int newStateIndex)
     {
         if (_currentState != null)
         {
             _currentState.OnExit();
         }
 
-        _currentState = newState;
+        _currentState = _states[newStateIndex];
         _currentState.OnEnter();
 
     }

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public enum EUnit {Zealot, DarkTemplar, Juggling, Ultralisk}
 
-public class UnitData : MonoBehaviour
+public class UnitData : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private EUnit _unitType;
     public EUnit UnitType { get { return _unitType;} private set { } }
@@ -48,4 +49,55 @@ public class UnitData : MonoBehaviour
 
     [SerializeField] private float _setFalseTime; // 죽는 애니메이션 이후  setfalse되는 시간.
     public float SetFalseTime { get { return _setFalseTime; } set { _setFalseTime = value; } }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_hp);  //hp 보내기
+            stream.SendNext(_hasReceivedMove); // 명령여부 보내기
+            stream.SendNext(_path.Count); // path 개수 보내기
+            stream.SendNext(_pathIndex); //  PathIndex 보내기
+
+            foreach(Vector2Int Point in _path)  //Path 보내기
+            {
+                stream.SendNext(Point.x);
+                stream.SendNext(Point.y);
+            }
+
+            //stream.SendNext(_attackTarget.GetComponent<PhotonView>().ViewID); //ID보내기
+
+        }
+        else if (stream.IsReading)
+        {
+            _hp = (int)stream.ReceiveNext(); // hp 받기
+            _hasReceivedMove = (bool)stream.ReceiveNext(); //명령여부 받기
+            int pathCount = (int)stream.ReceiveNext();// path개수 받기
+            _pathIndex = (int)stream.ReceiveNext(); // PathIndex 받기
+
+            _path.Clear();
+
+            for(int i = 0; i < pathCount; i++)  //Path 받기
+            {
+                int x = (int)stream.ReceiveNext();
+                int y = (int)stream.ReceiveNext();
+                _path.Add(new Vector2Int(x, y));
+            }
+
+            
+            //int otherID = (int)stream.ReceiveNext();// ID 받기
+
+            //PhotonView other = PhotonView.Find(otherID); 
+
+            //// 동기화가 되지않는 문제 발생.
+            //if(other != null)
+            //{
+            //    _attackTarget = other.GetComponent<UnitData>()._attackTarget;
+            //    _hitColiders =  other.GetComponent<UnitData>()._hitColiders;
+            //    _hitObject = other.GetComponent<UnitData>()._hitObject;
+            //}
+
+
+        }
+    }
 }
