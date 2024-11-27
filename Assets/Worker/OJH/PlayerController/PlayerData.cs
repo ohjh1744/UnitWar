@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerData : MonoBehaviourPun
+public class PlayerData : MonoBehaviourPun , IPunObservable
 {
     [SerializeField] private EUnit _unitType;
 
@@ -49,4 +49,15 @@ public class PlayerData : MonoBehaviourPun
 
     public UnityAction OnHpChanged;
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_hp);
+        }
+        else if (stream.IsReading)
+        {
+            _hp = (int)stream.ReceiveNext();
+        }
+    }
 }
