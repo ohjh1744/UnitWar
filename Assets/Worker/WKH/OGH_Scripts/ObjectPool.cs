@@ -8,6 +8,8 @@ public class ObjectPool : MonoBehaviourPun
 
     private List<GameObject>[] _poolDict;                   // 오브젝트 리스트
 
+    private GameObject _select;
+
     private void Awake()
     {
         if (Instance == null)
@@ -30,25 +32,26 @@ public class ObjectPool : MonoBehaviourPun
 
     public GameObject GetObject(int unitNum, Vector3 spawnPos)
     {
-        GameObject select = null;
+        _select = null;
 
         foreach (GameObject poolObj in _poolDict[unitNum])
         {
+            // 생성이 아닌 setfalse하고 settrue하는 부분은 동기화가 되어있지 않기때문에 Unit쪽에서 RPc를 통해 다른 PC에서도 보이게하도로갛자.
             if (!poolObj.activeSelf)
             {
-                select = poolObj;
-                select.SetActive(true);
-                select.transform.position = spawnPos;
+                _select = poolObj;
+                _select.SetActive(true);
+                _select.transform.position = spawnPos;
                 break;
             }
         }
 
-        if (select == null)
+        if (_select == null)
         {
-            select = PhotonNetwork.Instantiate($"Prefabs/Unit{unitNum}", spawnPos, Quaternion.identity);
-            _poolDict[unitNum].Add(select);
+            _select = PhotonNetwork.Instantiate($"Prefabs/Unit{unitNum}", spawnPos, Quaternion.identity);
+            _poolDict[unitNum].Add(_select);
         }
 
-        return select;
+        return _select;
     }
 }
