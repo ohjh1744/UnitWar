@@ -15,9 +15,16 @@ public class MinimapController : MonoBehaviour
 
     [SerializeField] private GameObject _test;      // 테스트용 오브젝트
 
+    [SerializeField] private Vector2 _mousePos;
+
+    [SerializeField] Camera _camera;
+
+    [SerializeField] CameraController _mainCam;
+
 
     private void Start()
     {
+        _camera = GetComponent<Camera>();
         _rightTop = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0));
         _leftTop = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         _rightBottom = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
@@ -26,7 +33,11 @@ public class MinimapController : MonoBehaviour
     }
     private void Update()
     {
-        ChaseMainCam();
+        //ChaseMainCam();
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    CheckMousePos();
+        //}
     }
 
     private void ChaseMainCam()
@@ -41,5 +52,21 @@ public class MinimapController : MonoBehaviour
         //Debug.DrawLine(_rightBottom, _rightTop, Color.red);
 
         _test.transform.position = Camera.main.transform.position + new Vector3(0, 0, 10);
+    }
+
+    private void CheckMousePos()
+    {
+        _mousePos = Input.mousePosition;
+        _mousePos = _camera.ScreenToWorldPoint(_mousePos);
+        StartCoroutine(PauseMainCamMove());
+        Camera.main.transform.position = _mousePos;
+    }
+
+    IEnumerator PauseMainCamMove()
+    {
+        _mainCam.enabled = false;
+        yield return new WaitForSeconds(1);
+        _mainCam.enabled = true;
+        yield break;
     }
 }

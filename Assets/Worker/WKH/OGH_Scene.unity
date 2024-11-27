@@ -186,6 +186,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 544704811, guid: 51ce2469cf66be542be5495bfa1697e2, type: 3}
+      propertyPath: _mainCam
+      value: 
+      objectReference: {fileID: 1655581471}
+    - target: {fileID: 1693862541, guid: 51ce2469cf66be542be5495bfa1697e2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4281841011898413971, guid: 51ce2469cf66be542be5495bfa1697e2, type: 3}
       propertyPath: m_Name
       value: Minimap
@@ -442,7 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
-  _borderDistance: 100
+  _borderDistance: 50
   _cameraScale: 2.5
   _moveBoundaryMin: {x: 0, y: 0}
   _moveBoundaryMax: {x: 0, y: 0}
