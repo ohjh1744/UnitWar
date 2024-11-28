@@ -105,13 +105,14 @@ public class AttackState : IState
             _attackDir = _data.HitObject.transform.position - _unitController.transform.position;
             PlayAttackAnimation();
         }
+
     }
 
     //FIX ME: Walk 애니메이션은 방향에 따라 좌,우만 재생 (24.11/15 16:30)
     private void PlayAttackAnimation()
     {
 
-        if (_attackDir.normalized.x > 0)
+        if (_attackDir.normalized.x >= 0)
         {
             //오른쪽 공격 애니메이션 작동
             _render.flipX = false;
