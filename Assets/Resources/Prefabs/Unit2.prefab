@@ -146,12 +146,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitType: 2
-  _hp: 100
-  _power: 5
+  _hp: 50
+  _power: 3
   _damageRate: 0.6
   _path: []
   _pathIndex: 0
-  _moveSpeed: 2
+  _moveSpeed: 4
   _hitColiders: []
   _hitObject: {fileID: 0}
   _attackTarget: {fileID: 0}

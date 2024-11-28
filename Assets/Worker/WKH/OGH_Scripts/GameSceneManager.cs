@@ -31,7 +31,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         if(Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {

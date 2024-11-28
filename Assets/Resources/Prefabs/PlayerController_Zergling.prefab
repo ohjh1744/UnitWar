@@ -665,10 +665,10 @@ MonoBehaviour:
   _aStar: {fileID: 8763637762513871611}
   _unitSpawner: {fileID: 354589250617588845}
   _target: {fileID: 0}
-  _spawnTime: 3
+  _spawnTime: 1
   _spawnPos: {x: 17, y: -10, z: 0}
-  _hp: 100
-  _maxHp: 100
+  _hp: 3000
+  _maxHp: 3000
 --- !u!58 &8001133814529120700
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -531,7 +531,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -264760545192145678}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -666,8 +667,8 @@ MonoBehaviour:
   _target: {fileID: 0}
   _spawnTime: 4
   _spawnPos: {x: -18, y: -10, z: 0}
-  _hp: 100
-  _maxHp: 100
+  _hp: 3000
+  _maxHp: 3000
 --- !u!58 &-5480153290760983768
 CircleCollider2D:
   m_ObjectHideFlags: 0

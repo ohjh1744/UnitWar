@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitType: 0
-  _hp: 500
+  _hp: 100
   _power: 5
   _damageRate: 0.9
   _path: []
