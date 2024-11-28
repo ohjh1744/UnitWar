@@ -95,7 +95,7 @@ public class RoomPanel : UIBInder
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("SceneOJH");
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
     }
