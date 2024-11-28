@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 
 public enum EUnit {Zealot, DarkTemplar, Juggling, Ultralisk}
+public enum ESound {Attack, Dead};
 
 public class UnitData : MonoBehaviourPun, IPunObservable
 {
@@ -52,6 +53,9 @@ public class UnitData : MonoBehaviourPun, IPunObservable
     [SerializeField] private float _setFalseTime; // 죽는 애니메이션 이후  setfalse되는 시간.
     public float SetFalseTime { get { return _setFalseTime; } set { _setFalseTime = value; } }
 
+    [SerializeField] private AudioClip[] _audioCLips;
+
+    public AudioClip[] AudioCLips { get { return _audioCLips; } private set { } }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
