@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,13 +69,18 @@ public class UnitController : MonoBehaviourPun, IDamageable
                 if (_unitData.HitColiders[i].gameObject != gameObject && _unitData.HitColiders[i].tag != "Obstacle" && ((otherUnit != null && otherUnit.UnitType != _unitData.UnitType) ||( otherPlayer != null && otherPlayer.UnitType != _unitData.UnitType)))
                 {
                     _unitData.HitObject = _unitData.HitColiders[i];
-                    // 만약 공격대상이 지정된 경우, 공격대상을 HitObject로 변경.
-                    if (_unitData.AttackTarget != null)
+                    // 만약 공격대상이 지정된 경우, 공격대상을 HitObject로 변경.  -> 지금 문제는 AttackTarget이 HitColiders에 없어도, AttackTarget을 때리는 문제 발생.
+                    if (_unitData.AttackTarget != null && Array.Exists(_unitData.HitColiders, c => c.gameObject == _unitData.AttackTarget))
                     {
                         _unitData.HitObject = _unitData.AttackTarget.GetComponent<Collider2D>();
                     }
                     break;
                 }
+                else
+                {
+                    _unitData.HitObject = null;
+                }
+
             }
         }
 
