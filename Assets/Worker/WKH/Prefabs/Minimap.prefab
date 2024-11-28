@@ -242,12 +242,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2538829591022691381}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c13904a5c62ecf34e9f830221ba18bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _test: {fileID: 780776157}
+  _mousePos: {x: 0, y: 0}
+  _camera: {fileID: 0}
+  _mainCam: {fileID: 0}
 --- !u!1 &4281841011898413971
 GameObject:
   m_ObjectHideFlags: 0
