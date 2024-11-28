@@ -14,9 +14,25 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private Vector3 _targetPosition; // 카메라가 이동할 목표 위치
 
+    private bool _isSet;
+    
+
     void Update()
     {
-        MoveCamera();
+        if(GameSceneManager.Instance.IsSetCam)
+        {
+            SetCamera();
+            MoveCamera();
+        }
+    }
+
+    private void SetCamera()
+    {
+        if(_isSet == false)
+        {
+            _targetPosition = transform.position;
+            _isSet = true;
+        }
     }
 
     private void MoveCamera()
@@ -42,7 +58,7 @@ public class CameraController : MonoBehaviour
         {
             _targetPosition.y += _moveSpeed * Time.deltaTime;
         }
-        Debug.Log($"{ _targetPosition.x}, { _targetPosition.y}");
+        //Debug.Log($"{ _targetPosition.x}, { _targetPosition.y}");
          //카메라 이동 범위 제한
         _targetPosition.x = Mathf.Clamp(_targetPosition.x, _moveBoundaryMin.x, _moveBoundaryMax.x);
         _targetPosition.y = Mathf.Clamp(_targetPosition.y, _moveBoundaryMin.y, _moveBoundaryMax.y);

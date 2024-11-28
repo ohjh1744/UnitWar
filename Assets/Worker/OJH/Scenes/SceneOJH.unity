@@ -239,9 +239,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 10
   _borderDistance: 50
-  _cameraScale: 10
-  _moveBoundaryMin: {x: 0, y: 0}
-  _moveBoundaryMax: {x: 0, y: 0}
+  _moveBoundaryMin: {x: -20, y: -20}
+  _moveBoundaryMax: {x: 20, y: 20}
   _targetPosition: {x: 0, y: 0, z: -10}
 --- !u!81 &754979244
 AudioListener:
