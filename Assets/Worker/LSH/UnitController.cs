@@ -19,6 +19,10 @@ public class UnitController : MonoBehaviourPun, IDamageable
     private IState[] _states = new IState[(int)EStates.Size];
     public IState[] States { get { return _states; } set { } }
 
+    [SerializeField] private AudioSource _audio;
+
+    public AudioSource Audio { get { return _audio; } private set { } }
+
 
     private void Awake()
     {
