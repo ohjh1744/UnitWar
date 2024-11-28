@@ -3,6 +3,7 @@ using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviourPunCallbacks
 {
@@ -20,35 +21,104 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private int[] _unitCounts;
 
+    private Coroutine _waitRoutine;
+
+    private bool _isLoad;
+
     public int[] UnitCounts { get { return _unitCounts; } private set { } }
 
     [SerializeField] private int[] _curUnitCounts;
 
     public int[] CurUnitCounts { get { return _curUnitCounts; } set { _curUnitCounts = value; } }
 
+    private bool _isSetCam;
+
+    public bool IsSetCam { get { return _isSetCam; } private set { } }
+
     void Start()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-        
-        PhotonNetwork.LocalPlayer.NickName = $"Player {Random.Range(1000, 10000)}";
-        PhotonNetwork.ConnectUsingSettings();
+        //if (SceneManager.GetActiveScene().buildIndex == 1)
+        //{
+        //    Debug.Log("씬전환32");
+        //    PhotonNetwork.LocalPlayer.SetLoad(true);
+        //}
+    }
+    //private void OnEnable()
+    //{
+    //    SceneManager.sceneLoaded += OnSceneLoaded;
+    //}
+    //
+    //private void OnDisable()
+    //{
+    //    SceneManager.sceneLoaded -= OnSceneLoaded;
+    //}
+    //
+    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //{
+    //    if (SceneManager.GetActiveScene().buildIndex == 1)
+    //    {
+    //        Debug.Log("씬전환3");
+    //        PhotonNetwork.LocalPlayer.SetLoad(true);
+    //    }
+    //}
 
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            if (!_isLoad)
+            {
+                Debug.Log("씬전환3");
+                PhotonNetwork.LocalPlayer.SetLoad(true);
+                _isLoad = true;
+            }
+        }
     }
 
-    public override void OnConnectedToMaster()
+    private bool CheckAllLoad()
     {
-        RoomOptions options = new RoomOptions();
-        options.MaxPlayers = 4;
-        options.IsVisible = false;
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.GetLoad() == false)
+            {
+                return false;
+            }
+        }
 
-        PhotonNetwork.JoinOrCreateRoom(RoomName, options, TypedLobby.Default);
+        return true;
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        Debug.Log("씬전환4");
+        if (changedProps.ContainsKey(CustomProperty.LOAD))
+        {
+            Debug.Log($"{targetPlayer.NickName}이 로딩이 완료되었다.");
+            bool allLoaded = CheckAllLoad();
+            Debug.Log($"모든 플레이어가 로딩 완료되었는가: {allLoaded}");
+            if (allLoaded)
+            {
+                GameStart();
+            }
+        }
+    }
+
+    private void GameStart()
+    {
+        if(_waitRoutine != null)
+        {
+            StopCoroutine(_waitRoutine);
+        }
+        StartCoroutine(WaitPlayerEnter());
     }
 
     IEnumerator WaitPlayerEnter()
@@ -61,11 +131,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         }
         Debug.Log("모든 플레이어가 접속했습니다. 게임시작 준비 중");
         StartCoroutine(StartDelayRoutine());
-    }
-
-    public override void OnJoinedRoom()
-    {
-        StartCoroutine(WaitPlayerEnter());
     }
 
 
@@ -99,19 +164,23 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             {
                 case 0:
                     GameObject playerController_zealot = PhotonNetwork.Instantiate("Prefabs/PlayerController_Zealot", _spawnerPos[0], Quaternion.identity);
-                    Camera.main.transform.position = _spawnerPos[0] + new Vector3(0,0,-10);
+                    Camera.main.transform.position = _spawnerPos[0] + new Vector3(0, 0, -10);
+                    _isSetCam = true;
                     break;
                 case 1:
                     GameObject playerController_DarkTempler = PhotonNetwork.Instantiate("Prefabs/PlayerController_DarkTempler", _spawnerPos[1], Quaternion.identity);
                     Camera.main.transform.position = _spawnerPos[1] + new Vector3(0, 0, -10);
+                    _isSetCam = true;
                     break;
                 case 2:
                     GameObject playerController_Zergling = PhotonNetwork.Instantiate("Prefabs/PlayerController_Zergling", _spawnerPos[2], Quaternion.identity);
                     Camera.main.transform.position = _spawnerPos[2] + new Vector3(0, 0, -10);
+                    _isSetCam = true;
                     break;
                 case 3:
                     GameObject playerController_Ultrarisk = PhotonNetwork.Instantiate("Prefabs/PlayerController_Ultrarisk", _spawnerPos[3], Quaternion.identity);
                     Camera.main.transform.position = _spawnerPos[3] + new Vector3(0, 0, -10);
+                    _isSetCam = true;
                     break;
                 default:
                     break;
