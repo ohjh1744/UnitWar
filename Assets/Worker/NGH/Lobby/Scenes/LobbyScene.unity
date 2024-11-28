@@ -1825,6 +1825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!1 &274218662
 GameObject:
   m_ObjectHideFlags: 0
@@ -11189,6 +11190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!1 &1582686672
 GameObject:
   m_ObjectHideFlags: 0
@@ -11703,6 +11705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!1 &1615726872
 GameObject:
   m_ObjectHideFlags: 0
@@ -12573,6 +12576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!1 &1731075823
 GameObject:
   m_ObjectHideFlags: 0
@@ -16459,6 +16463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!1 &2064758812
 GameObject:
   m_ObjectHideFlags: 0
@@ -17325,19 +17330,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 231143540298622730}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8371969074817434935}
-        m_TargetAssemblyTypeName: MainPanel, Assembly-CSharp
-        m_MethodName: RandomMatching
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &22625693189060722
 GameObject:
   m_ObjectHideFlags: 0
@@ -17706,19 +17699,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7728368345489112287}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8371969074817434935}
-        m_TargetAssemblyTypeName: MainPanel, Assembly-CSharp
-        m_MethodName: CreateRoomMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &681769855519656083
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20694,6 +20675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!224 &6974160403061380918
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21154,6 +21136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!114 &7752202216958605596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21324,6 +21307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!114 &7963416687352020998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21511,6 +21495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!1 &8057490256788556644
 GameObject:
   m_ObjectHideFlags: 0
@@ -22236,6 +22221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!1 &8904657565324189112
 GameObject:
   m_ObjectHideFlags: 0
@@ -22297,6 +22283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!222 &8961629435556035964
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22508,6 +22495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!1 &9183670546213507308
 GameObject:
   m_ObjectHideFlags: 0
@@ -22540,6 +22528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fdcde5fa8d4c62439cb8dc3bdb85e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonText: {fileID: 0}
 --- !u!222 &9222185004122226820
 CanvasRenderer:
   m_ObjectHideFlags: 0
