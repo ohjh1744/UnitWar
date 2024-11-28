@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 
 public enum EUnit {Zealot, DarkTemplar, Juggling, Ultralisk}
+public enum ESound {Attack, Dead};
 
 public class UnitData : MonoBehaviourPun, IPunObservable
 {
@@ -30,6 +31,8 @@ public class UnitData : MonoBehaviourPun, IPunObservable
     public float MoveSpeed { get{ return _moveSpeed; } private set { } }
 
     [SerializeField] private Collider2D[] _hitColiders; // 공격가능한 대상들 
+
+    // HitCOliders와 HitObject의 경우 굳이 동기화를 안해도 되는것으로 판단.
     public Collider2D[] HitColiders { get { return _hitColiders; }  set { _hitColiders = value; } }
 
     [SerializeField] private Collider2D _hitObject; // 랜덤 공격 대상 
@@ -50,6 +53,9 @@ public class UnitData : MonoBehaviourPun, IPunObservable
     [SerializeField] private float _setFalseTime; // 죽는 애니메이션 이후  setfalse되는 시간.
     public float SetFalseTime { get { return _setFalseTime; } set { _setFalseTime = value; } }
 
+    [SerializeField] private AudioClip[] _audioCLips;
+
+    public AudioClip[] AudioCLips { get { return _audioCLips; } private set { } }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -66,7 +72,16 @@ public class UnitData : MonoBehaviourPun, IPunObservable
                 stream.SendNext(Point.y);
             }
 
-            //stream.SendNext(_attackTarget.GetComponent<PhotonView>().ViewID); //ID보내기
+            if(_attackTarget != null)
+            {
+                stream.SendNext(_attackTarget.GetComponent<PhotonView>().ViewID); //ID보내기
+            }
+            else
+            {
+                stream.SendNext(0); //ID보내기
+            }
+
+
 
         }
         else if (stream.IsReading)
@@ -85,18 +100,21 @@ public class UnitData : MonoBehaviourPun, IPunObservable
                 _path.Add(new Vector2Int(x, y));
             }
 
-            
-            //int otherID = (int)stream.ReceiveNext();// ID 받기
 
-            //PhotonView other = PhotonView.Find(otherID); 
+            int otherID = (int)stream.ReceiveNext();// ID 받기
 
-            //// 동기화가 되지않는 문제 발생.
-            //if(other != null)
-            //{
-            //    _attackTarget = other.GetComponent<UnitData>()._attackTarget;
-            //    _hitColiders =  other.GetComponent<UnitData>()._hitColiders;
-            //    _hitObject = other.GetComponent<UnitData>()._hitObject;
-            //}
+            if(otherID == 0)
+            {
+                _attackTarget = null;
+            }
+            else
+            {
+                PhotonView other = PhotonView.Find(otherID);
+                if (other != null)
+                {
+                    _attackTarget = other.gameObject;
+                }
+            }
 
 
         }

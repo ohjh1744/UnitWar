@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     [SerializeField] private float _lineWidth;
 
-    [SerializeField] private UnitSpawner _unitSpawner;
-
     private float _time;                                              // Unit별 생성 주기 체크.
 
     [SerializeField] private Slider _hpSlider;
@@ -185,6 +183,7 @@ public class PlayerController : MonoBehaviourPun, IDamageable
         int yPos = 0;
 
         int dirIndex = 0;
+        int spawnIndex = 0;
 
         for (int i = 0; i < _playerData.Units.Count; i++)
         {
@@ -221,18 +220,22 @@ public class PlayerController : MonoBehaviourPun, IDamageable
                 if (dirIndex == _endPosDir.Length - 1)
                 {
                     dirIndex = 0;
+                    spawnIndex++;
                 }
                 else
                 {
                     dirIndex++;
                 }
 
-                xPos = _endPosDir[dirIndex].x;
-                yPos = _endPosDir[dirIndex].y;
+                xPos = _endPosDir[dirIndex].x + spawnIndex;
+                yPos = _endPosDir[dirIndex].y + spawnIndex;
             }
         }
 
     }
+
+    // Unit 소환 Position 위치
+    private int _unitPosIndex = 0;
 
     private void CreateUnit()
     {
@@ -244,8 +247,13 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             {
                 if(GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType] < GameSceneManager.Instance.UnitCounts[(int)_playerData.UnitType])
                 {
-                    _unitSpawner.Spawn((int)_playerData.UnitType, GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType], _playerData.SpawnPos);
+                    if(_unitPosIndex == GameSceneManager.Instance.UnitCounts[(int)_playerData.UnitType])
+                    {
+                        _unitPosIndex = 0;
+                    }
+                    _playerData.UnitSpawner.Spawn((int)_playerData.UnitType, _unitPosIndex, _playerData.SpawnPos);
                     GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType]++;
+                    _unitPosIndex++;
                 }
                 _time = 0;
             }

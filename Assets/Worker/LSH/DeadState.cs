@@ -39,6 +39,7 @@ public class DeadState : MonoBehaviourPun, IState
         _curTime = 0;
         Debug.Log("Dead상태 진입");
         PlayDeadAnimation();
+        _unitController.Audio.PlayOneShot(_data.AudioCLips[(int)ESound.Dead]);
     }
 
     public void OnUpdate()

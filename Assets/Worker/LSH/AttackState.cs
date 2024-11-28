@@ -96,21 +96,23 @@ public class AttackState : IState
             IDamageable damageable = _data.HitObject.GetComponent<IDamageable>();
             damageable.GetDamage(_data.Power);
             _curDamageRate = 0;
+            _unitController.Audio.PlayOneShot(_data.AudioCLips[(int)ESound.Attack]);
         }
 
-        // 상대 unit과의 바라보는 방향 계산.
+        // 상대 unit과의 바라보는 방향 계산하여 애니메이션 동작.
         if (_data.HitObject != null)
         {
             _attackDir = _data.HitObject.transform.position - _unitController.transform.position;
             PlayAttackAnimation();
         }
+
     }
 
     //FIX ME: Walk 애니메이션은 방향에 따라 좌,우만 재생 (24.11/15 16:30)
     private void PlayAttackAnimation()
     {
 
-        if (_attackDir.normalized.x > 0)
+        if (_attackDir.normalized.x >= 0)
         {
             //오른쪽 공격 애니메이션 작동
             _render.flipX = false;
