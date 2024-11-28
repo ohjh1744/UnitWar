@@ -32,6 +32,7 @@ public class UnitController : MonoBehaviourPun, IDamageable
     {
         //죽고 Pull에서 다시 생성될때, Data Reset해주기
         ResetData();
+        photonView.RPC("SetTrue", RpcTarget.All);
         photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
         //ChangeState(_states[(int)EStates.Idle]);
     }
@@ -85,6 +86,12 @@ public class UnitController : MonoBehaviourPun, IDamageable
         _unitData.AttackTarget = null;
         _unitData.HasReceivedMove = false;
         
+    }
+
+    [PunRPC]
+    public void SetTrue()
+    {
+        gameObject.SetActive(true);
     }
 
     [PunRPC]

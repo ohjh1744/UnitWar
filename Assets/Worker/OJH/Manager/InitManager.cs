@@ -11,7 +11,7 @@ public static class InitManager
         //GameObject.Instantiate(Resources.Load<DataManager>("Manager/DataManager"));
         //GameObject.Instantiate(Resources.Load<SoundManager>("Manager/SoundManager"));
         GameObject.Instantiate(Resources.Load<GameSceneManager>("Manager/GameSceneManager"));
-        //GameObject.Instantiate(Resources.Load<ObjectPool>("Manager/ObjectPool"));
+        GameObject.Instantiate(Resources.Load<ObjectPool>("Manager/ObjectPool"));
     }
 
 

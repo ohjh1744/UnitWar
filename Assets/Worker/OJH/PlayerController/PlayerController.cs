@@ -25,15 +25,6 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     [SerializeField] private UnitSpawner _unitSpawner;
 
-    private static int[] _unitCounts;
-
-    public static int[] UnitCounts { get { return _unitCounts; } private set { } }
-
-    private static int[] _curUnitCounts;
-
-    public static int[] CurUnitCounts { get { return _curUnitCounts; } set { _curUnitCounts = value; } }
-
-
     private float _time;                                              // Unit별 생성 주기 체크.
 
     [SerializeField] private Slider _hpSlider;
@@ -49,20 +40,6 @@ public class PlayerController : MonoBehaviourPun, IDamageable
         new Vector2Int(-2, +2), // 좌상
         new Vector2Int(-2, -2), // 좌하
     };
-
-    private void Awake()
-    {
-        _unitCounts = new int[4];
-        _unitCounts[0] = 10;
-        _unitCounts[1] = 10;
-        _unitCounts[2] = 10;
-        _unitCounts[3] = 10;
-        _curUnitCounts = new int[4];
-        _curUnitCounts[0] = 0;
-        _curUnitCounts[1] = 0;
-        _curUnitCounts[2] = 0;
-        _curUnitCounts[3] = 0;
-    }
 
     private void OnEnable()
     {
@@ -91,12 +68,10 @@ public class PlayerController : MonoBehaviourPun, IDamageable
     {
         if (photonView.IsMine)
         {
-            Debug.Log($"{PhotonNetwork.LocalPlayer.IsLocal},{gameObject.name}");
             SelectUnits();
             CheckCommand();
             CreateUnit();
         }
-        Debug.Log($"{_playerData.UnitType},{_curUnitCounts[(int)_playerData.UnitType]},{_unitCounts[(int)_playerData.UnitType]}");
     }
 
     
@@ -267,48 +242,15 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
             if (_time >= _playerData.SpawnTime)
             {
-                if(_curUnitCounts[(int)_playerData.UnitType] < _unitCounts[(int)_playerData.UnitType])
+                if(GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType] < GameSceneManager.Instance.UnitCounts[(int)_playerData.UnitType])
                 {
-                    _unitSpawner.Spawn((int)_playerData.UnitType, _curUnitCounts[(int)_playerData.UnitType], _playerData.SpawnPos);
-                    _curUnitCounts[(int)_playerData.UnitType]++;
+                    _unitSpawner.Spawn((int)_playerData.UnitType, GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType], _playerData.SpawnPos);
+                    GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType]++;
                 }
                 _time = 0;
             }
         }
     }
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if(stream.IsWriting)
-    //    {
-    //        stream.SendNext(_curUnitCounts.Length);
-    //        
-    //        foreach(int count in _curUnitCounts)
-    //        {
-    //            stream.SendNext(count);
-    //        }
-    //        stream.SendNext(_unitCounts.Length);
-    //
-    //        foreach (int count in _unitCounts)
-    //        {
-    //            stream.SendNext(count);
-    //        }
-    //    }
-    //    else if(stream.IsReading)
-    //    {
-    //        int curLength = (int)stream.ReceiveNext();
-    //
-    //        for (int i = 0; i < curLength; i++)
-    //        {
-    //            _curUnitCounts[i] = (int)stream.ReceiveNext();
-    //        }
-    //        int length = (int)stream.ReceiveNext();
-    //
-    //        for(int i = 0;i < length; i++)
-    //        {
-    //            _unitCounts[i] = (int)stream.ReceiveNext();
-    //        }
-    //    }
-    //}
 
     public void GetDamage(int damage)
     {

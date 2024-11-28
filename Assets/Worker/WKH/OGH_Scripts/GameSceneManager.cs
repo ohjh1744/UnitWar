@@ -18,6 +18,14 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private Vector3[] _spawnerPos;                     // 스포너 위치
 
+    [SerializeField] private int[] _unitCounts;
+
+    public int[] UnitCounts { get { return _unitCounts; } private set { } }
+
+    [SerializeField] private int[] _curUnitCounts;
+
+    public int[] CurUnitCounts { get { return _curUnitCounts; } set { _curUnitCounts = value; } }
+
     void Start()
     {
         if(Instance == null)
