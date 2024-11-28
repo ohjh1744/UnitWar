@@ -588,7 +588,6 @@ MonoBehaviour:
   _lineRenderer: {fileID: 8459673582637169601}
   _lineZPos: -1
   _lineWidth: 0.1
-  _unitSpawner: {fileID: 8459673582637169600}
   _hpSlider: {fileID: 7878351781050375005}
 --- !u!114 &8459673582637169615
 MonoBehaviour:
@@ -608,7 +607,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -2991268026201275749}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
