@@ -96,9 +96,10 @@ public class AttackState : IState
             IDamageable damageable = _data.HitObject.GetComponent<IDamageable>();
             damageable.GetDamage(_data.Power);
             _curDamageRate = 0;
+            _unitController.Audio.PlayOneShot(_data.AudioCLips[(int)ESound.Attack]);
         }
 
-        // 상대 unit과의 바라보는 방향 계산.
+        // 상대 unit과의 바라보는 방향 계산하여 애니메이션 동작.
         if (_data.HitObject != null)
         {
             _attackDir = _data.HitObject.transform.position - _unitController.transform.position;
