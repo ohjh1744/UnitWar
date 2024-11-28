@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     [SerializeField] private float _lineWidth;
 
-    [SerializeField] private UnitSpawner _unitSpawner;
-
     private float _time;                                              // Unit喊 积己 林扁 眉农.
 
     [SerializeField] private Slider _hpSlider;
@@ -244,7 +242,7 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             {
                 if(GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType] < GameSceneManager.Instance.UnitCounts[(int)_playerData.UnitType])
                 {
-                    _unitSpawner.Spawn((int)_playerData.UnitType, GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType], _playerData.SpawnPos);
+                    _playerData.UnitSpawner.Spawn((int)_playerData.UnitType, GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType], _playerData.SpawnPos);
                     GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType]++;
                 }
                 _time = 0;
