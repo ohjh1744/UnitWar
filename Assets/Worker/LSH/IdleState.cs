@@ -39,7 +39,7 @@ public class IdleState : IState
 
     public void OnUpdate()
     {
-        if (_data.HP <= 0 || GameSceneManager.Instance.IsFinish == true)
+        if (_data.HP <= 0 || (GameSceneManager.Instance.IsFinish == true && _unitController.photonView.IsMine == true))
         {
             //_unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
             _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
