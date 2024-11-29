@@ -8,6 +8,8 @@ public class ObjectPool : MonoBehaviourPun
 
     private List<GameObject>[] _poolDict;                   // 오브젝트 리스트
 
+    public List<GameObject>[] PoolDict { get { return _poolDict; } set { _poolDict = value; } }
+ 
     private GameObject _select;
 
     private void Awake()

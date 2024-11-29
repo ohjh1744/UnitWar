@@ -27,6 +27,12 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     [SerializeField] private Slider _hpSlider;
 
+    [SerializeField] private bool _isfinish;
+
+    [SerializeField] private GameObject _winImage;
+
+    [SerializeField] private GameObject _loseImage;
+
     private Vector2Int[] _endPosDir =
     {
         new Vector2Int( 0, +2), // 상
@@ -64,7 +70,9 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     void Update()
     {
-        if (photonView.IsMine)
+        GameEnd();
+        // 소유자 및 살아있는 상태에서만 
+        if (photonView.IsMine && GameSceneManager.Instance.IsFinish == false)
         {
             SelectUnits();
             CheckCommand();
@@ -72,6 +80,39 @@ public class PlayerController : MonoBehaviourPun, IDamageable
         }
     }
 
+    private void GameEnd()
+    {
+
+        if (GameSceneManager.Instance.CurPlayerCount == 1 && GameSceneManager.Instance.IsFinish == false)
+        {
+            Debug.Log("win!!");
+            _winImage.SetActive(true);
+            GameSceneManager.Instance.IsFinish = true;
+        }
+        else if (_playerData.HP <= 0 && GameSceneManager.Instance.IsFinish == false)
+        {
+            Debug.Log("Lose!!");
+            _loseImage.SetActive(true);
+            GameSceneManager.Instance.IsFinish = true;
+            photonView.RPC("UpdatePlayerCount", RpcTarget.All, 1);
+
+        }
+
+    }
+
+    public void GameExit()
+    {
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LoadLevel(0);
+    }
+
+
+    [PunRPC]
+    private void UpdatePlayerCount(int updateNum)
+    {
+        Debug.Log("인구감소!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        GameSceneManager.Instance.CurPlayerCount -= updateNum;
+    }
     
 
     // Unit선택하기

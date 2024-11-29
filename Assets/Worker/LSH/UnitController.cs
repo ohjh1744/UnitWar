@@ -39,7 +39,6 @@ public class UnitController : MonoBehaviourPun, IDamageable
         ResetData();
         photonView.RPC("SetTrue", RpcTarget.All);
         photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
-        //ChangeState(_states[(int)EStates.Idle]);
     }
 
     private void Update()

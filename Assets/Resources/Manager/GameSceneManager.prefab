@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameState: 0
-  _playerCount: 4
+  _playerCount: 2
   _spawnerPos:
   - {x: -19.4, y: 11.61, z: 0}
   - {x: 22.32, y: 11.3, z: 0}
@@ -55,6 +55,9 @@ MonoBehaviour:
   - {x: -19.64, y: -10.34, z: 0}
   _unitCounts: 0a0000000a0000000f00000008000000
   _curUnitCounts: 00000000000000000000000000000000
+  _originPlayerCount: 2
+  _curPlayerCount: 2
+  _audio: {fileID: 989988759296128608}
 --- !u!114 &133082116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +91,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 989bca3d51d0d614a8d86383ba9f7e03, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 1

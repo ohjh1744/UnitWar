@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
 public class PlayerData : MonoBehaviourPun , IPunObservable
 {
     [SerializeField] private EUnit _unitType;

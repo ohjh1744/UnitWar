@@ -12,24 +12,28 @@ public class RoomPanel : UIBInder
     [SerializeField] PlayerEntry[] _playerEntries;
     [SerializeField] Button _startButton;
 
-    private void Awake()
-    {
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
 
     private void OnEnable()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         UpdatePlayers();
 
         PlayerNumbering.OnPlayerNumberingChanged += UpdatePlayers;
 
+        //게임 씬 들어가기 전에 초기화해줘야할 변수들.
         PhotonNetwork.LocalPlayer.SetReady(false);
-        //PhotonNetwork.LocalPlayer.SetLoad(false);
+        PhotonNetwork.LocalPlayer.SetLoad(false);
+        GameSceneManager.Instance.CurPlayerCount = GameSceneManager.Instance.OriginPlayerCount;
+        GameSceneManager.Instance.IsFinish = false;
+        GameSceneManager.Instance.IsLoad = false;
+        ObjectPool.Instance.PoolDict = null;
     }
 
     private void OnDisable()
     {
         PlayerNumbering.OnPlayerNumberingChanged -= UpdatePlayers;
+        PhotonNetwork.AutomaticallySyncScene = false;
     }
 
     public void UpdatePlayers()
@@ -81,7 +85,7 @@ public class RoomPanel : UIBInder
 
     private bool CheckAllReady()
     {
-        if (PhotonNetwork.PlayerList.Length < 4)
+        if (PhotonNetwork.PlayerList.Length < 2)
             return false;
 
         foreach (Player player in PhotonNetwork.PlayerList)
