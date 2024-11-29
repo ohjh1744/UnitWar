@@ -70,10 +70,10 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     void Update()
     {
-        GameEnd();
         // 소유자 및 살아있는 상태에서만 
         if (photonView.IsMine && GameSceneManager.Instance.IsFinish == false)
         {
+            GameEnd();
             SelectUnits();
             CheckCommand();
             CreateUnit();
@@ -94,7 +94,9 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             Debug.Log("Lose!!");
             _loseImage.SetActive(true);
             GameSceneManager.Instance.IsFinish = true;
-            photonView.RPC("UpdatePlayerCount", RpcTarget.Others, 1);
+            GameSceneManager.Instance.CurPlayerCount--;
+            int playerCount = GameSceneManager.Instance.CurPlayerCount;
+            photonView.RPC("UpdatePlayerCount", RpcTarget.Others, playerCount);
 
         }
 
@@ -111,7 +113,7 @@ public class PlayerController : MonoBehaviourPun, IDamageable
     private void UpdatePlayerCount(int updateNum)
     {
         Debug.Log("인구감소!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        GameSceneManager.Instance.CurPlayerCount -= updateNum;
+        GameSceneManager.Instance.CurPlayerCount = updateNum;
     }
     
 
