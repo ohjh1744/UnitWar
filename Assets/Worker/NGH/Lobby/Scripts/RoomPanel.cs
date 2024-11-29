@@ -85,7 +85,7 @@ public class RoomPanel : UIBInder
 
     private bool CheckAllReady()
     {
-        if (PhotonNetwork.PlayerList.Length < 2)
+        if (PhotonNetwork.PlayerList.Length < 4)
             return false;
 
         foreach (Player player in PhotonNetwork.PlayerList)

@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameState: 0
-  _playerCount: 2
+  _playerCount: 4
   _spawnerPos:
   - {x: -19.4, y: 11.61, z: 0}
   - {x: 22.32, y: 11.3, z: 0}
