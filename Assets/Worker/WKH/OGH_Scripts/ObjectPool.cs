@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviourPun
@@ -24,6 +25,11 @@ public class ObjectPool : MonoBehaviourPun
             Destroy(gameObject);
         }
 
+        SetPool();
+    }
+
+    public void SetPool()
+    {
         _poolDict = new List<GameObject>[4];
         for (int i = 0; i < _poolDict.Length; i++)
         {

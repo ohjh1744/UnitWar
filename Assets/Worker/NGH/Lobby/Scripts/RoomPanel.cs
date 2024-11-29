@@ -27,7 +27,7 @@ public class RoomPanel : UIBInder
         GameSceneManager.Instance.CurPlayerCount = GameSceneManager.Instance.OriginPlayerCount;
         GameSceneManager.Instance.IsFinish = false;
         GameSceneManager.Instance.IsLoad = false;
-        ObjectPool.Instance.PoolDict = null;
+        ObjectPool.Instance.SetPool();
     }
 
     private void OnDisable()

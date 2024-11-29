@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             Debug.Log("Lose!!");
             _loseImage.SetActive(true);
             GameSceneManager.Instance.IsFinish = true;
-            photonView.RPC("UpdatePlayerCount", RpcTarget.All, 1);
+            photonView.RPC("UpdatePlayerCount", RpcTarget.Others, 1);
 
         }
 
