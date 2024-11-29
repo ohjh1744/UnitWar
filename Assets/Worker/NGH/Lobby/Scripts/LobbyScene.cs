@@ -15,7 +15,7 @@ public class LobbyScene : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        //PhotonNetwork.AutomaticallySyncScene = true;
 
         if (PhotonNetwork.InRoom)
         {

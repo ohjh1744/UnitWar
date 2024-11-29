@@ -24,6 +24,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     private Coroutine _waitRoutine;
 
     private bool _isLoad;
+    public bool IsLoad { get { return _isLoad;} set { _isLoad = value; } }
 
     public int[] UnitCounts { get { return _unitCounts; } private set { } }
 
@@ -31,9 +32,22 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
 
     public int[] CurUnitCounts { get { return _curUnitCounts; } set { _curUnitCounts = value; } }
 
-    private bool _isSetCam;
+    [SerializeField] private int _originPlayerCount;
+    public int OriginPlayerCount { get { return _originPlayerCount; }  private set { } }
 
+    [SerializeField] private int _curPlayerCount;
+    public int CurPlayerCount { get { return _curPlayerCount; } set { _curPlayerCount = value; } }
+
+    private bool _isSetCam;
     public bool IsSetCam { get { return _isSetCam; } private set { } }
+
+    [SerializeField] private AudioSource _audio;
+
+    // 게임 끝났는지 여부 
+    [SerializeField] private bool _isFinish;
+
+    public bool IsFinish { get { return _isFinish; } set { _isFinish = value; } }
+
 
     void Start()
     {
@@ -75,13 +89,22 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     {
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            if (!_isLoad)
+            if (_isLoad == false)
             {
+                //게임 소리 켜주기.
+                _audio.Play();
+                // MastrePC Scene따라가게 하지 않기위해서 게임씬쪽에서 false 처리 해주기.
+                PhotonNetwork.AutomaticallySyncScene = false;
                 Debug.Log("씬전환3");
                 PhotonNetwork.LocalPlayer.SetLoad(true);
                 _isLoad = true;
             }
         }
+        else
+        {
+            _audio.Stop();
+        }
+
     }
 
     private bool CheckAllLoad()

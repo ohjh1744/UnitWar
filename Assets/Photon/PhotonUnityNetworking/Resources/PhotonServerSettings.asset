@@ -42,6 +42,7 @@ MonoBehaviour:
   - ChangeState
   - SetUnitCount
   - SetTrue
+  - UpdatePlayerCount
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
