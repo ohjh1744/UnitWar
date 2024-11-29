@@ -55,9 +55,10 @@ MonoBehaviour:
   - {x: -19.64, y: -10.34, z: 0}
   _unitCounts: 0a0000000a0000000f00000008000000
   _curUnitCounts: 00000000000000000000000000000000
-  _originPlayerCount: 2
-  _curPlayerCount: 2
+  _originPlayerCount: 4
+  _curPlayerCount: 4
   _audio: {fileID: 989988759296128608}
+  _isFinish: 0
 --- !u!114 &133082116
 MonoBehaviour:
   m_ObjectHideFlags: 0

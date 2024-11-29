@@ -1502,8 +1502,8 @@ MonoBehaviour:
   _target: {fileID: 0}
   _spawnTime: 3
   _spawnPos: {x: 17, y: 12, z: 0}
-  _hp: 500
-  _maxHp: 500
+  _hp: 3000
+  _maxHp: 3000
 --- !u!120 &7781819388279062031
 LineRenderer:
   m_ObjectHideFlags: 0
