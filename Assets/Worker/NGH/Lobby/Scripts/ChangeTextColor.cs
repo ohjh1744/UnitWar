@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ChangeTextColor : UIBInder, IPointerEnterHandler, IPointerExitHandler
+public class ChangeTextColor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI buttonText; // 변경할 텍스트
 

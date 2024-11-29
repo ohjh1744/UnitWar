@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 //UIBinding
@@ -47,6 +49,29 @@ public class UIBInder : MonoBehaviour
         foreach (Component child in components)
         {
             componentDic.TryAdd((child.gameObject.name, components.GetType()), child);
+        }
+    }
+
+    public void BindButtons()
+    {
+        Button[] buttons = GetComponentsInChildren<Button>(true);
+        foreach(Button button in buttons)
+        {
+            button.onClick.AddListener(() => SoundManager.Instance.PlayUI("mousedown2"));
+        }
+    }
+
+    public void BindButtonTexts()
+    {
+        Button[] buttons = GetComponentsInChildren<Button>(true);
+        foreach (Button button in buttons)
+        {
+            TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                ChangeTextColor changeTextColor = button.gameObject.AddComponent<ChangeTextColor>();
+                changeTextColor.buttonText = text;
+            }
         }
     }
 
