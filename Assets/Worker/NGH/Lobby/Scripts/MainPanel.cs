@@ -33,6 +33,7 @@ public class MainPanel : UIBInder
 
             DeleteUserConfirm(eventData, email, password);
         });
+        AddEvent("QuitButton", EventType.Click, QuitGame);
     }
 
     private void OnEnable()
@@ -156,5 +157,13 @@ public class MainPanel : UIBInder
                         PhotonNetwork.Disconnect();
                     });
             });
+    }
+
+    public void QuitGame(PointerEventData eventData)
+    {
+        Application.Quit(); // 게임 종료
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
