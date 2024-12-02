@@ -60,11 +60,6 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
-        //if (SceneManager.GetActiveScene().buildIndex == 1)
-        //{
-        //    Debug.Log("씬전환32");
-        //    PhotonNetwork.LocalPlayer.SetLoad(true);
-        //}
     }
     //private void OnEnable()
     //{
@@ -130,12 +125,12 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             Debug.Log($"모든 플레이어가 로딩 완료되었는가: {allLoaded}");
             if (allLoaded)
             {
-                GameStart();
+                GameReady();
             }
         }
     }
 
-    private void GameStart()
+    private void GameReady()
     {
         if(_waitRoutine != null)
         {
@@ -160,10 +155,10 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
     IEnumerator StartDelayRoutine()
     {
         yield return new WaitForSeconds(1f);
-        TestGameStart();
+        GameStart();
     }
 
-    public void TestGameStart()
+    public void GameStart()
     {
         Debug.Log("게임 시작");
 
