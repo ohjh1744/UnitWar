@@ -93,7 +93,7 @@ public class GameSceneManager : MonoBehaviourPunCallbacks
             {
                 //게임 소리 켜주기.
                 _audio.Play();
-                // MastrePC Scene따라가게 하지 않기위해서 게임씬쪽에서 false 처리 해주기.
+                // Player가 게임이 끝나고나서 따로 로비씬으로 이동하기위해, MastrePC Scene따라가게 하지 않기위해서 게임씬쪽에서 false 처리 해주기.
                 PhotonNetwork.AutomaticallySyncScene = false;
                 Debug.Log("씬전환3");
                 PhotonNetwork.LocalPlayer.SetLoad(true);
