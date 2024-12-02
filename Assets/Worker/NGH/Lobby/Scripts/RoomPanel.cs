@@ -25,6 +25,11 @@ public class RoomPanel : UIBInder
         PhotonNetwork.LocalPlayer.SetReady(false);
         PhotonNetwork.LocalPlayer.SetLoad(false);
         GameSceneManager.Instance.CurPlayerCount = GameSceneManager.Instance.OriginPlayerCount;
+        for(int i = 0; i < GameSceneManager.Instance.CurUnitCounts.Length; i++)
+        {
+            GameSceneManager.Instance.CurUnitCounts[i] = 0;
+        }
+
         GameSceneManager.Instance.IsFinish = false;
         GameSceneManager.Instance.IsLoad = false;
         ObjectPool.Instance.SetPool();

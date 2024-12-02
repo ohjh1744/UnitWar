@@ -72,14 +72,14 @@ public class UnitData : MonoBehaviourPun, IPunObservable
                 stream.SendNext(Point.y);
             }
 
-            if(_attackTarget != null)
-            {
-                stream.SendNext(_attackTarget.GetComponent<PhotonView>().ViewID); //ID보내기
-            }
-            else
-            {
-                stream.SendNext(0); //ID보내기
-            }
+            //if(_attackTarget != null)
+            //{
+            //    stream.SendNext(_attackTarget.GetComponent<PhotonView>().ViewID); //ID보내기
+            //}
+            //else
+            //{
+            //    stream.SendNext(0); //ID보내기
+            //}
 
 
 
@@ -101,20 +101,20 @@ public class UnitData : MonoBehaviourPun, IPunObservable
             }
 
 
-            int otherID = (int)stream.ReceiveNext();// ID 받기
+            //int otherID = (int)stream.ReceiveNext();// ID 받기
 
-            if(otherID == 0)
-            {
-                _attackTarget = null;
-            }
-            else
-            {
-                PhotonView other = PhotonView.Find(otherID);
-                if (other != null)
-                {
-                    _attackTarget = other.gameObject;
-                }
-            }
+            //if(otherID == 0)
+            //{
+            //    _attackTarget = null;
+            //}
+            //else
+            //{
+            //    PhotonView other = PhotonView.Find(otherID);
+            //    if (other != null)
+            //    {
+            //        _attackTarget = other.gameObject;
+            //    }
+            //}
 
 
         }

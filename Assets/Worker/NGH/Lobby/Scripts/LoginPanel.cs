@@ -17,6 +17,7 @@ public class LoginPanel : UIBInder
         AddEvent("LoginButton", EventType.Click, Login);
         AddEvent("SignUpButton", EventType.Click, ShowSignUpPanel);
         AddEvent("ResetPasswordButton", EventType.Click, ShowResetPasswordPanel);
+        AddEvent("QuitButton", EventType.Click, QuitGame);
     }
 
     // 로그인을 진행
@@ -121,6 +122,14 @@ public class LoginPanel : UIBInder
         {
             return false;
         }
+    }
+
+    public void QuitGame(PointerEventData eventData)
+    {
+        Application.Quit(); // 게임 종료
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     private string GetFirebaseErrorMessage(AggregateException exception)

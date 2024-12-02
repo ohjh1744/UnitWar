@@ -27,11 +27,15 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     [SerializeField] private Slider _hpSlider;
 
-    [SerializeField] private bool _isfinish;
+    private bool _isfinish;
 
     [SerializeField] private GameObject _winImage;
 
     [SerializeField] private GameObject _loseImage;
+
+    [SerializeField] private AudioSource _audio;
+
+    [SerializeField] private AudioClip[] _audioClips;
 
     private Vector2Int[] _endPosDir =
     {
@@ -45,10 +49,12 @@ public class PlayerController : MonoBehaviourPun, IDamageable
         new Vector2Int(-2, -2), // 좌하
     };
 
+    // Unit 소환 Position 위치
+    private int _unitPosIndex = 0;
+
     private void OnEnable()
     {
         _playerData.OnHpChanged += UpdateHp;
-        Debug.Log($"1: {_playerData.OnHpChanged}");
     }
 
     private void OnDisable()
@@ -60,10 +66,8 @@ public class PlayerController : MonoBehaviourPun, IDamageable
     {
         _playerData.Units = new List<UnitData>();
         _lineRenderer = GetComponent<LineRenderer>();
-
         _lineRenderer.startWidth = _lineWidth;
         _lineRenderer.endWidth = _lineWidth;
-
         _lineRenderer.startColor = Color.green;
         _lineRenderer.endColor = Color.green;
     }
@@ -112,7 +116,6 @@ public class PlayerController : MonoBehaviourPun, IDamageable
     [PunRPC]
     private void UpdatePlayerCount(int updateNum)
     {
-        Debug.Log("인구감소!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         GameSceneManager.Instance.CurPlayerCount = updateNum;
     }
     
@@ -144,6 +147,27 @@ public class PlayerController : MonoBehaviourPun, IDamageable
         }
     }
 
+    // Unit 선택시 명령Sound play.
+    private void PlaySelectSound()
+    {
+        EUnit unitType = _playerData.UnitType;
+        switch (unitType)
+        {
+            case EUnit.Zealot:
+                _audio.PlayOneShot(_audioClips[(int)EUnit.Zealot]);
+                break;
+            case EUnit.DarkTemplar:
+                _audio.PlayOneShot(_audioClips[(int)EUnit.DarkTemplar]);
+                break;
+            case EUnit.Juggling:
+                _audio.PlayOneShot(_audioClips[(int)EUnit.Juggling]);
+                break;
+            case EUnit.Ultralisk:
+                _audio.PlayOneShot(_audioClips[(int)EUnit.Ultralisk]);
+                break;
+        }
+    }
+
 
     // 사각형 라인 그리기
     private void DrawRectangle()
@@ -164,6 +188,8 @@ public class PlayerController : MonoBehaviourPun, IDamageable
     // 사각형안에 Unit이 존재하는지.
     private void CheckUnits()
     {
+        bool isExist = false;
+
         Vector2 centerPos = new Vector2((_lineStartPoint.x + _lineEndPoint.x) / 2, (_lineStartPoint.y + _lineEndPoint.y) / 2);
         float width = Mathf.Abs(_lineStartPoint.x - _lineEndPoint.x);
         float height = Mathf.Abs(_lineStartPoint.y - _lineEndPoint.y);
@@ -177,8 +203,15 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             // 내 종족 Unit만 건들 수 있도록 함.
             if (unit != null && unit.UnitType == _playerData.UnitType)
             {
+                isExist = true;
                 _playerData.Units.Add(unit);
             }
+        }
+
+        // Unit이 1마리라도 존재하면 명령SoundPlay
+        if(isExist == true)
+        {
+            PlaySelectSound();
         }
 
     }
@@ -277,9 +310,6 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     }
 
-    // Unit 소환 Position 위치
-    private int _unitPosIndex = 0;
-
     private void CreateUnit()
     {
         if(ObjectPool.Instance != null)
@@ -312,4 +342,6 @@ public class PlayerController : MonoBehaviourPun, IDamageable
     {
         _hpSlider.value = (float)_playerData.HP / (float)_playerData.MaxHp;
     }
+
+
 }
