@@ -12,6 +12,9 @@ public class UnitData : MonoBehaviourPun, IPunObservable
     [SerializeField] private EUnit _unitType;
     public EUnit UnitType { get { return _unitType;} private set { } }
 
+    [SerializeField] private int _originHp;  // 체력
+    public int OriginHp { get { return _originHp; } private set { } }
+
     [SerializeField] private int _hp;  // 체력
     public int HP { get { return _hp; }  set { _hp = value; } }
 

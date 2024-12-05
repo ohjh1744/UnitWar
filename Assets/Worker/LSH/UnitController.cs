@@ -113,7 +113,7 @@ public class UnitController : MonoBehaviourPun, IDamageable
 
     private void ResetData()
     {
-        _unitData.HP = 100;
+        _unitData.HP = _unitData.OriginHp;
         _unitData.Path.Clear();
         _unitData.PathIndex = 0;
         _unitData.HitObject = null;

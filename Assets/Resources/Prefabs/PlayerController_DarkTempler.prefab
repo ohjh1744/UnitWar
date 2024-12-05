@@ -1506,7 +1506,7 @@ MonoBehaviour:
   _aStar: {fileID: 1634759484149007541}
   _unitSpawner: {fileID: 8673681453622573814}
   _target: {fileID: 0}
-  _spawnTime: 3
+  _spawnTime: 1.66
   _spawnPos: {x: 17, y: 12, z: 0}
   _hp: 3000
   _maxHp: 3000
@@ -1624,7 +1624,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.578125
+  m_Radius: 0.5
 --- !u!82 &2478457666937796700
 AudioSource:
   m_ObjectHideFlags: 0

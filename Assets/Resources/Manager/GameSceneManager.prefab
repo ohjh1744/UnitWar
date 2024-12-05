@@ -49,11 +49,11 @@ MonoBehaviour:
   _gameState: 0
   _playerCount: 4
   _spawnerPos:
-  - {x: -19.4, y: 11.61, z: 0}
-  - {x: 22.32, y: 11.3, z: 0}
-  - {x: 21.67, y: -10.1, z: 0}
-  - {x: -19.64, y: -10.34, z: 0}
-  _unitCounts: 0a0000000a0000000f00000008000000
+  - {x: -19.4, y: 11.61, z: 1}
+  - {x: 22.32, y: 11.3, z: 1}
+  - {x: 21.67, y: -10.1, z: 1}
+  - {x: -19.64, y: -10.34, z: 1}
+  _unitCounts: 0f0000000c000000140000000a000000
   _curUnitCounts: 00000000000000000000000000000000
   _originPlayerCount: 4
   _curPlayerCount: 4

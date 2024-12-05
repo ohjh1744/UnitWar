@@ -1352,7 +1352,7 @@ MonoBehaviour:
   _aStar: {fileID: 5031224841007026481}
   _unitSpawner: {fileID: 852726264959176890}
   _target: {fileID: 0}
-  _spawnTime: 4
+  _spawnTime: 2
   _spawnPos: {x: -18, y: -10, z: 0}
   _hp: 3000
   _maxHp: 3000
