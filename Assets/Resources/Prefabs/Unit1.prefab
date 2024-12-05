@@ -148,7 +148,7 @@ MonoBehaviour:
   _unitType: 1
   _originHp: 45
   _hp: 45
-  _power: 9
+  _power: 10
   _damageRate: 0.7
   _path: []
   _pathIndex: 0
