@@ -146,9 +146,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitType: 2
-  _originHp: 25
-  _hp: 25
-  _power: 3
+  _originHp: 30
+  _hp: 30
+  _power: 4
   _damageRate: 0.6
   _path: []
   _pathIndex: 0
