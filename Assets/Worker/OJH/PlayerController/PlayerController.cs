@@ -261,6 +261,9 @@ public class PlayerController : MonoBehaviourPun, IDamageable
         int dirIndex = 0;
         int spawnIndex = 0;
 
+        bool _isFindPath = false;
+        List<Vector2Int> findPath = new List<Vector2Int>();
+
         for (int i = 0; i < _playerData.Units.Count; i++)
         {
             UnitData unit = _playerData.Units[i];
@@ -279,16 +282,27 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             Vector2Int startPos = new Vector2Int((int)_playerData.Units[i].transform.position.x, (int)_playerData.Units[i].transform.position.y);
             Vector2Int endPos = new Vector2Int((int)movePosX + xPos, (int)movePosY + yPos);
 
-            if (_playerData.Astar.DoAStar(startPos, endPos) == true)
+            // 만약 그 전 unit의 path를 찾았다면, 그 다음 Unit들은 AStar따로 돌리지 않고, 찾은 경로를 저장하여 넘겨줌.
+            if(_isFindPath == true)
             {
-                unit.Path.Clear();
-
-                foreach (Vector2Int path in _playerData.Astar.Path)
+                unit.Path = findPath;
+                unit.Path.Add(endPos);
+            }
+            else  //경로를 찾지 못했따면 다음 Unit astar 진행.
+            {
+                if (_playerData.Astar.DoAStar(startPos, endPos) == true)
                 {
-                    unit.PathIndex = 0;
-                    unit.Path.Add(path);
+                    _isFindPath = true;
+                    unit.Path.Clear();
+                    foreach (Vector2Int path in _playerData.Astar.Path)
+                    {
+                        unit.PathIndex = 0;
+                        unit.Path.Add(path);
+                    }
+                    findPath = unit.Path;
                 }
             }
+
 
             // 단체로 이동 오더 시 한곳에 모여지 않도록 구현.
             if (orderNum == (int)EOrder.Move)
