@@ -59,7 +59,7 @@ public class AttackState : IState
             //_unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
             _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
         }
-        if (_data.Path.Count == _data.PathIndex && _data.HitObject == null)
+        if (_data.Path != null && _data.Path.Count == _data.PathIndex && _data.HitObject == null)
         {
             //_unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
             _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);

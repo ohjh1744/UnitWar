@@ -63,7 +63,7 @@ public class WalkState : IState
         _checkAttackTargetTime += Time.deltaTime;
 
         // 이동 마지막 경로까지 이동을 끝냈다면, HasReceivedMove false.
-        if (_data.PathIndex == _data.Path.Count)
+        if (_data.Path != null && _data.PathIndex == _data.Path.Count)
         {
             _data.HasReceivedMove = false;
         }

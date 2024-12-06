@@ -282,13 +282,13 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             if (_playerData.Astar.DoAStar(startPos, endPos) == true)
             {
                 unit.Path.Clear();
-
                 foreach (Vector2Int path in _playerData.Astar.Path)
                 {
                     unit.PathIndex = 0;
                     unit.Path.Add(path);
                 }
             }
+
 
             // 단체로 이동 오더 시 한곳에 모여지 않도록 구현.
             if (orderNum == (int)EOrder.Move)
