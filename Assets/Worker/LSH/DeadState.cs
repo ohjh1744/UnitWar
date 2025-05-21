@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeadState : MonoBehaviourPun, IState
+public class DeadState : UnitState
 {
-    private UnitController _unitController;
-
     private UnitData _data;
 
     private Animator _animator;
@@ -18,14 +16,12 @@ public class DeadState : MonoBehaviourPun, IState
     private float _curTime;
 
 
-    public DeadState(UnitController controller)
+    public DeadState(UnitController unit) : base(unit)
     {
-        //생성자
-        _unitController = controller;
 
-        _data = _unitController.UnitData;
+        _data = Unit.UnitData;
 
-        _animator = _unitController.GetComponent<Animator>();
+        _animator = Unit.GetComponent<Animator>();
 
         _hashDead = Animator.StringToHash("Death");
 
@@ -34,26 +30,26 @@ public class DeadState : MonoBehaviourPun, IState
     }
 
 
-    public void OnEnter()
+    public override void OnEnter()
     {
         _curTime = 0;
         Debug.Log("Dead상태 진입");
         PlayDeadAnimation();
-        _unitController.Audio.PlayOneShot(_data.AudioCLips[(int)ESound.Dead]);
+        Unit.Audio.PlayOneShot(_data.AudioCLips[(int)ESound.Dead]);
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
         _curTime += Time.deltaTime;
         // 애니메이션 동작 후 setfalse
         if(_curTime > _setFalsTime)
         {
             GameSceneManager.Instance.CurUnitCounts[(int)_data.UnitType]--;
-            _unitController.gameObject.SetActive(false);
+            Unit.gameObject.SetActive(false);
         }
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
         Debug.Log("Dead상태 탈출");
         StopAni();

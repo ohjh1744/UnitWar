@@ -4,10 +4,8 @@ using System.IO;
 using UnityEngine;
 using Photon.Pun;
 
-public class IdleState : IState
+public class IdleState : UnitState
 {
-    private UnitController _unitController;
-
     private UnitData _data;
 
     private Animator _animator;
@@ -18,49 +16,47 @@ public class IdleState : IState
 
     private int _hashIdleRight;
 
-    public IdleState(UnitController controller)
+    public IdleState(UnitController unit) : base(unit)
     {
-        //생성자
-        _unitController = controller;
 
-        _data = _unitController.UnitData;
+        _data = Unit.UnitData;
 
-        _animator = _unitController.GetComponent<Animator>();
+        _animator = Unit.GetComponent<Animator>();
 
         _hashIdleFront = Animator.StringToHash("Idle_Front");
     }
 
 
-    public void OnEnter()
+    public override void OnEnter()
     {
         Debug.Log("Idle상태 진입");
         
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
-        if (_data.HP <= 0 || (GameSceneManager.Instance.IsFinish == true && _unitController.photonView.IsMine == true))
+        if (_data.HP <= 0 || (GameSceneManager.Instance.IsFinish == true && Unit.photonView.IsMine == true))
         {
             //_unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
-            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
+            Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
         }
 
         if (_data.Path.Count > 0 && _data.PathIndex != _data.Path.Count)        
         {
             // _unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
-            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Walk);
+            Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Walk);
         }
         if (_data.HitObject != null)
         {
             // _unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
-            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Attack);
+            Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Attack);
         }
 
         DoIdle();
 
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
         Debug.Log("Idle상태 탈출");
     }

@@ -4,10 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : IState
+public class AttackState : UnitState
 {
-    private UnitController _unitController;
-
     private UnitData _data;
 
     private Collider2D _detectEnemy;
@@ -28,14 +26,13 @@ public class AttackState : IState
 
     private SpriteRenderer _render;
 
-    public AttackState(UnitController controller)
+    public AttackState(UnitController unit): base(unit)
     {
-        //생성자
-        _unitController = controller;
-        _data = _unitController.UnitData;
 
-        _animator = _unitController.GetComponent<Animator>();
-        _render = _unitController.GetComponent<SpriteRenderer>();
+        _data = Unit.UnitData;
+
+        _animator = Unit.GetComponent<Animator>();
+        _render = Unit.GetComponent<SpriteRenderer>();
 
         _hashAttackFront = Animator.StringToHash("Attack_Front");
         _hashAttackBack = Animator.StringToHash("Attack_Back");
@@ -43,38 +40,38 @@ public class AttackState : IState
     }
 
 
-    public void OnEnter()
+    public override void OnEnter()
     {
         Debug.Log("Attack상태 진입");        
 
         _curDamageRate = 0;        
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
         Debug.Log("공격중!");
 
-        if (_data.HP <= 0 || (GameSceneManager.Instance.IsFinish == true && _unitController.photonView.IsMine == true)) 
+        if (_data.HP <= 0 || (GameSceneManager.Instance.IsFinish == true && Unit.photonView.IsMine == true)) 
         {
             //_unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
-            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
+            Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
         }
         if (_data.Path != null && _data.Path.Count == _data.PathIndex && _data.HitObject == null)
         {
             //_unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
-            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
+            Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
         }
         if ((_data.HasReceivedMove == true || _data.HitObject == null) && _data.Path.Count > 0 && _data.PathIndex != _data.Path.Count)
         {
             //_unitController.ChangeState(_unitController.States[(int)EStates.Walk]);
-            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Walk);
+            Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Walk);
         }
 
         DoAttack();
 
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
         Debug.Log("Attack상태 탈출");
         StopAni();
@@ -102,11 +99,11 @@ public class AttackState : IState
                 damageable.GetDamage(_data.Power);
             }
             _curDamageRate = 0;
-            _unitController.Audio.PlayOneShot(_data.AudioCLips[(int)ESound.Attack]);
+            Unit.Audio.PlayOneShot(_data.AudioCLips[(int)ESound.Attack]);
         }
 
         // 상대 unit과의 바라보는 방향 계산하여 애니메이션 동작.
-        _attackDir = _data.HitObject.transform.position - _unitController.transform.position;
+        _attackDir = _data.HitObject.transform.position - Unit.transform.position;
         PlayAttackAnimation();
 
     }

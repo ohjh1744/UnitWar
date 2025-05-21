@@ -5,10 +5,8 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using Photon.Pun;
 
-public class WalkState : IState
+public class WalkState : UnitState
 {
-    private UnitController _unitController;
-
     private UnitData _data;
 
     private AStar _aStar;
@@ -29,15 +27,14 @@ public class WalkState : IState
 
     private SpriteRenderer _render;
 
-    public WalkState(UnitController controller)
+    public WalkState(UnitController unit): base(unit)
     {
-        //생성자
-        _unitController = controller;
-        _data = _unitController.UnitData;
-        _aStar = _unitController.AStar;
 
-        _animator = _unitController.GetComponent<Animator>();
-        _render = _unitController.GetComponent<SpriteRenderer>();
+        _data = Unit.UnitData;
+        _aStar = Unit.AStar;
+
+        _animator = Unit.GetComponent<Animator>();
+        _render = Unit.GetComponent<SpriteRenderer>();
 
         _hashWalkFront = Animator.StringToHash("Walk_Front");
         _hashWalkBack = Animator.StringToHash("Walk_Back");
@@ -45,7 +42,7 @@ public class WalkState : IState
     }
 
 
-    public void OnEnter()
+    public override void OnEnter()
     {
         Debug.Log("Walk상태 진입");        
 
@@ -58,7 +55,7 @@ public class WalkState : IState
     }
 
     //순서 바꾸지 말기!
-    public void OnUpdate()
+    public override void OnUpdate()
     {
         _checkAttackTargetTime += Time.deltaTime;
 
@@ -69,10 +66,10 @@ public class WalkState : IState
         }
 
         //상태전환 
-        if (_data.HP <= 0 || (GameSceneManager.Instance.IsFinish == true && _unitController.photonView.IsMine == true))
+        if (_data.HP <= 0 || (GameSceneManager.Instance.IsFinish == true && Unit.photonView.IsMine == true))
         {
             //_unitController.ChangeState(_unitController.States[(int)EStates.Dead]);
-            _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
+            Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Dead);
         }
 
         if (_data.HasReceivedMove == false)
@@ -80,12 +77,12 @@ public class WalkState : IState
             if (_data.Path.Count == _data.PathIndex && _data.AttackTarget == null)
             {
                 //_unitController.ChangeState(_unitController.States[(int)EStates.Idle]);
-                _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
+                Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Idle);
             }
             if (_data.HitObject != null)
             {
                 //_unitController.ChangeState(_unitController.States[(int)EStates.Attack]);
-                _unitController.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Attack);
+                Unit.photonView.RPC("ChangeState", RpcTarget.All, (int)EStates.Attack);
             }
         }
 
@@ -105,7 +102,7 @@ public class WalkState : IState
 
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
         Debug.Log("Walk상태 탈출");
         StopAni();
@@ -116,7 +113,7 @@ public class WalkState : IState
     {
         Debug.Log("경로 변환!!!");
         _currentAttackTarget = _data.AttackTarget.transform.position;
-        Vector2Int startPos = new Vector2Int((int)_unitController.transform.position.x, (int)_unitController.transform.position.y);
+        Vector2Int startPos = new Vector2Int((int)Unit.transform.position.x, (int)Unit.transform.position.y);
         Vector2Int endPos = new Vector2Int((int)_data.AttackTarget.transform.position.x, (int)_data.AttackTarget.transform.position.y);
         _aStar.DoAStar(startPos, endPos);
         _data.Path.Clear();
@@ -129,16 +126,16 @@ public class WalkState : IState
     {
         Debug.Log("Walk중!");
         // Unit 위치 vector2int로 변환
-        Vector2Int unitPos = new Vector2Int((int)_unitController.transform.position.x, (int)_unitController.transform.position.y);
+        Vector2Int unitPos = new Vector2Int((int)Unit.transform.position.x, (int)Unit.transform.position.y);
 
         // 바라보고 있는 방향 정하기
         _currentDir = pathPoint - unitPos;
 
         // 현재 위치에서 목표 지점으로 이동
-        _unitController.transform.position = Vector2.MoveTowards(_unitController.transform.position, pathPoint, _data.MoveSpeed * Time.deltaTime);
+        Unit.transform.position = Vector2.MoveTowards(Unit.transform.position, pathPoint, _data.MoveSpeed * Time.deltaTime);
 
         // 목표 지점에 도달했는지 확인
-        if ((Vector2)_unitController.transform.position == pathPoint)
+        if ((Vector2)Unit.transform.position == pathPoint)
         {
             _data.PathIndex++;  // 다음 지점으로 이동
         }
