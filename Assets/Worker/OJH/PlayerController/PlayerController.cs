@@ -37,6 +37,10 @@ public class PlayerController : MonoBehaviourPun, IDamageable
 
     [SerializeField] private AudioClip[] _audioClips;
 
+    [SerializeField] private AStar _aStar;
+
+    [SerializeField] private UnitSpawner _unitSpawner;
+
     private Vector2Int[] _endPosDir =
     {
         new Vector2Int( 0, +2), // »ó
@@ -279,10 +283,10 @@ public class PlayerController : MonoBehaviourPun, IDamageable
             Vector2Int startPos = new Vector2Int((int)_playerData.Units[i].transform.position.x, (int)_playerData.Units[i].transform.position.y);
             Vector2Int endPos = new Vector2Int((int)movePosX + xPos, (int)movePosY + yPos);
 
-            if (_playerData.Astar.DoAStar(startPos, endPos) == true)
+            if (_aStar.DoAStar(startPos, endPos) == true)
             {
                 unit.Path.Clear();
-                foreach (Vector2Int path in _playerData.Astar.Path)
+                foreach (Vector2Int path in _aStar.Path)
                 {
                     unit.PathIndex = 0;
                     unit.Path.Add(path);
@@ -324,7 +328,7 @@ public class PlayerController : MonoBehaviourPun, IDamageable
                     {
                         _unitPosIndex = 0;
                     }
-                    _playerData.UnitSpawner.Spawn((int)_playerData.UnitType, _unitPosIndex, _playerData.SpawnPos);
+                    _unitSpawner.Spawn((int)_playerData.UnitType, _unitPosIndex, _playerData.SpawnPos);
                     GameSceneManager.Instance.CurUnitCounts[(int)_playerData.UnitType]++;
                     _unitPosIndex++;
                 }

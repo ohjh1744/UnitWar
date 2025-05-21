@@ -1200,6 +1200,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d3ca7d19d4663694c9463ad0671f3b6e, type: 3}
   - {fileID: 8300000, guid: aad1cccb6e73eb24bb142d4ac30c5e7d, type: 3}
   - {fileID: 8300000, guid: 4124f38b87687e548bea0d8ab0b959c3, type: 3}
+  _aStar: {fileID: 5031224841007026481}
+  _unitSpawner: {fileID: 852726264959176890}
 --- !u!114 &4087443948332882786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1349,8 +1351,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitType: 3
-  _aStar: {fileID: 5031224841007026481}
-  _unitSpawner: {fileID: 852726264959176890}
   _target: {fileID: 0}
   _spawnTime: 2
   _spawnPos: {x: -18, y: -10, z: 0}

@@ -11,14 +11,6 @@ public class PlayerData : MonoBehaviourPun , IPunObservable
 
     public EUnit UnitType { get { return _unitType; } private set { } }
 
-    [SerializeField] private AStar _aStar;
-
-    public AStar Astar { get { return _aStar; } private set { } }
-
-    [SerializeField] private UnitSpawner _unitSpawner;
-
-    public UnitSpawner UnitSpawner { get { return _unitSpawner; } private set { } }
-
     private List<UnitData> _units;
 
     public List<UnitData> Units { get { return _units; } set  { _units = value; } }
