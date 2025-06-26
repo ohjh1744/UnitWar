@@ -75,17 +75,19 @@ public class AStar : MonoBehaviour
                 return true;
             }
 
-            //이미 방문한 정점이라면 무시.
-            if (_checkNodes.Contains(currentNode.pos) == true)
-            {
-                continue;
-            }
-
+            //방문한 노드에 현재 노드 추가
             _checkNodes.Add(currentNode.pos);
 
             for (int i = 0; i < _direction.Length; i++)
             {
+
                 Vector2Int nextPos = currentNode.pos + _direction[i];
+
+                //이미 방문한 정점이라면 무시.
+                if (_checkNodes.Contains(nextPos) == true)
+                {
+                    continue;
+                }
 
                 hitCollider = Physics2D.OverlapCircle(nextPos, 0.4f);
                 //장애물 있을시 무시
